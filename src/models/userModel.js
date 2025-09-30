@@ -186,4 +186,4 @@ const playerSchema = new Schema({
   ...playerInfoSchema.obj, // spread fields from playerInfoSchema
 });
 
-module.exports = mongoose.model('UserDatabase', playerSchema);
+module.exports = mongoose.model('players', playerSchema);

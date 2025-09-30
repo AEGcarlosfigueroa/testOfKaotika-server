@@ -1,13 +1,21 @@
 const express = require("express")
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
-const mongodbRoute = 'mongo string conection goes here'
+const mongodbRoute = 'mongodb+srv://carlospalacio_db_user:Parlante12@kaoticalegends.t09ezfi.mongodb.net/'
+const morgan = require('morgan');
+
+const usersRouter = require('./routes/userRoutes');
 
 const app = express();
 
+app.use(morgan('dev'))
+
 const PORT = process.env.PORT || 3000;
 
+
 app.use(bodyParser.json());
+
+app.use("/api/players", usersRouter)
 
 async function start(){
     try
@@ -24,3 +32,4 @@ async function start(){
     }
 }
 start ();
+

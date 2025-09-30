@@ -1,0 +1,46 @@
+name: Deploy NodeJS App (Docker)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file from GitHub secret
+        run: echo "${{ secrets.PROD_ENV_FILE }}" > .env
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Set container name
+        run: |
+       
+          if [ -z "${{ secrets.CONTAINER_NAME }}" ]; then
+            echo "ERROR: El secreto CONTAINER_NAME no está definido"
+            exit 1
+          fi
+          echo "CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}" >> $GITHUB_ENV
+
+      - name: Build and restart Docker container
+        run: |
+          cd $GITHUB_WORKSPACE
+
+          
+          docker rm -f $CONTAINER_NAME || true
+
+          
+          docker compose -f docker-compose.yml build server
+          docker compose -f docker-compose.yml up -d --force-recreate server
+
+          
+          docker rename server $CONTAINER_NAME || true
+
+      - name: Clean up
+        run: echo "Deployment for $CONTAINER_NAME complete."

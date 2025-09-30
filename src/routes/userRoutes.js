@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("../controllers/userController");
+const { verifyFirebaseToken } = require("../middlewares/verifyData"); // Firebase Auth
 
-const middleware = require("../middlewares/verifyData")
+// Public route — anyone can access
+router.get("/", verifyFirebaseToken, userController.getAllUsers);
 
-router.get("/", userController.getAllUsers);
-
-// router.post("/", middleware.verify, userController)
+// Protected route — only users with valid ID token and verified email
+router.post("/", verifyFirebaseToken, userController.getAllUsers);
 
 module.exports = router;

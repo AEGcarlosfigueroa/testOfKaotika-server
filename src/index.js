@@ -1,8 +1,11 @@
+require('dotenv').config();
 const express = require("express")
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
-const mongodbRoute = 'mongodb+srv://carlospalacio_db_user:Parlante12@kaoticalegends.t09ezfi.mongodb.net/'
+const mongodbRoute = process.env.MONGODB_URI;
 const morgan = require('morgan');
+const { verifyFirebaseToken } = require('./middlewares/verifyData')
+
 
 const usersRouter = require('./routes/userRoutes');
 
@@ -15,7 +18,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use("/api/players", usersRouter)
+app.use("/api/players", verifyFirebaseToken ,usersRouter)
+
 
 async function start(){
     try

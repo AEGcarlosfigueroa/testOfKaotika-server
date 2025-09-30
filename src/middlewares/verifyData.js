@@ -1,6 +1,5 @@
-const { initializeApp } = require('firebase-admin/app');
+const {authentication} = require('../firebase')
 
-const app = initializeApp();
 
 async function verifyFirebaseToken(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -12,7 +11,7 @@ async function verifyFirebaseToken(req, res, next) {
   const idToken = authHeader.split("Bearer ")[1];
 
   try {
-    const decodedToken = await getAuth().verifyIdToken(idToken);
+    const decodedToken = await authentication.verifyIdToken(idToken);
 
     req.user = decodedToken;
 
@@ -24,4 +23,7 @@ async function verifyFirebaseToken(req, res, next) {
   } catch (error) {
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
+}
+module.exports = {
+  verifyFirebaseToken
 }

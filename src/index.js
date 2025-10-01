@@ -9,7 +9,6 @@ const { verifyFirebaseToken } = require('./middlewares/verifyData')
 
 const usersRouter = require('./routes/userRoutes');
 
-const kaotikaRouter = require('./routes/kaotikaRoutes')
 
 const app = express();
 
@@ -22,7 +21,6 @@ app.use(bodyParser.json());
 
 app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
 
-app.use("/api/kaotika", verifyFirebaseToken, kaotikaRouter);   // For external Kaotika players
 
 async function start(){
     try

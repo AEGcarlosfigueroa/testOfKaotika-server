@@ -55,3 +55,27 @@ module.exports = {
     getAllUsers,
     getPlayerFromDatabaseByEmail
 }
+
+// const { getPlayerFromDatabaseById } = require('../services/databaseService');
+// const { getPlayerFromKaotika } = require('../services/kaotikaService');
+
+// const getPlayer = async (req, res) => {
+//   const email = req.params.email;
+//   try {
+//     let player;
+
+//     if (useKaotika) {
+//       player = await getPlayerFromKaotika(email);
+//     } else {
+//       player = await getPlayerFromDatabaseById(email);
+//     }
+
+//     if (!player) {
+//       return res.status(404).json({ message: 'Player not found' });
+//     }
+
+//     res.json(player);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };

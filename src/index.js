@@ -9,6 +9,8 @@ const { verifyFirebaseToken } = require('./middlewares/verifyData')
 
 const usersRouter = require('./routes/userRoutes');
 
+const kaotikaRouter = require('./routes/kaotikaRoutes')
+
 const app = express();
 
 app.use(morgan('dev'))
@@ -18,7 +20,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use("/api/players", verifyFirebaseToken ,usersRouter)
+app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
+
+app.use("/api/kaotika", verifyFirebaseToken, kaotikaRouter);   // For external Kaotika players
 
 
 async function start(){

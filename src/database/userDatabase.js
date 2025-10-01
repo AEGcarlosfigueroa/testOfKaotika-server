@@ -11,10 +11,10 @@ const getAllUsers = async () => {
         throw error;
     }
 };
-const getPlayerFromDatabaseById = async (playerEmail) => {
+const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     try
     {
-        const player = await userDatabase.findById(playerEmail)
+        const player = await userDatabase.findOne({email: playerEmail})
         return player;
     }
     catch (error){
@@ -24,5 +24,5 @@ const getPlayerFromDatabaseById = async (playerEmail) => {
 
 module.exports = {
     getAllUsers,
-    getPlayerFromDatabaseById
+    getPlayerFromDatabaseByEmail
 }

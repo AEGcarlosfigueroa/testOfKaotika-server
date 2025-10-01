@@ -11,7 +11,18 @@ const getAllUsers = async () => {
         throw error;
     }
 };
+const getPlayerFromDatabaseById = async (playerEmail) => {
+    try
+    {
+        const player = await userDatabase.findById(playerEmail)
+        return player;
+    }
+    catch (error){
+        throw error;
+    }
+}
 
 module.exports = {
-    getAllUsers
+    getAllUsers,
+    getPlayerFromDatabaseById
 }

@@ -19,7 +19,7 @@ async function verifyFirebaseToken(req, res, next) {
       return res.status(403).json({ error: "Email not verified" });
     }
 
-    next(); // ✅ token is valid, continue
+    next(); 
   } catch (error) {
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }

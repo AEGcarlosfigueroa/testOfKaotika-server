@@ -21,10 +21,22 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     catch (error){
         throw error;
     }
+};
+const updateInsertPlayer = async (playerData) => {
+    const updatedPlayer = await userDatabase.updateInsertPlayer(playerData)
+    return updatedPlayer;
 }
 
+// const upsertPlayer = async (playerData) => {
+//   return await Player.findOneAndUpdate(
+//     { email: playerData.email },
+//     playerData,   // direct replacement since schemas match
+//     { upsert: true, new: true }
+//   );
+// };
 
 module.exports = {
     getAllUsers,
-    getPlayerFromDatabaseByEmail
+    getPlayerFromDatabaseByEmail,
+    updateInsertPlayer
 }

@@ -24,7 +24,6 @@ app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your Mongo
 
 app.use("/api/kaotika", verifyFirebaseToken, kaotikaRouter);   // For external Kaotika players
 
-
 async function start(){
     try
     {

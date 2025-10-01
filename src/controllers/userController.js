@@ -1,81 +1,61 @@
 const userService = require("../services/userService");
+const kaotikaService = require("../services/kaotikaService");
 
 const getAllUsers = async (req, res) => {
-    try{
+    try {
         const allUsers = await userService.getAllUsers();
-        if(allUsers.length === 0)
-        {
-            return res.status(404).send({message: 'This user does not exist!'});
+        if (allUsers.length === 0) {
+            return res.status(404).send({ message: 'No users found!' });
         }
-        res.send ({ status: "Success", userData: allUsers});
-    } catch (error)
-    {
-        res
-            .status(error?.status || 500)
-            .send({ status: "FAILED",
-                    message: "request failed",
-                    data: { error: error?.message || error}
-            });
+        res.send({ status: "SUCCESS", userData: allUsers });
+    } catch (error) {
+        res.status(error?.status || 500).send({ 
+            status: "FAILED",
+            message: "Request failed",
+            data: { error: error?.message || error }
+        });
     }
 };
+
 const getPlayerFromDatabaseByEmail = async (req, res) => {
-    const {params: {playerEmail}} = req;
+    const { params: { playerEmail } } = req;
 
-    if(!playerEmail)
-    {
-        return res
-            .status(400)
-            .send({ status: "FAILED", data: {error: "Parameter ': playerEmail' can not be empty" },
-            })
+    if (!playerEmail) {
+        return res.status(400).send({ 
+            status: "FAILED", 
+            data: { error: "Parameter ':playerEmail' cannot be empty" } 
+        });
     }
-    try
-    {
-        const player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
-        if (!player)
-        {
-            return res
-                .status(404)
-                .send({ status: "FAILED",
-                        data: { error:  `Cant find player by email'${playerEmail}'`}
+
+    try {
+        let player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
+        const legend = await kaotikaService.getLegendByEmail(playerEmail);
+
+        if (!player) {
+            if (!legend) {
+                return res.status(404).send({ 
+                    status: "FAILED",
+                    data: { error: `Cannot find legend by email '${playerEmail}'` }
                 });
+            }
+            player = await userService.updateInsertPlayer(legend);
+        } else if (legend) {
+            // Optional: update existing player with latest external data
+            player = await userService.updateInsertPlayer(legend);
         }
-        res.send({status: "SUCCESS!", data: player});
-    } catch (error){
-        res
-            .status(error?.status || 500)
-            .send ({status: "FAILED",
-                    message: "Error al realizar la peticion:",
-                    data: { error: error?.message || error}
-            });
+
+        res.send({ status: "SUCCESS", data: player });
+
+    } catch (error) {
+        res.status(error?.status || 500).send({ 
+            status: "FAILED",
+            message: "Error fetching player",
+            data: { error: error?.message || error }
+        });
     }
+};
 
-
-}
 module.exports = {
     getAllUsers,
     getPlayerFromDatabaseByEmail
-}
-
-// const { getPlayerFromDatabaseById } = require('../services/databaseService');
-// const { getPlayerFromKaotika } = require('../services/kaotikaService');
-
-// const getPlayer = async (req, res) => {
-//   const email = req.params.email;
-//   try {
-//     let player;
-
-//     if (useKaotika) {
-//       player = await getPlayerFromKaotika(email);
-//     } else {
-//       player = await getPlayerFromDatabaseById(email);
-//     }
-
-//     if (!player) {
-//       return res.status(404).json({ message: 'Player not found' });
-//     }
-
-//     res.json(player);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+};

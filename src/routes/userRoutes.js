@@ -7,6 +7,7 @@ const { verifyFirebaseToken } = require("../middlewares/verifyData"); // Firebas
 // Public route — anyone can access
 router.get("/", verifyFirebaseToken, userController.getAllUsers);
 
+router.get("/", verifyFirebaseToken, userController.getPlayerFromDatabaseByEmail)
 // Protected route — only users with valid ID token and verified email
 router.post("/", verifyFirebaseToken, userController.getAllUsers);
 

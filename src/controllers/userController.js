@@ -18,6 +18,40 @@ const getAllUsers = async (req, res) => {
             });
     }
 };
+const getPlayerFromDatabaseByEmail = async (req, res) => {
+    const {params: {playerEmail}} = req;
+
+    if(!playerEmail)
+    {
+        return res
+            .status(400)
+            .send({ status: "FAILED", data: {error: "Parameter ': playerEmail' can not be empty" },
+            })
+    }
+    try
+    {
+        const player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
+        if (!player)
+        {
+            return res
+                .status(404)
+                .send({ status: "FAILED",
+                        data: { error:  `Cant find player by email'${playerEmail}'`}
+                });
+        }
+        res.send({status: "SUCCESS!", data: player});
+    } catch (error){
+        res
+            .status(error?.status || 500)
+            .send ({status: "FAILED",
+                    message: "Error al realizar la peticion:",
+                    data: { error: error?.message || error}
+            });
+    }
+
+
+}
 module.exports = {
-    getAllUsers
+    getAllUsers,
+    getPlayerFromDatabaseByEmail
 }

@@ -1,4 +1,3 @@
-
 FROM node:20-alpine
 
 
@@ -13,7 +12,7 @@ RUN npm install --production
 COPY . .
 
 
-EXPOSE 4182
+EXPOSE 3000
 
 
 CMD ["npm", "start"]

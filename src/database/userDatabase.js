@@ -23,12 +23,20 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     }
 }
 const updateInsertPlayer = async(playerData) => {
+    console.log("updateInsertPlayer data received");
+    console.log(playerData);
+
+    const object = playerData.data;
+
+    object._id = undefined;
+
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: playerData.email}, 
-        playerData,
+        object,
         {upsert : true, new: true});
 
-        console.log("updatedAcount: " + updatedPlayer)
+        console.log("updateInsertPlayer data outgoing");
+        console.log(updatedPlayer);
 
 
         return updatedPlayer;

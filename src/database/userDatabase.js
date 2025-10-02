@@ -28,12 +28,21 @@ const updateInsertPlayer = async(playerData) => {
 
     const object = playerData.data;
 
+    const foundObj = await getPlayerFromDatabaseByEmail(object.email);
+
+    if(!foundObj)
+    {
+        object.is_active = false;
+    }
+    else
+    {
+        object.is_active = true;
+    }
+
     object._id = undefined;
 
-    const emailNormalized = playerData.email.trim().toLowerCase();
-
     const updatedPlayer = await userDatabase.findOneAndUpdate({
-        email: emailNormalized}, 
+        email: object.email}, 
         {$set: object },
         {upsert : true, new: true});
 

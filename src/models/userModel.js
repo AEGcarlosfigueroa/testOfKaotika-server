@@ -161,7 +161,7 @@ const skillsSchema = new Schema({
 const playerInfoSchema = new Schema({
   name: String,
   nickname: String,
-  email: { type: String, required: true, unique: true },
+  email: String,
   avatar: String,
   classroom_Id: String,
   level: Number,

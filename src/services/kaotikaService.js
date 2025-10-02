@@ -3,6 +3,7 @@ const kaotikaService = require('../database/kaotikaDB')
 const getLegendByEmail = async (playerEmail) => {
     try{
         const player = await kaotikaService.getLegendByEmail(playerEmail);
+        
         return player;
     }
     catch (error)

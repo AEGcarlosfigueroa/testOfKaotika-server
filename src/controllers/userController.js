@@ -39,11 +39,15 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
                 });
             }
             player = await userService.updateInsertPlayer(legend);
+            player.is_active = false;
+    
             console.log("if there is no player we check kaoticaserver: " + player)
         } else if (legend) {
             // Optional: update existing player with latest external data
             player = await userService.updateInsertPlayer(legend);
-                    console.log("dataPlayer: " + player)
+            player.is_active = true;
+
+            console.log("dataPlayer: " + player)
 
         }
 

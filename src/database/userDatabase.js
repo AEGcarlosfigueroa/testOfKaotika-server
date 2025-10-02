@@ -15,6 +15,7 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     try
     {
         const player = await userDatabase.findOne({email: playerEmail})
+        console.log("player: " + player)
         return player;
     }
     catch (error){
@@ -27,16 +28,12 @@ const updateInsertPlayer = async(playerData) => {
         playerData,
         {upsert : true, new: true});
 
+        console.log("updatedAcount: " + updatedPlayer)
+
+
         return updatedPlayer;
 }
 
-// const upsertPlayer = async (playerData) => {
-//   return await Player.findOneAndUpdate(
-//     { email: playerData.email },
-//     playerData,   // direct replacement since schemas match
-//     { upsert: true, new: true }
-//   );
-// };
 
 
 module.exports = {

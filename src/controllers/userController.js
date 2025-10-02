@@ -39,12 +39,16 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
                 });
             }
             player = await userService.updateInsertPlayer(legend);
+            console.log("if there is no player we check kaoticaserver: " + player)
         } else if (legend) {
             // Optional: update existing player with latest external data
             player = await userService.updateInsertPlayer(legend);
+                    console.log("dataPlayer: " + player)
+
         }
 
         res.send({ status: "SUCCESS", data: player });
+        console.log("dataPlayer: " + data)
 
     } catch (error) {
         res.status(error?.status || 500).send({ 

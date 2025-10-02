@@ -38,13 +38,13 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
                     data: { error: `Cannot find legend by email '${playerEmail}'` }
                 });
             }
-            legend.is_active = false;
+            // legend.is_active = false;
             player = await userService.updateInsertPlayer(legend);
     
             console.log("if there is no player we check kaoticaserver: " + player)
         } else if (legend) {
             // Optional: update existing player with latest external data
-            legend.is_active = true;
+            // legend.is_active = true;
             player = await userService.updateInsertPlayer(legend);
 
             console.log("dataPlayer: " + player)

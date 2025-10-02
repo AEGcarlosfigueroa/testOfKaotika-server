@@ -35,6 +35,8 @@ const updateInsertPlayer = async(playerData) => {
         object,
         {upsert : true, new: true});
 
+        
+
         console.log("updateInsertPlayer data outgoing");
         console.log(updatedPlayer);
 

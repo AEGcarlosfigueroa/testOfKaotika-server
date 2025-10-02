@@ -9,6 +9,8 @@ const { verifyFirebaseToken } = require("../middlewares/verifyData"); // Firebas
 
 router.get("/email/:playerEmail", verifyFirebaseToken, userController.getPlayerFromDatabaseByEmail);
 // Protected route — only users with valid ID token and verified email
+
 // router.post("/", verifyFirebaseToken, userController.getAllUsers);
 
 module.exports = router;
+

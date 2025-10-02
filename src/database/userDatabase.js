@@ -32,7 +32,7 @@ const updateInsertPlayer = async(playerData) => {
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: playerData.email}, 
-        object,
+        {$set: object },
         {upsert : true, new: true});
 
         

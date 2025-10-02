@@ -3,6 +3,7 @@ const kaotikaDB = require('../models/userModel');
 const getLegendByEmail = async (playerEmail) => {
     try{
         const response = await fetch(`https://kaotika-server.fly.dev/players/email/${playerEmail}`); 
+        console.log("response:" + response)
         if (!response.ok)
         {
             throw new Error(`Error fetching player: ${response.statusText}`);

@@ -1,7 +1,7 @@
 services:
-  mobile:
+  server:
     build: .
     container_name: team3-server
     ports:
-      - "6002:4182"
+      - "6002:3000"
     restart: unless-stopped

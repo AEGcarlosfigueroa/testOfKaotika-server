@@ -10,6 +10,8 @@ async function verifyFirebaseToken(req, res, next) {
 
   const idToken = authHeader.split("Bearer ")[1];
 
+  console.log(idToken)
+
   try {
     const decodedToken = await authentication.verifyIdToken(idToen);
 k

@@ -33,7 +33,7 @@ async function start(){
     } 
     catch(error)
     {
-        console.log(`Error to connect to the database: ${error.message}`);
+        console.error(`Error to connect to the database: ${error.message}`);
     }
 }
 start ();

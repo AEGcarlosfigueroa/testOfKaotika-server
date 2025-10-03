@@ -9,4 +9,4 @@ initializeApp({
 console.log("GOOGLE_APPLICATION_CREDENTIALS:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 const authentication = getAuth()
 
-module.exports = { authentication }; // export it
+module.exports = { authentication };

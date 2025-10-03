@@ -15,6 +15,7 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     try
     {
         const player = await userDatabase.findOne({email: playerEmail})
+        console.log("player: " + player)
         return player;
     }
     catch (error){
@@ -22,21 +23,38 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     }
 }
 const updateInsertPlayer = async(playerData) => {
+    console.log("updateInsertPlayer data received");
+    console.log(playerData);
+
+    const object = playerData.data;
+
+    const foundObj = await getPlayerFromDatabaseByEmail(object.email);
+
+    if(!foundObj)
+    {
+        object.is_active = false;
+    }
+    else
+    {
+        object.is_active = true;
+    }
+
+    object._id = undefined;
+
     const updatedPlayer = await userDatabase.findOneAndUpdate({
-        email: playerData.email}, 
-        playerData,
+        email: object.email}, 
+        {$set: object },
         {upsert : true, new: true});
+
+        
+
+        console.log("updateInsertPlayer data outgoing");
+        console.log(updatedPlayer);
+
 
         return updatedPlayer;
 }
 
-// const upsertPlayer = async (playerData) => {
-//   return await Player.findOneAndUpdate(
-//     { email: playerData.email },
-//     playerData,   // direct replacement since schemas match
-//     { upsert: true, new: true }
-//   );
-// };
 
 
 module.exports = {

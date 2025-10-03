@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "${{ secrets.FIREBASE_SERVICE }}" | base64 --decode > firebase.json
 
-      - name: Pull latest changes
+      - name: Pull latest changesz
         run: git pull origin main
 
       - name: Set container name

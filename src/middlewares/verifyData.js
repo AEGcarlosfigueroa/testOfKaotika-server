@@ -11,8 +11,8 @@ async function verifyFirebaseToken(req, res, next) {
   const idToken = authHeader.split("Bearer ")[1];
 
   try {
-    const decodedToken = await authentication.verifyIdToken(idToken);
-
+    const decodedToken = await authentication.verifyIdToken(idToen);
+k
     req.user = decodedToken;
 
     if (!decodedToken.email_verified) {

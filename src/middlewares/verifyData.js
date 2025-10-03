@@ -1,4 +1,4 @@
-const {authentication} = require('../firebase')
+const {authentication} = require('../firebase.js')
 
 
 async function verifyFirebaseToken(req, res, next) {
@@ -14,7 +14,7 @@ async function verifyFirebaseToken(req, res, next) {
 
   try {
     const decodedToken = await authentication.verifyIdToken(idToken);
-k
+
     req.user = decodedToken;
 
     if (!decodedToken.email_verified) {
@@ -23,6 +23,7 @@ k
 
     next(); 
   } catch (error) {
+    console.log(error);
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 }

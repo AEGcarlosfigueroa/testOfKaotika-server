@@ -133,6 +133,7 @@ const playerAttributesSchema = new Schema({
   name: String,
   description: String,
   value: Number,
+  
 });
 
 const playerProfileSchema = new Schema({
@@ -140,6 +141,7 @@ const playerProfileSchema = new Schema({
   description: String,
   image: String,
   attributes: [playerAttributesSchema],
+  role: {type: String, enum: ["ISTVAN", "VILLANO", "MORTIMER"], default: "ACOLITO"}
 });
 
 // Tasks Schema

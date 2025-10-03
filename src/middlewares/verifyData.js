@@ -13,7 +13,7 @@ async function verifyFirebaseToken(req, res, next) {
   console.log(idToken)
 
   try {
-    const decodedToken = await authentication.verifyIdToken(idToen);
+    const decodedToken = await authentication.verifyIdToken(idToken);
 k
     req.user = decodedToken;
 

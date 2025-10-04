@@ -59,14 +59,9 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
             console.log("if there is no player we check kaoticaserver: " + player)
 
         } else if (legend) {
-<<<<<<< HEAD
-            // update existing player with latest external data
-            // legend.is_active = true;
-=======
             //update existing player with latest external data
 
             const currentRole = player.profile.role;
->>>>>>> develop
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = currentRole;
             await player.save(); // <- ensures role is saved

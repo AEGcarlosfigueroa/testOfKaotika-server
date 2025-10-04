@@ -133,6 +133,7 @@ const playerAttributesSchema = new Schema({
   name: String,
   description: String,
   value: Number,
+  
 });
 
 const playerProfileSchema = new Schema({
@@ -140,6 +141,7 @@ const playerProfileSchema = new Schema({
   description: String,
   image: String,
   attributes: [playerAttributesSchema],
+  role: {type: String, enum: ["ISTVAN", "VILLANO", "MORTIMER"], default: "ACOLITO"}
 });
 
 // Tasks Schema
@@ -167,6 +169,8 @@ const playerInfoSchema = new Schema({
   level: Number,
   experience: Number,
   is_active: Boolean,
+  socketId: Number, //gets assigned automatically when it gets connected via socket, changes every time you get it
+  isInside: Boolean, // determines whether the user is inside the laboratory or not.
   profile: playerProfileSchema,
   gold: Number,
   tasks: [tasksSchema],

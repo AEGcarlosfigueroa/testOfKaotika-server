@@ -38,14 +38,40 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
                     data: { error: `Cannot find legend by email '${playerEmail}'` }
                 });
             }
-            // legend.is_active = false;
+
             player = await userService.updateInsertPlayer(legend);
+
+            if (player.email === "classcraft.daw2@aeg.eus")
+            {
+                player.profile.role = "ISTVAN";
+            }
+            else if(player.email === "ozarate@aeg.eus")
+            {
+                player.profile.role = "VILLANO"
+            }
+            else if(player.email === "oskar.calvo@aeg.eus")
+            {
+                player.profile.role = "MORTIMER"
+            }
+            await player.save();
+
     
             console.log("if there is no player we check kaoticaserver: " + player)
+
         } else if (legend) {
+<<<<<<< HEAD
             // update existing player with latest external data
             // legend.is_active = true;
+=======
+            //update existing player with latest external data
+
+            const currentRole = player.profile.role;
+>>>>>>> develop
             player = await userService.updateInsertPlayer(legend);
+            player.profile.role = currentRole;
+            await player.save(); // <- ensures role is saved
+
+            
 
             console.log("dataPlayer: " + player)
 
@@ -54,7 +80,8 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
         res.send({ status: "SUCCESS", data: player });
         console.log("dataPlayer: " + data)
 
-    } catch (error) {
+    }
+     catch (error) {
         res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Error fetching player",

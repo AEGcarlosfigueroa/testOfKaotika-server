@@ -141,7 +141,7 @@ const playerProfileSchema = new Schema({
   description: String,
   image: String,
   attributes: [playerAttributesSchema],
-  role: {type: String, enum: ["ISTVAN", "VILLANO", "MORTIMER"], default: "ACOLITO"}
+  role: {type: String, enum: ["ISTVAN", "VILLANO", "MORTIMER", "ACOLITO"], default: "ACOLITO"}
 });
 
 // Tasks Schema

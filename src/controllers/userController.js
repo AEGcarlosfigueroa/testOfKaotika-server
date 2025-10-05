@@ -7,9 +7,9 @@ const getAllUsers = async (req, res) => {
         if (allUsers.length === 0) {
             return res.status(404).send({ message: 'No users found!' });
         }
-        res.send({ status: "SUCCESS", userData: allUsers });
+        return res.send({ status: "SUCCESS", userData: allUsers });
     } catch (error) {
-        res.status(error?.status || 500).send({ 
+        return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Request failed",
             data: { error: error?.message || error }
@@ -41,53 +41,43 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
 
             player = await userService.updateInsertPlayer(legend);
 
-            if (player.email === "classcraft.daw2@aeg.eus")
-            {
+            if (player.email === "classcraft.daw2@aeg.eus") {
                 player.profile.role = "ISTVAN";
-            }
-            else if(player.email === "ozarate@aeg.eus")
-            {
-                player.profile.role = "VILLANO"
-            }
-            else if(player.email === "oskar.calvo@aeg.eus")
-            {
-                player.profile.role = "MORTIMER"
+            } else if(player.email === "ozarate@aeg.eus") {
+                player.profile.role = "VILLANO";
+            } else if(player.email === "oskar.calvo@aeg.eus" || player.email === "carlos.palacio@ikasle.aeg.eus") {
+                player.profile.role = "MORTIMER";
             }
             await player.save();
 
-    
-            console.log("if there is no player we check kaoticaserver: " + player)
+            console.log("Created new player from Kaotika server:", player);
 
+            return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
-
-
-            //update existing player with latest external data
-
+            // update existing player
             const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = currentRole;
 
-            await player.save(); // <- ensures role is saved
+            await player.save();
 
-            
+            console.log("Updated existing player with Kaotika data:", player);
 
-            console.log("dataPlayer: " + player)
-
+            return res.send({ status: "SUCCESS", data: player });
         }
 
-        res.send({ status: "SUCCESS", data: player });
-        console.log("dataPlayer: " + data)
-        console.log("role" , player.profile.role)
+        // fallback: player exists but no legend
+        return res.send({ status: "SUCCESS", data: player });
 
-    }
-     catch (error) {
-        res.status(error?.status || 500).send({ 
+    } catch (error) {
+        return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Error fetching player",
             data: { error: error?.message || error }
         });
     }
 };
+
 
 module.exports = {
     getAllUsers,

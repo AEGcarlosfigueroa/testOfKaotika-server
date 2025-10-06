@@ -1,5 +1,6 @@
 const userService = require("../services/userService");
 const kaotikaService = require("../services/kaotikaService");
+const playerRoles = require("../database/playerRoles");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -41,13 +42,7 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
 
             player = await userService.updateInsertPlayer(legend);
 
-            if (player.email === "classcraft.daw2@aeg.eus") {
-                player.profile.role = "ISTVAN";
-            } else if(player.email === "ozarate@aeg.eus") {
-                player.profile.role = "VILLANO";
-            } else if(player.email === "oskar.calvo@aeg.eus" || player.email === "carlos.palacio@ikasle.aeg.eus") {
-                player.profile.role = "MORTIMER";
-            }
+            player.profile.role = playerRoles.getRoleBYEmail(playerEmail)
             await player.save();
 
             console.log("Created new player from Kaotika server:", player);

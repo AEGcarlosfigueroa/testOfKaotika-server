@@ -2,6 +2,7 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 const {authentication} = require('../firebase.js');
 const userService = require("../services/userService");
+const { istvanListener } = require("./listeners/istvanListener")
 
 function initIoServer(app, port)
 {
@@ -10,12 +11,17 @@ function initIoServer(app, port)
     const io = new Server(httpServer, {
       cors: {
         origin: ["https://amritb.github.io"], // FOR TESTING PURPOSES ONLY
-        connectionStateRecovery: {}
+        connectionStateRecovery: {
+          skipMiddlewares: false
+        }
       }
     });
 
     io.on("connection", (socket) => {
       console.log("Connected with socket token " + socket.id);
+
+      istvanListener(socket, io);
+
       socket.on("disconnect", async () => {
         console.log(socket.id + " disconnected");
         try

@@ -16,7 +16,6 @@ function initIoServer(app, port)
         }
       }
     });
-
     io.on("connection", (socket) => {
       console.log("Connected with socket token " + socket.id);
 
@@ -40,7 +39,7 @@ function initIoServer(app, port)
     });
 
     io.use(async (socket, next) => {
-      console.log("enter middleware " + socket);
+    console.log("enter middleware for socket:", socket.id);
       try
       {
         const idToken = socket.handshake.auth.token;

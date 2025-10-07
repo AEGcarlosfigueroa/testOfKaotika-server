@@ -22,6 +22,17 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
         throw error;
     }
 };
+
+const getPlayerFromDatabaseBySocketId = async (playerSocketId) => {
+    try
+    {
+        const player = await userDatabase.getPlayerFromDatabaseBySocketId(playerSocketId);
+        return player;
+    }
+    catch (error){
+        throw error;
+    }
+};
 const updateInsertPlayer = async (playerData) => {
     const updatedPlayer = await userDatabase.updateInsertPlayer(playerData)
     return updatedPlayer;
@@ -38,5 +49,6 @@ const updateInsertPlayer = async (playerData) => {
 module.exports = {
     getAllUsers,
     getPlayerFromDatabaseByEmail,
-    updateInsertPlayer
+    updateInsertPlayer,
+    getPlayerFromDatabaseBySocketId
 }

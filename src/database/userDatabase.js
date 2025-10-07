@@ -11,6 +11,17 @@ const getAllUsers = async () => {
         throw error;
     }
 };
+const getPlayerFromDatabaseBySocketId = async (playerSocketId) => {
+    try
+    {
+        const player = await userDatabase.findOne({socketId: playerSocketId})
+        console.log("player: " + player);
+        return player;
+    }
+    catch (error){
+        throw error;
+    }
+}
 const getPlayerFromDatabaseByEmail = async (playerEmail) => {
     try
     {
@@ -22,9 +33,7 @@ const getPlayerFromDatabaseByEmail = async (playerEmail) => {
         throw error;
     }
 }
-const updateInsertPlayer = async(playerData) => {
-    console.log("updateInsertPlayer data received");
-    console.log(playerData);
+const updateInsertPlayer = async(playerData) => {;
 
     const object = playerData.data;
 
@@ -40,6 +49,9 @@ const updateInsertPlayer = async(playerData) => {
     }
 
     object._id = undefined;
+
+    console.log("updatePlayer:")
+    console.log(object);
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: object.email}, 
@@ -60,5 +72,6 @@ const updateInsertPlayer = async(playerData) => {
 module.exports = {
     getAllUsers,
     getPlayerFromDatabaseByEmail,
-    updateInsertPlayer
+    updateInsertPlayer,
+    getPlayerFromDatabaseBySocketId
 }

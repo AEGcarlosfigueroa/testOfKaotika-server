@@ -18,6 +18,17 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const getPlayerBySocketId = async (req, res) => {
+    const { params: {playerSocketId} } = req;
+    if(!playerSocketId)
+    {
+        return res.status(400).send({ 
+            status: "FAILED", 
+            data: { error: "Parameter 'playerSocketId' cannot be empty" } 
+        });
+    }
+}
+
 const getPlayerFromDatabaseByEmail = async (req, res) => {
     const { params: { playerEmail } } = req;
 
@@ -76,5 +87,6 @@ const getPlayerFromDatabaseByEmail = async (req, res) => {
 
 module.exports = {
     getAllUsers,
-    getPlayerFromDatabaseByEmail
+    getPlayerFromDatabaseByEmail,
+    getPlayerBySocketId
 };

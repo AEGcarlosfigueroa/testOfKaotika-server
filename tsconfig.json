@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es6",
+    "noCheck": true,
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/**/*"],
+}

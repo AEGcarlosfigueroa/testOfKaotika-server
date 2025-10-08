@@ -1,4 +1,4 @@
-import userDatabase from '../models/userModel';
+import userDatabase from '../models/userModel.ts';
 
 export async function getAllUsers()
 {

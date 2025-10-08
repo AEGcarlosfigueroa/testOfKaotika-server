@@ -1,4 +1,4 @@
-import * as kaotikaDB from "../database/kaotikaDB";
+import * as kaotikaDB from "../database/kaotikaDB.ts";
 
 export async function getLegendByEmail(playerEmail: String)
 {

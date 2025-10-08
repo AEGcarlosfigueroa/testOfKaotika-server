@@ -1,4 +1,4 @@
-import * as userDatabase from "./../database/userDatabase"
+import * as userDatabase from "./../database/userDatabase.ts"
 
 const getAllUsers = async () => {
     try

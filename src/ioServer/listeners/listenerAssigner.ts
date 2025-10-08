@@ -1,8 +1,8 @@
 import { Server, Socket } from "socket.io";
-import { getRoleByEmail } from "./../../database/playerRoles";
-import { istvanListener } from "./istvanListener";
+import { getRoleByEmail } from "./../../database/playerRoles.ts";
+import { istvanListener } from "./istvanListener.ts";
 
-import * as userService from"./../../services/userService"
+import * as userService from"./../../services/userService.ts"
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {

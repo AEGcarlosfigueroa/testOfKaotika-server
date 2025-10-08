@@ -1,6 +1,6 @@
-import * as userService from "./../services/userService"
-import * as kaotikaService from "./../services/kaotikaService"
-import * as playerRoles from "./../database/playerRoles"
+import * as userService from "./../services/userService.ts"
+import * as kaotikaService from "./../services/kaotikaService.ts"
+import * as playerRoles from "./../database/playerRoles.ts"
 
 const getAllUsers = async (req: any, res: any) => {
     try {

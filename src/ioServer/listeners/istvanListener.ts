@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 
-import * as userService from"./../../services/userService"
+import * as userService from"./../../services/userService.ts"
 
 function istvanListener(socket: Socket, io: Server)
 {

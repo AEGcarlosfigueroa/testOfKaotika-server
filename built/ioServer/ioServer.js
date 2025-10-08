@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { authentication } from '../firebase';
-import * as userService from "../services/userService";
-import { listenerAssigner } from "./listeners/listenerAssigner";
+import { authentication } from '../firebase.ts';
+import * as userService from "../services/userService.ts";
+import { listenerAssigner } from "./listeners/listenerAssigner.ts";
 function initIoServer(app, port) {
     const httpServer = createServer(app);
     const io = new Server(httpServer, {

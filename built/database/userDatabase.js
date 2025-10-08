@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import userDatabase from '../models/userModel';
+import userDatabase from '../models/userModel.ts';
 export function getAllUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         try {

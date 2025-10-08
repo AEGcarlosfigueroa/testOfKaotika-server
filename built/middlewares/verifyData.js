@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as authentication from '../firebase';
-function verifyFirebaseToken(req, res, next) {
+import * as authentication from '../firebase.ts';
+export function verifyFirebaseToken(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -30,4 +30,3 @@ function verifyFirebaseToken(req, res, next) {
         }
     });
 }
-export { verifyFirebaseToken };

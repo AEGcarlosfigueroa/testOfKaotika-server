@@ -1,6 +1,7 @@
-require('dotenv').config();
-const { initializeApp, applicationDefault } = require('firebase-admin/app');
-const { getAuth } = require('firebase-admin/auth');
+import * as dotenv from 'dotenv';
+dotenv.config();
+import { initializeApp, applicationDefault } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 initializeApp({
     credential: applicationDefault(),
 });

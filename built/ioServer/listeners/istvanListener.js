@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as userService from "./../../services/userService";
+import * as userService from "./../../services/userService.ts";
 function istvanListener(socket, io) {
     socket.on("scan", (email) => __awaiter(this, void 0, void 0, function* () {
         try {

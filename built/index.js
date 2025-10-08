@@ -7,20 +7,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-require('dotenv').config();
-import * as express from "express";
-import * as bodyParser from "body-parser";
+import * as dotenv from 'dotenv';
+dotenv.config();
+import express from "express";
+import pkg from "express";
 import * as mongoose from "mongoose";
 const mongodbRoute = process.env.MONGODB_URI;
-import * as morgan from "morgan";
-import { verifyFirebaseToken } from "./middlewares/verifyData";
-import { initIoServer } from './ioServer/ioServer';
-import { usersRouter } from './routes/userRoutes';
+import logger from "morgan";
+import { verifyFirebaseToken } from "./middlewares/verifyData.ts";
+import { initIoServer } from './ioServer/ioServer.ts';
+import { usersRouter } from './routes/userRoutes.ts';
+const { Application } = pkg;
 const app = express();
-app.use(morgan("dev"));
+app.use(logger("dev"));
 const PORT = process.env.PORT || 3000;
 initIoServer(app, PORT);
-app.use(bodyParser.json());
+app.use(express.json());
 app.use("/api/players", verifyFirebaseToken, usersRouter); // For your MongoDB players
 function start() {
     return __awaiter(this, void 0, void 0, function* () {

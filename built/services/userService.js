@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as userDatabase from "./../database/userDatabase";
+import * as userDatabase from "./../database/userDatabase.ts";
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield userDatabase.getAllUsers();

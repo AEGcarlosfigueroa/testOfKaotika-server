@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as userService from "./../services/userService";
-import * as kaotikaService from "./../services/kaotikaService";
-import * as playerRoles from "./../database/playerRoles";
+import * as userService from "./../services/userService.ts";
+import * as kaotikaService from "./../services/kaotikaService.ts";
+import * as playerRoles from "./../database/playerRoles.ts";
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield userService.getAllUsers();

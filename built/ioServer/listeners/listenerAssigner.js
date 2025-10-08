@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getRoleByEmail } from "./../../database/playerRoles";
-import { istvanListener } from "./istvanListener";
-import * as userService from "./../../services/userService";
+import { getRoleByEmail } from "./../../database/playerRoles.ts";
+import { istvanListener } from "./istvanListener.ts";
+import * as userService from "./../../services/userService.ts";
 export function listenerAssigner(socket, io) {
     return __awaiter(this, void 0, void 0, function* () {
         const player = yield userService.getPlayerFromDatabaseBySocketId(socket.id);

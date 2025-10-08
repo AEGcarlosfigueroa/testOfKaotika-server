@@ -7,6 +7,7 @@ function istvanListener(socket: Socket, io: Server)
     socket.on("scan", async (email) => {
         try
         {
+            
             const player = await userService.getPlayerFromDatabaseByEmail(email);
 
             let inside = player.isInside;
@@ -15,11 +16,15 @@ function istvanListener(socket: Socket, io: Server)
 
             player.isInside = inside;
 
+            player.save();
+
             const acolyteSocket = await io.in(player.socketId).fetchSockets();
 
-            console.log(acolyteSocket);
+            console.log(acolyteSocket[0]);
 
-            io.to(acolyteSocket).emit("authorization", "positive");
+            acolyteSocket[0].emit("authorization", "positive");
+
+            console.log("enter");
         }
         catch(error)
         {

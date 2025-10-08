@@ -45,6 +45,7 @@ export async function updateInsertPlayer(playerData: any)
     if(!foundObj)
     {
         object.is_active = false;
+        object.isInside = false;
     }
     else
     {

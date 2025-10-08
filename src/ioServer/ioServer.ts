@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import {authentication} from '../firebase';
 import * as userService from "../services/userService";
-import { istvanListener } from "./listeners/istvanListener"
+import { listenerAssigner } from "./listeners/listenerAssigner"
 
 function initIoServer(app: any, port: any)
 {
@@ -21,7 +21,7 @@ function initIoServer(app: any, port: any)
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
 
-      istvanListener(socket, io);
+      listenerAssigner(socket, io);
 
       socket.on("disconnect", async () => {
         console.log(socket.id + " disconnected");

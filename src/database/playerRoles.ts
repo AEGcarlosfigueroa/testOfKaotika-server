@@ -1,4 +1,4 @@
-const playerRole = {
+export const playerRole = {
 
     "classcraft.daw2@aeg.eus" : "ISTVAN",
     "ozarate@aeg.eus" : "VILLANO",

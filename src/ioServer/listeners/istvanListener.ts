@@ -1,6 +1,8 @@
 import { Server, Socket } from "socket.io";
 
-import * as userService from"./../../services/userService.ts"
+import * as userService from"./../../services/userService.ts";
+
+import mortimerListUpdate from "../events/mortimerListUpdate.ts";
 
 function istvanListener(socket: Socket, io: Server)
 {
@@ -25,6 +27,8 @@ function istvanListener(socket: Socket, io: Server)
             acolyteSocket[0].emit("authorization", "positive");
 
             console.log("enter");
+
+            mortimerListUpdate(io);
         }
         catch(error)
         {

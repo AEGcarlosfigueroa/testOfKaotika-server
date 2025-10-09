@@ -36,6 +36,12 @@ const getPlayerFromDatabaseBySocketId = async (playerSocketId: String) => {
 const updateInsertPlayer = async (playerData: String) => {
     const updatedPlayer = await userDatabase.updateInsertPlayer(playerData)
     return updatedPlayer;
+};
+
+const getAllConnectedPlayers = async () => {
+
+    const players = await userDatabase.getAllConnectedPlayers();
+    return players;
 }
 
 // const upsertPlayer = async (playerData) => {
@@ -50,5 +56,6 @@ export {
     updateInsertPlayer,
     getPlayerFromDatabaseByEmail,
     getAllUsers,
-    getPlayerFromDatabaseBySocketId
+    getPlayerFromDatabaseBySocketId,
+    getAllConnectedPlayers
 }

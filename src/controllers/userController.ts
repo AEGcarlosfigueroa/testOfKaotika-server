@@ -51,23 +51,25 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
                 });
             }
 
-            player = await userService.updateInsertPlayer(legend);
 
-            player.profile.role = playerRoles.getRoleByEmail(playerEmail)
+            player = await userService.updateInsertPlayer(legend);
+            player.profile.role = playerRoles.getRoleByEmail(playerEmail);
+            player.markModified('profile'); // mark the parent object
             await player.save();
+            console.log("Created new player with role:", player.profile.role);
+                                
 
             console.log("Created new player from Kaotika server:", player);
 
             return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
-            // update existing player
+
             const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
-            player.profile.role = currentRole;
-
+            player.profile.role = currentRole; // preserve previous role
+            player.markModified('profile');
             await player.save();
-
-            console.log("Updated existing player with Kaotika data:", player);
+            console.log("Updated existing player with role:", player.profile.role);
 
             return res.send({ status: "SUCCESS", data: player });
         }

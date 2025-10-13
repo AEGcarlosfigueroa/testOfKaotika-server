@@ -13,9 +13,9 @@ export const roles = {
     mortimer: "oskar.calvo@aeg.eus"
 }
 const DEFAULT = "ACOLITO" //this is for students 
-export function getRoleByEmail(playerEmail: string)
-{
-    const role = playerRole[playerEmail] || DEFAULT;
-
-    return role;
+export function getRoleByEmail(playerEmail: string) {
+  const cleanEmail = playerEmail.trim().toLowerCase();
+  const role = playerRole[cleanEmail] || DEFAULT;
+  return role;
 }
+

@@ -42,8 +42,6 @@ export async function getAllConnectedPlayers()
     try
     {
         const players = await userDatabase.find({ $and: [{socketId: { $ne : null }}, {'profile.role': "ACOLITO"}]});
-        console.log("Connected players: ");
-        console.log(players);
         return players;
     }
     catch(error)

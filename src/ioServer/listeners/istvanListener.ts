@@ -22,7 +22,7 @@ function istvanListener(socket: Socket, io: Server)
 
             const acolyteSocket = await io.in(player.socketId).fetchSockets();
 
-            console.log(acolyteSocket[0]);
+            console.log(acolyteSocket[0].id);
 
             acolyteSocket[0].emit("authorization", "positive");
 

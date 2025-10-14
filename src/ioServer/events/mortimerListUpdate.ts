@@ -22,8 +22,6 @@ export default async function mortimerListUpdate(io: Server)
                 io.in(mortimerSocketId).emit("update", players);
             }
         }
-        console.log("update complete");
-        console.log(players);
     }
     catch(error)
     {

@@ -17,7 +17,9 @@ export async function getPlayerFromDatabaseBySocketId(playerSocketId: String)
 {
     try
     {
-        const player = await userDatabase.findOne({socketId: playerSocketId})
+        const player = await userDatabase.findOne({socketId: playerSocketId});
+        console.log("player: " + player);
+        return player;
     }
     catch (error){
         throw error;

@@ -53,35 +53,19 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
 
 
             player = await userService.updateInsertPlayer(legend);
-
-            // Log only for your email
-            if (playerEmail === "carlos.palacio@ikasle.aeg.eus") {
-                console.log("Raw email:", playerEmail);
-                console.log("Role found in map:", playerRoles.playerRole[playerEmail]);
-            }
-
             player.profile.role = playerRoles.getRoleByEmail(playerEmail);
-            player.markModified('profile');
+            player.markModified('profile'); // mark the parent object
             await player.save();
-            console.log("Created new player with role:", player.profile.role);
-                                
 
-            console.log("Created new player with role:", player.profile.role);
             return res.send({ status: "SUCCESS", data: player });
-        } 
-        else if (legend) {
+        } else if (legend) {
+
+            const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
-
-            if (playerEmail === "carlos.palacio@ikasle.aeg.eus") {
-                console.log("Raw email:", playerEmail);
-                console.log("Role found in map:", playerRoles.playerRole[playerEmail]);
-            }
-
-            player.profile.role = playerRoles.getRoleByEmail(playerEmail);
+            player.profile.role = currentRole; // preserve previous role
             player.markModified('profile');
             await player.save();
 
-            console.log("Updated existing player with refreshed role:", player.profile.role);
             return res.send({ status: "SUCCESS", data: player });
         }
 

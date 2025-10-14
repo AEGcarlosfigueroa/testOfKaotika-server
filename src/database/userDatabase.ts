@@ -1,4 +1,5 @@
 import userDatabase from '../models/userModel.ts';
+import * as mongoose from 'mongoose'
 
 export async function getAllUsers()
 {
@@ -16,8 +17,7 @@ export async function getPlayerFromDatabaseBySocketId(playerSocketId: String)
 {
     try
     {
-        const player = await userDatabase.findOne({socketId: playerSocketId})
-        console.log("player: " + player);
+        const player = await userDatabase.findOne({socketId: playerSocketId});
         return player;
     }
     catch (error){
@@ -29,10 +29,23 @@ export async function getPlayerFromDatabaseByEmail(playerEmail: String)
     try
     {
         const player = await userDatabase.findOne({email: playerEmail})
-        console.log("player: " + player)
+        console.log("player: " + player);
+        console.log(playerEmail);
         return player;
     }
     catch (error){
+        throw error;
+    }
+}
+export async function getAllConnectedPlayers()
+{
+    try
+    {
+        const players = await userDatabase.find({ $and: [{socketId: { $ne : null }}, {'profile.role': "ACOLITO"}]});
+        return players;
+    }
+    catch(error)
+    {
         throw error;
     }
 }

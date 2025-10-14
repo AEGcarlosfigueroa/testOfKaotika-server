@@ -6,10 +6,21 @@ export const playerRole = {
     "oskar.calvo@aeg.eus" : "MORTIMER"
 
 }
+
+export const roles = {
+    istvan: "carlos.palacio@ikasle.aeg.eus",
+    villano: "ozarate@aeg.eus",
+    mortimer: "oskar.calvo@aeg.eus"
+}
 const DEFAULT = "ACOLITO" //this is for students 
-export function getRoleByEmail(playerEmail: string) {
-  const cleanEmail = playerEmail.trim().toLowerCase();
-  const role = playerRole[cleanEmail] || DEFAULT;
-  return role;
+export function getRoleByEmail(playerEmail: String) {
+  console.log("email" + playerEmail);
+  console.log("role:" + roles.istvan);
+  if(playerEmail === roles.istvan)
+  {
+    return 'ISTVAN';
+  }
+
+  return 'ACOLITO';
 }
 

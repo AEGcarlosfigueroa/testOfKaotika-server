@@ -30,7 +30,8 @@ export async function getPlayerFromDatabaseByEmail(playerEmail: String)
     try
     {
         const player = await userDatabase.findOne({email: playerEmail})
-        console.log("player: " + player)
+        console.log("player: " + player);
+        console.log(playerEmail);
         return player;
     }
     catch (error){

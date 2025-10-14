@@ -9,8 +9,12 @@ function istvanListener(socket: Socket, io: Server)
     socket.on("scan", async (email) => {
         try
         {
+            console.log("istvanlistener triggered");
+            console.log(email)
             
             const player = await userService.getPlayerFromDatabaseByEmail(email);
+
+            console.log("player found: " + player);
 
             let inside = player.isInside;
 

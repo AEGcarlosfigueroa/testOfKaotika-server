@@ -21,7 +21,7 @@ function initIoServer(app: any, port: any)
 
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
-      // mortimerListUpdate(io);
+      mortimerListUpdate(io);
       listenerAssigner(socket, io);
 
       socket.on("disconnect", async () => {
@@ -33,7 +33,7 @@ function initIoServer(app: any, port: any)
           player.socketId = null;
           await player.save();
           console.log(player.socketId);
-          // mortimerListUpdate(io);
+          mortimerListUpdate(io);
         }
         catch(error)
         {

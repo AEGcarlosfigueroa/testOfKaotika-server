@@ -26,6 +26,7 @@ const getPlayerFromDatabaseByEmail = async (playerEmail: String) => {
 const getPlayerFromDatabaseBySocketId = async (playerSocketId: String) => {
     try
     {
+        console.log("socket: " + playerSocketId);
         const player = await userDatabase.getPlayerFromDatabaseBySocketId(playerSocketId);
         return player;
     }

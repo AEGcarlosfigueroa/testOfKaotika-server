@@ -14,8 +14,6 @@ function istvanListener(socket: Socket, io: Server)
             
             const player = await userService.getPlayerFromDatabaseByEmail(email);
 
-            console.log("player found: " + player);
-
             let inside = player.isInside;
 
             inside = !inside;
@@ -28,7 +26,8 @@ function istvanListener(socket: Socket, io: Server)
 
             console.log(acolyteSocket[0].id);
 
-            acolyteSocket[0].emit("authorization", "positive");
+            acolyteSocket[0].emit("authorization", player);
+
 
             console.log("enter");
 

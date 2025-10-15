@@ -8,7 +8,11 @@ export async function listenerAssigner(socket: Socket, io: Server)
 {
     const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
+    console.log(player);
+
     const role = getRoleByEmail(player.email);
+
+    console.log("role: " + role);
 
     switch(role)
     {

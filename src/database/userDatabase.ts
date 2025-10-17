@@ -18,7 +18,6 @@ export async function getPlayerFromDatabaseBySocketId(playerSocketId: String)
     try
     {
         const player = await userDatabase.findOne({socketId: playerSocketId});
-        console.log("player: " + player);
         return player;
     }
     catch (error){
@@ -30,8 +29,6 @@ export async function getPlayerFromDatabaseByEmail(playerEmail: String)
     try
     {
         const player = await userDatabase.findOne({email: playerEmail})
-        console.log("player: " + player);
-        console.log(playerEmail);
         return player;
     }
     catch (error){

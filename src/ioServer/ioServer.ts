@@ -29,10 +29,8 @@ function initIoServer(app: any, port: any)
         try
         {  
           const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
-          console.log(player);
           player.socketId = null;
           await player.save();
-          console.log(player.socketId);
           mortimerListUpdate(io);
         }
         catch(error)

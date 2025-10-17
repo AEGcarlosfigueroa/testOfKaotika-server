@@ -20,7 +20,7 @@ function istvanListener(socket: Socket, io: Server)
 
             player.isInside = inside;
 
-            player.save();
+            await player.save();
 
             const acolyteSocket = await io.in(player.socketId).fetchSockets();
 

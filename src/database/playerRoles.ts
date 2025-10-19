@@ -4,26 +4,26 @@ export const playerRole = {
     // "oskar.calvo@aeg.eus" : "MORTIMER",
     "carlos.figueroa@ikasle.aeg.eus" : "ISTVAN",
     "ozarate@aeg.eus" : "VILLANO",
-    "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER"
+    "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER",
+    "carlos.palacio@ikasle.aeg.eus" : "ACOLITO"
 
 }
 
 export const roles = {
     istvan: "carlos.figueroa@ikasle.aeg.eus",
     villano: "ozarate@aeg.eus",
-    mortimer: "ignacio.ayaso@ikasle.aeg.eus"
+    mortimer: "ignacio.ayaso@ikasle.aeg.eus",
+    acolito: "carlos.palacio@ikasle.aeg.eus"
 }
 const DEFAULT = "ACOLITO" //this is for students 
-export function getRoleByEmail(playerEmail: String) {
-  if(playerEmail === roles.istvan)
-  {
-    return 'ISTVAN';
-  }
-  else if(playerEmail === roles.mortimer)
-  {
-    return 'MORTIMER';
-  }
+export function getRoleByEmail(playerEmail: string) {
+  if (playerEmail === roles.istvan) return 'ISTVAN';
+  if (playerEmail === roles.mortimer) return 'MORTIMER';
+  if (playerEmail === roles.villano) return 'VILLANO';
+  if (playerEmail === roles.acolito) return 'ACOLITO';
 
-  return 'ACOLITO';
+
+  return 'ACOLITO'; // default for students
 }
+
 

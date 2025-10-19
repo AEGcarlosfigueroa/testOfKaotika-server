@@ -55,16 +55,16 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = playerRoles.getRoleByEmail(playerEmail);
             console.log(player.profile.role )
-            player.markModified('profile'); // mark the parent object
-            await player.save();
+            // player.markModified('profile'); // mark the parent object
+            // await player.save();
 
             return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
 
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = playerRoles.getRoleByEmail(playerEmail);
-            player.markModified('profile');
-            await player.save();
+            // player.markModified('profile');
+            // await player.save();
 
             return res.send({ status: "SUCCESS", data: player });
         }

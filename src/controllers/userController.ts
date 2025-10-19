@@ -61,7 +61,6 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
             return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
 
-            const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = currentRole; // preserve previous role
             console.log(currentRole)
@@ -72,6 +71,8 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
         }
 
         // fallback: player exists but no legend
+        console.log(player.profile.role )
+
         console.log(player.profile.role )
 
         return res.send({ status: "SUCCESS", data: player });

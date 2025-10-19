@@ -3,6 +3,7 @@ export const playerRole = {
     // "classcraft.daw2@aeg.eus" : "ISTVAN",
     // "oskar.calvo@aeg.eus" : "MORTIMER",
     "carlos.figueroa@ikasle.aeg.eus" : "ISTVAN",
+    "carlos.figueroa@ikasle.aeg.eus" : "ISTVAN",
     "ozarate@aeg.eus" : "VILLANO",
     "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER",
     "carlos.palacio@ikasle.aeg.eus" : "ACOLITO"
@@ -10,6 +11,7 @@ export const playerRole = {
 }
 
 export const roles = {
+    istvan: "carlos.figueroa@ikasle.aeg.eus",
     istvan: "carlos.figueroa@ikasle.aeg.eus",
     villano: "ozarate@aeg.eus",
     mortimer: "ignacio.ayaso@ikasle.aeg.eus",

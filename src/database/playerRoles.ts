@@ -15,11 +15,19 @@ export const roles = {
 }
 const DEFAULT = "ACOLITO" //this is for students 
 export function getRoleByEmail(playerEmail: string) {
-  if (playerEmail === roles.istvan) return 'ISTVAN';
-  if (playerEmail === roles.mortimer) return 'MORTIMER';
-  if (playerEmail === roles.villano) return 'VILLANO';
-
-  return 'ACOLITO'; // default for students
+  if (playerEmail === roles.istvan) 
+    {
+      return 'ISTVAN';
+    }
+  else if (playerEmail === roles.mortimer){
+    return 'MORTIMER';
+  } 
+  else if (playerEmail === roles.villano) 
+    {
+      return 'VILLANO';
+    }
+  else {
+    return 'ACOLITO'; // default for students
 }
-
+}
 

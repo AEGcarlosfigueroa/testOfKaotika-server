@@ -24,6 +24,6 @@ export function getRoleByEmail(playerEmail: string) {
   if (playerEmail === roles.villano) return 'VILLANO';
 
 
-  if (playerEmail === roles.acolito) return 'ACOLITO';
+  return DEFAULT;
 }
 

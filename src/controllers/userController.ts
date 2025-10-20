@@ -61,6 +61,7 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
             return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
 
+            const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
             player.profile.role = currentRole; // preserve previous role
             console.log(currentRole)

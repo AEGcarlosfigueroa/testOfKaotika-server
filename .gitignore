@@ -8,3 +8,6 @@ built
 *.log
 firebase.json
 built
+server.pem
+mqtt-client-cert.pem
+mqtt-client-key.pem

@@ -1,5 +1,6 @@
 const connectUrl = 'mqtts://8170107f188a4c6f93244c5cdc6ed241.s1.eu.hivemq.cloud:8883';
 import * as dotenv from 'dotenv';
+import * as cardService from './../services/cardService.ts'
 import mqtt from 'mqtt';
 const subscribedTopics = ['cardscan', 'isintower']
 
@@ -21,13 +22,29 @@ export default function startMQTT(mqttOptions: any)
             console.log(subscribedTopics[i]);
         }
       });
-      
+
       client.on('message', (topic, payload) => {
-        console.log('Received Message:', topic, payload.toString())
+        console.log('Received Message:', topic, payload.toString());
+        const message = {
+            topic: topic,
+            content: payload,
+        };
+
+        manageResponse(message);
+
       });
     })
 
     client.on('error', (error) => {
       console.error('connection failed', error)
     })
+}
+
+async function manageResponse(message: any)
+{
+    if(message.topic === subscribedTopics[0])
+    {
+        const card = await cardService.getEntryFromCardID(message.content.toString());
+        console.log(card);
+    }
 }

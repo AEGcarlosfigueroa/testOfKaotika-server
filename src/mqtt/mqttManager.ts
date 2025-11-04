@@ -2,11 +2,12 @@ const connectUrl = 'mqtts://8170107f188a4c6f93244c5cdc6ed241.s1.eu.hivemq.cloud:
 import * as dotenv from 'dotenv';
 import * as cardService from './../services/cardService.ts'
 import mqtt from 'mqtt';
-const subscribedTopics = ['cardscan', 'isintower']
+import * as userService from './../services/userService.ts'
+const subscribedTopics = ['cardscan']
+import { pendingSockets } from '../ioServer/listeners/isInTowerListener.ts';
 
 export default function startMQTT(mqttOptions: any)
 {
-    console.log(process.env.HIVEMQ_PASSWORD)
     const client = mqtt.connect(mqttOptions.url, {
       username: mqttOptions.user,
       password: mqttOptions.password
@@ -44,7 +45,30 @@ async function manageResponse(message: any)
 {
     if(message.topic === subscribedTopics[0])
     {
-        const card = await cardService.getEntryFromCardID(message.content.toString());
-        console.log(card);
+        manageTopicMessage(message);
     }
+}
+
+async function manageTopicMessage(message: any)
+{
+  try
+  {
+    const card = await cardService.getEntryFromCardID(message.content.toString());
+    console.log(card);
+    if(card)
+    {
+      const email = card.email;
+      const player = await userService.getPlayerFromDatabaseByEmail(email);
+      if(player)
+      {
+        const socketID = player.socketId;
+        pendingSockets.push(socketID);
+
+      }
+    }
+  }
+  catch(error)
+  {
+    console.error(error);
+  }
 }

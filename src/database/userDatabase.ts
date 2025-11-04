@@ -57,6 +57,7 @@ export async function updateInsertPlayer(playerData: any)
     {
         object.is_active = false;
         object.isInside = false;
+        object.isInTower = false;
     }
     else
     {
@@ -65,18 +66,10 @@ export async function updateInsertPlayer(playerData: any)
 
     object._id = undefined;
 
-    console.log("updatePlayer:")
-    console.log(object);
-
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: object.email}, 
         {$set: object },
         {upsert : true, new: true});
-
-        
-
-        console.log("updateInsertPlayer data outgoing");
-        console.log(updatedPlayer);
 
 
         return updatedPlayer;

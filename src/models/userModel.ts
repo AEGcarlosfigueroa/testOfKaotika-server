@@ -171,6 +171,7 @@ const playerInfoSchema = new Schema({
   is_active: Boolean,
   socketId: String || null, //gets assigned automatically when it gets connected via socket, changes every time you get it
   isInside: Boolean, // determines whether the user is inside the laboratory or not.
+  isInTower: Boolean, // determines whether the player is in the tower or not
   profile: playerProfileSchema,
   gold: Number,
   tasks: [tasksSchema],

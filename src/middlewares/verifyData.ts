@@ -10,8 +10,6 @@ export async function verifyFirebaseToken(req: any, res: any, next: Function) {
 
   const idToken = authHeader.split("Bearer ")[1];
 
-  console.log(idToken)
-
   try {
     const decodedToken = await authentication.authentication.verifyIdToken(idToken);
 

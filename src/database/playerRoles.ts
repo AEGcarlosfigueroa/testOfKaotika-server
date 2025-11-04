@@ -1,13 +1,14 @@
 export const playerRole = {
 
-    "classcraft.daw2@aeg.eus" : "ISTVAN",
+    "carlos.figueroa@ikasle.aeg.eus" : "ISTVAN",
     "oskar.calvo@aeg.eus" : "MORTIMER",
     "ozarate@aeg.eus" : "VILLANO",
 
 }
 
 export const roles = {
-    istvan: "classcraft.daw2@aeg.eus",
+    // istvan: "classcraft.daw2@aeg.eus",
+    istvan: "carlos.figueroa@ikasle.aeg.eus",
     villano: "ozarate@aeg.eus",
     mortimer: "oskar.calvo@aeg.eus",
 }

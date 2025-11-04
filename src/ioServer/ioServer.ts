@@ -40,36 +40,6 @@ function initIoServer(app: any, port: any)
       })
     });
 
-    //TEST MODE VERIFICATION MIDDLEWARE TO MAKE THINGS EASIER
-    // io.use(async (socket: Socket, next: Function) => {
-    //   console.log("enter middleware " + socket);
-    //   try
-    //   {
-    //     const email = socket.handshake.auth.email;
-
-    //     let player = await userService.getPlayerFromDatabaseByEmail(email);
-
-    //     if(!player)
-    //     {
-    //       const err = new Error("not authorized: no player found with associated email");
-    //       next(err);
-    //     }
-
-    //     player.socketId = socket.id;
-
-    //     await player.save();
-
-    //     console.log("PLAYER INSERTED:");
-    //     console.log(player);
-    //     next();
-    //   }
-    //   catch(error: any)
-    //   {
-    //     const err = new Error("not authorized: internal server error");
-    //     next(err);
-    //   }
-    // })
-
     //PRODUCTION MODE VERIFICATION WITH IDTOKEN
     io.use(async (socket: Socket, next: Function) => {
       console.log("enter middleware " + socket);
@@ -84,20 +54,42 @@ function initIoServer(app: any, port: any)
         if (!decodedToken.email_verified) {
           const err = new Error("not authorized: token invalid");
           next(err);
-        }io.use(async (socket: Socket, next: Function) => {
-      console.log("enter middleware " + socket);
-      try
-      {
-        const idToken = socket.handshake.auth.token;
+        }
+        io.use(async (socket: Socket, next: Function) => {
+          console.log("enter middleware " + socket.id);
+          try
+          {
+            const idToken = socket.handshake.auth.token;
 
-        const decodedToken = await authentication.verifyIdToken(idToken);
+            const decodedToken = await authentication.verifyIdToken(idToken);
 
-        console.log(decodedToken.email);
+            console.log(decodedToken.email);
 
-        if (!decodedToken.email_verified) {
-          const err = new Error("not authorized: token invalid");
+            if (!decodedToken.email_verified) {
+              const err = new Error("not authorized: token invalid");
+              next(err);
+            }
+
+            let player = await userService.getPlayerFromDatabaseByEmail(decodedToken.email);
+
+            if(!player)
+            {
+              const err = new Error("not authorized: no player found with associated email");
+              next(err);
+            }
+
+            player.socketId = socket.id;
+
+            await player.save();
+
+            next();
+        }
+        catch(error: any)
+        {
+          const err = new Error("not authorized: internal server error");
           next(err);
         }
+        })
 
         let player = await userService.getPlayerFromDatabaseByEmail(decodedToken.email);
 
@@ -111,29 +103,6 @@ function initIoServer(app: any, port: any)
 
         await player.save();
 
-        next();
-      }
-      catch(error: any)
-      {
-        const err = new Error("not authorized: internal server error");
-        next(err);
-      }
-    })
-
-        let player = await userService.getPlayerFromDatabaseByEmail(decodedToken.email);
-
-        if(!player)
-        {
-          const err = new Error("not authorized: no player found with associated email");
-          next(err);
-        }
-
-        player.socketId = socket.id;
-
-        await player.save();
-
-        console.log("PLAYER INSERTED:");
-        console.log(player);
         next();
       }
       catch(error: any)

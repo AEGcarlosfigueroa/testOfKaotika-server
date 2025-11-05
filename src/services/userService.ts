@@ -60,5 +60,6 @@ export {
     getPlayerFromDatabaseByEmail,
     getAllUsers,
     getPlayerFromDatabaseBySocketId,
-    getAllConnectedPlayers
+    getAllConnectedPlayers,
+    getPlayerFromCardID
 }

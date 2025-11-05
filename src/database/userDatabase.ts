@@ -91,8 +91,6 @@ export async function updateInsertPlayer(playerData: any)
         {$set: object },
         {upsert : true, new: true});
 
-        console.log(updatedPlayer);
-
 
     return updatedPlayer;
 }

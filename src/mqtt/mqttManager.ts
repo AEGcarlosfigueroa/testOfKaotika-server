@@ -53,12 +53,25 @@ async function manageTopicMessage(message: any)
 {
   try
   {
-    const player = await cardService.getEntryFromCardID(message.content.toString());
-    console.log("Player Found: " + player.email);
+    const player = await userService.getPlayerFromCardID(message.content.toString());
     if(player)
     {
+      console.log("Player Found: " + player.email);
       const socketID = player.socketId;
-      pendingSockets.push(socketID);
+      let socketAlreadyPending = false;
+      for(let i=0; i<pendingSockets.length; i++)
+      {
+        if(socketID === pendingSockets[i])
+        {
+          socketAlreadyPending = true;
+        }
+      }
+
+      if(!socketAlreadyPending && socketID !== null)
+      {
+        pendingSockets.push(socketID);
+      }
+      console.log(pendingSockets);
     }
   }
   catch(error)

@@ -3,8 +3,11 @@ import * as dotenv from 'dotenv';
 import * as cardService from './../services/cardService.ts'
 import mqtt from 'mqtt';
 import * as userService from './../services/userService.ts'
-const subscribedTopics = ['cardscan']
+const subscribedTopics = ['cardscan', 'authorization']
 import { pendingSockets } from '../ioServer/listeners/isInTowerListener.ts';
+import isInTowerEntranceRequest from '../ioServer/events/isInTowerEntramceRequest.ts';
+
+export let mqttClient = null;
 
 export default function startMQTT(mqttOptions: any)
 {
@@ -12,6 +15,8 @@ export default function startMQTT(mqttOptions: any)
       username: mqttOptions.user,
       password: mqttOptions.password
     })
+
+    mqttClient = client
 
     client.on('connect', () => {
       console.log('MQTT Connected');
@@ -70,6 +75,7 @@ async function manageTopicMessage(message: any)
       if(!socketAlreadyPending && socketID !== null)
       {
         pendingSockets.push(socketID);
+        isInTowerEntranceRequest(socketID);
       }
       console.log(pendingSockets);
     }

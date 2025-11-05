@@ -6,6 +6,8 @@ import * as userService from "../services/userService.ts";
 import { listenerAssigner } from "./listeners/listenerAssigner.ts"
 import mortimerListUpdate from "./events/mortimerListUpdate.ts";
 
+let server = null;
+
 function initIoServer(app: any, port: any)
 {
     const httpServer = createServer(app);
@@ -18,6 +20,8 @@ function initIoServer(app: any, port: any)
         skipMiddlewares: false
       }
     });
+
+    server = io;
 
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
@@ -122,4 +126,4 @@ function initIoServer(app: any, port: any)
     httpServer.listen(port);
 }
 
-export { initIoServer }
+export { initIoServer, server }

@@ -73,15 +73,11 @@ export async function updateInsertPlayer(playerData: any)
         object.is_active = false;
         object.isInside = false;
         object.isInTower = false;
+        object.cardID = null;
     }
     else
     {
         object.is_active = true;
-    }
-
-    if(object.cardID === undefined)
-    {
-        object.cardID = null;
     }
 
     object._id = undefined;
@@ -91,6 +87,7 @@ export async function updateInsertPlayer(playerData: any)
         {$set: object },
         {upsert : true, new: true});
 
+        console.log(updatedPlayer);
 
     return updatedPlayer;
 }

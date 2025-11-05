@@ -22,7 +22,17 @@ const getPlayerFromDatabaseByEmail = async (playerEmail: String) => {
         throw error;
     }
 };
-
+const getPlayerFromCardID = async(cardID: String) => {
+    try
+    {
+        const player = userDatabase.getPlayerFromCardID(cardID);
+        return player;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 const getPlayerFromDatabaseBySocketId = async (playerSocketId: String) => {
     try
     {
@@ -44,14 +54,6 @@ const getAllConnectedPlayers = async () => {
     const players = await userDatabase.getAllConnectedPlayers();
     return players;
 }
-
-// const upsertPlayer = async (playerData) => {
-//   return await Player.findOneAndUpdate(
-//     { email: playerData.email },
-//     playerData,   // direct replacement since schemas match
-//     { upsert: true, new: true }
-//   );
-// };
 
 export {
     updateInsertPlayer,

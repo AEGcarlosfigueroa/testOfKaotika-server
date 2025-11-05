@@ -1,5 +1,6 @@
 import userDatabase from '../models/userModel.ts';
 import * as mongoose from 'mongoose'
+import { getRoleByEmail  } from './playerRoles.ts';
 
 export async function getAllUsers()
 {
@@ -47,11 +48,25 @@ export async function getAllConnectedPlayers()
         throw error;
     }
 }
+export async function getPlayerFromCardID(card: String)
+{
+    try
+    {
+        const player = await userDatabase.findOne({cardID: card});
+        return player;
+    }
+    catch(error)
+    {
+        throw error
+    }
+}
 export async function updateInsertPlayer(playerData: any)
 {
     const object = playerData.data;
 
     const foundObj = await getPlayerFromDatabaseByEmail(object.email);
+
+    object.profile.role = getRoleByEmail(object.email);
 
     if(!foundObj)
     {
@@ -64,6 +79,11 @@ export async function updateInsertPlayer(playerData: any)
         object.is_active = true;
     }
 
+    if(object.cardID === undefined)
+    {
+        object.cardID = null;
+    }
+
     object._id = undefined;
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
@@ -71,6 +91,8 @@ export async function updateInsertPlayer(playerData: any)
         {$set: object },
         {upsert : true, new: true});
 
+        console.log(updatedPlayer);
 
-        return updatedPlayer;
+
+    return updatedPlayer;
 }

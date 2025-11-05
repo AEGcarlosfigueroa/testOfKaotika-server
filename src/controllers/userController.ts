@@ -53,28 +53,15 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
 
 
             player = await userService.updateInsertPlayer(legend);
-            player.profile.role = playerRoles.getRoleByEmail(playerEmail);
-            console.log(player.profile.role )
-            player.markModified('profile'); // mark the parent object
-            await player.save();
 
             return res.send({ status: "SUCCESS", data: player });
         } else if (legend) {
 
             const currentRole = player.profile.role;
             player = await userService.updateInsertPlayer(legend);
-            player.profile.role = currentRole; // preserve previous role
-            console.log(currentRole)
-            player.markModified('profile');
-            await player.save();
 
             return res.send({ status: "SUCCESS", data: player });
         }
-
-        // fallback: player exists but no legend
-        console.log(player.profile.role )
-
-        console.log(player.profile.role )
 
         return res.send({ status: "SUCCESS", data: player });
 

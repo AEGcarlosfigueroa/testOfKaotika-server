@@ -53,18 +53,12 @@ async function manageTopicMessage(message: any)
 {
   try
   {
-    const card = await cardService.getEntryFromCardID(message.content.toString());
-    console.log(card);
-    if(card)
+    const player = await cardService.getEntryFromCardID(message.content.toString());
+    console.log("Player Found: " + player.email);
+    if(player)
     {
-      const email = card.email;
-      const player = await userService.getPlayerFromDatabaseByEmail(email);
-      if(player)
-      {
-        const socketID = player.socketId;
-        pendingSockets.push(socketID);
-
-      }
+      const socketID = player.socketId;
+      pendingSockets.push(socketID);
     }
   }
   catch(error)

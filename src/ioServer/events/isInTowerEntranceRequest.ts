@@ -1,6 +1,6 @@
 import { server } from '../ioServer.ts';
 import { pendingSockets } from '../listeners/isInTowerListener.ts';
-import * as userService from './../../services/userService.ts';
+import * as userService from '../../services/userService.ts';
 import { mqttClient } from '../../mqtt/mqttManager.ts';
 
 export default async function isInTowerEntranceRequest(socketID: string)

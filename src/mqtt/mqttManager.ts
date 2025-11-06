@@ -5,7 +5,7 @@ import mqtt from 'mqtt';
 import * as userService from './../services/userService.ts'
 const subscribedTopics = ['cardscan', 'authorization']
 import { pendingSockets } from '../ioServer/listeners/isInTowerListener.ts';
-import isInTowerEntranceRequest from '../ioServer/events/isInTowerEntramceRequest.ts';
+import isInTowerEntranceRequest from '../ioServer/events/isInTowerEntranceRequest.ts';
 
 export let mqttClient = null;
 
@@ -76,6 +76,18 @@ async function manageTopicMessage(message: any)
       {
         pendingSockets.push(socketID);
         isInTowerEntranceRequest(socketID);
+      }
+      else if(socketAlreadyPending)
+      {
+        isInTowerEntranceRequest(socketID);
+      }
+      else
+      {
+        mqttClient.publish('authorization', `${false}`, { qos: 0, retain: false }, (error) => {
+          if (error) {
+            console.error(error)
+          }
+        });
       }
       console.log(pendingSockets);
     }

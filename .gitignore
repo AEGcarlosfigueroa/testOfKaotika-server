@@ -11,3 +11,4 @@ built
 server.pem
 mqtt-client-cert.pem
 mqtt-client-key.pem
+certificates

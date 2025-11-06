@@ -3,8 +3,9 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import {authentication} from '../firebase.ts';
 import * as userService from "../services/userService.ts";
-import { listenerAssigner } from "./listeners/listenerAssigner.ts"
+import { listenerAssigner } from "./listeners/listenerAssigner.ts";
 import mortimerListUpdate from "./events/mortimerListUpdate.ts";
+import { pendingSockets } from "./listeners/isInTowerListener.ts";
 
 let server = null;
 
@@ -35,6 +36,14 @@ function initIoServer(app: any, port: any)
           const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
           player.socketId = null;
           await player.save();
+          for(let i=0; i<pendingSockets.length; i++)
+          {
+            if(socket.id === pendingSockets[i])
+            {
+              pendingSockets.splice(i, 1);
+              break;
+            }
+          }
           mortimerListUpdate(io);
         }
         catch(error)

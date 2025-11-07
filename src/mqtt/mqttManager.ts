@@ -83,13 +83,21 @@ async function manageTopicMessage(message: any)
       }
       else
       {
-        mqttClient.publish('authorization', `${false}`, { qos: 0, retain: false }, (error) => {
+        mqttClient.publish('authorization', '1', { qos: 0, retain: false }, (error) => {
           if (error) {
             console.error(error)
           }
         });
       }
       console.log(pendingSockets);
+    }
+    else
+    {
+      mqttClient.publish('authorization', '1', { qos: 0, retain: false }, (error) => {
+        if (error) {
+          console.error(error)
+        }
+      });
     }
   }
   catch(error)

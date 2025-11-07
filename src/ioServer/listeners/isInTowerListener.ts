@@ -42,12 +42,25 @@ export function isInTowerListener(socket: Socket, io: Server)
 
                 authorizationToPublish = true;
             }
+
+            if(authorizationToPublish)
+            {
+                mqttClient.publish('authorization', '0', { qos: 0, retain: false }, (error) => {
+                  if (error) {
+                    console.error(error)
+                  }
+                });
+            }
+            else
+            {
+                mqttClient.publish('authorization', '1', { qos: 0, retain: false }, (error) => {
+                  if (error) {
+                    console.error(error)
+                  }
+                });
+            }
             
-            mqttClient.publish('authorization', `${authorizationToPublish}`, { qos: 0, retain: false }, (error) => {
-              if (error) {
-                console.error(error)
-              }
-            });
+            
 
             console.log("Player authorized: " + isInTower);
             console.log("Current player status: " + player.isInTower);

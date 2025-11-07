@@ -31,12 +31,6 @@ app.use(express.json());
 
 app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
 
-app.post('/register-token', (req, res) => {
-    const { token } = req.body;
-    console.log('Received FCM token:', token);
-    // TODO: store token in your database for this user
-    res.sendStatus(200);
-})
 
 startMQTT(mqttOptions);
 

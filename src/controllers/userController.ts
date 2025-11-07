@@ -1,7 +1,9 @@
 import * as userService from "./../services/userService.ts"
 import * as kaotikaService from "./../services/kaotikaService.ts"
 import * as playerRoles from "./../database/playerRoles.ts"
+import { roles } from "./../database/playerRoles.ts"
 import { Response, Request } from "express";
+import { messaging } from "../firebaseAdmin"; // import the same instance
 
 const getAllUsers = async (req: any, res: any) => {
     try {
@@ -107,10 +109,42 @@ const registerToken = async (req: Request, res: Response) => {
   }
 };
 
+const notifyMortimer = async (req: Request, res: Response) => {
+    try{
+        const { senderEmail, title, body } = req.body;
 
+        if(!senderEmail || !title || !body)
+        {
+            return res.status(400).json({ error: 'senderEmail, title, and body are required'});
+
+        }
+        //Find Mortimer in DB
+        const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer)
+        if(!mortimer || mortimer.fcmToken)
+        {
+            return res.status(400).json({ error: 'MORTIMER NOT FOUND / DOES NOT HAVE A TOKEN'})
+        }
+        //build the FCM message
+        const message = {
+            notification : {
+                title,
+                body: `${senderEmail} says: ${body}`, //include sender's info
+            },
+            token : mortimer.fcmToken,
+        };
+        //send push notificationç
+        await messaging.send(message);
+
+        res.status(200).json({ message: 'NOtification sent to Mortimer'});
+    }catch(error){
+        console.error("Error notifying Mortimer: ", error);
+        res.status(500).json({ error: "FAILED to send notification"});
+    }
+}
 export {
     getAllUsers,
     getPlayerFromDatabaseByEmail,
     getPlayerBySocketId,
-    registerToken
+    registerToken,
+    notifyMortimer
 };

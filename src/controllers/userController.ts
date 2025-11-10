@@ -76,75 +76,9 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
     }
 };
 
-const registerToken = async (req: Request, res: Response) => {
-  try {
-    const { playerEmail } = req.params;
-    const { token } = req.body;
 
-    if (!playerEmail || !token) {
-      return res.status(400).json({ error: "Email and token are required" });
-    }
-
-    console.log("Received FCM token:", token, "for", playerEmail);
-
-    const player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
-
-    if (!player) {
-      return res.status(404).json({ error: "Player not found" });
-    }
-
-    // Store the token in the player's record
-    player.fcmToken = token;
-    await player.save();
-
-    console.log("Received FCM token:", token, "for", playerEmail);
-
-
-    console.log(`Saved FCM token for ${playerEmail}`);
-    return res.status(200).json({ message: "Token registered successfully" });
-
-  } catch (error) {
-    console.error("ERROR REGISTERING TOKEN:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-const notifyMortimer = async (req: Request, res: Response) => {
-    try{
-        const { senderEmail, title, body } = req.body;
-
-        if(!senderEmail || !title || !body)
-        {
-            return res.status(400).json({ error: 'senderEmail, title, and body are required'});
-
-        }
-        //Find Mortimer in DB
-        const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer)
-        if(!mortimer || mortimer.fcmToken)
-        {
-            return res.status(400).json({ error: 'MORTIMER NOT FOUND / DOES NOT HAVE A TOKEN'})
-        }
-        //build the FCM message
-        const message = {
-            notification : {
-                title,
-                body: `${senderEmail} says: ${body}`, //include sender's info
-            },
-            token : mortimer.fcmToken,
-        };
-        //send push notificationç
-        await messaging.send(message);
-
-        res.status(200).json({ message: 'NOtification sent to Mortimer'});
-    }catch(error){
-        console.error("Error notifying Mortimer: ", error);
-        res.status(500).json({ error: "FAILED to send notification"});
-    }
-}
 export {
     getAllUsers,
     getPlayerFromDatabaseByEmail,
     getPlayerBySocketId,
-    registerToken,
-    notifyMortimer
 };

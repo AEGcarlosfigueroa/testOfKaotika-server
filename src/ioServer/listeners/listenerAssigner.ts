@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import { getRoleByEmail } from "./../../database/playerRoles.ts";
 import { istvanListener } from "./istvanListener.ts";
 import { isInTowerListener } from "./isInTowerListener.ts";
+import fcmTokenListener from "./fcmTokenListener.ts"
 
 import * as userService from"./../../services/userService.ts"
 
@@ -22,6 +23,8 @@ export async function listenerAssigner(socket: Socket, io: Server)
             break;
             case "ACOLITO":
             isInTowerListener(socket, io);
+            case "MORTIMER":
+            fcmTokenListener.registerToken(socket, io)
             default:
             break;
         }

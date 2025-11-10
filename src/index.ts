@@ -35,6 +35,7 @@ app.use(express.json());
 
 app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
 
+
 startMQTT(mqttOptions);
 
 function mqttOptionsConfiguration()

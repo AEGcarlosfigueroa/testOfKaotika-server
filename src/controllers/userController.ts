@@ -1,6 +1,9 @@
 import * as userService from "./../services/userService.ts"
 import * as kaotikaService from "./../services/kaotikaService.ts"
 import * as playerRoles from "./../database/playerRoles.ts"
+import { roles } from "./../database/playerRoles.ts"
+import { Response, Request } from "express";
+import { messaging } from "../firebaseAdmin"; // import the same instance
 
 const getAllUsers = async (req: any, res: any) => {
     try {
@@ -77,5 +80,5 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
 export {
     getAllUsers,
     getPlayerFromDatabaseByEmail,
-    getPlayerBySocketId
+    getPlayerBySocketId,
 };

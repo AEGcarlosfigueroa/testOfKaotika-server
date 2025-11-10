@@ -1,4 +1,5 @@
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
+import fs from 'fs';
 dotenv.config();
 import express from "express";
 import pkg from "express";
@@ -10,12 +11,15 @@ import { verifyFirebaseToken } from "./middlewares/verifyData.ts";
 import { initIoServer } from './ioServer/ioServer.ts';
 import { usersRouter } from './routes/userRoutes.ts';
 import startMQTT from './mqtt/mqttManager.ts';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const mqttOptions = {
-    password: process.env.HIVEMQ_PASSWORD,
-    user: process.env.HIVEMQ_USER,
-    url: process.env.HIVEMQ_URL
-};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
+
+const mqttOptions = mqttOptionsConfiguration();
 
 const {Application} = pkg;
 
@@ -33,6 +37,32 @@ app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your Mongo
 
 
 startMQTT(mqttOptions);
+
+function mqttOptionsConfiguration()
+{
+    try
+    {
+        return ({
+        clientId: clientId,
+        rejectUnauthorized: true,
+        clean: true,
+        ca: fs.readFileSync(path.resolve(__dirname, "../ca.crt")),
+        key: fs.readFileSync(path.resolve(__dirname, "../prodserver.key")),
+        cert: fs.readFileSync(path.resolve(__dirname, "../tok-server.crt")),
+        url: process.env.HIVEMQ_URL
+        });
+    }
+    catch(error)
+    {
+        console.log("No certificates found, trying fallback");
+        return ({
+            url: process.env.HIVEMQ_URL,
+            password: process.env.HIVEMQ_PASSWORD,
+            user: process.env.HIVEMQ_USER
+        });
+    }
+    
+}
 
 async function start(){
     try

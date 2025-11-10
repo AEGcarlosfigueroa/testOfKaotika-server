@@ -11,10 +11,25 @@ export let mqttClient = null;
 
 export default function startMQTT(mqttOptions: any)
 {
-    const client = mqtt.connect(mqttOptions.url, {
+  let options = null;
+  
+  if(mqttOptions.ca !== undefined)
+  {
+    options = {
+    ca: mqttOptions.ca,
+    cert: mqttOptions.cert,
+    key: mqttOptions.key
+    }
+  }
+  else
+  {
+    options = {
       username: mqttOptions.user,
       password: mqttOptions.password
-    })
+    }
+  }
+  
+  const client = mqtt.connect(mqttOptions.url, options)
 
     mqttClient = client
 

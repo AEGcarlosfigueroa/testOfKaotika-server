@@ -4,6 +4,12 @@ import { mqttClient } from '../../mqtt/mqttManager.ts';
 
 import mortimerListUpdate from '../events/mortimerListUpdate.ts';
 
+import { messaging } from "../../firebase";
+
+import { roles } from "../../database/playerRoles";
+
+
+
 export const pendingSockets = [];
 
 export function isInTowerListener(socket: Socket, io: Server)
@@ -11,6 +17,8 @@ export function isInTowerListener(socket: Socket, io: Server)
     socket.on("inTower", async(isInTower) => {
         try
         {
+
+
             console.log("isInTower triggered");
             let isInPendingList = false;
 
@@ -27,6 +35,12 @@ export function isInTowerListener(socket: Socket, io: Server)
             }
 
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
+
+            const accepted =  `An ACOLYTE ${player.email} Has entered the Tower`
+
+            const denied =  `An ACOLYTE ${player.email} Has being denied`
+            
+
 
             if(isInPendingList && player && isInTower)
             {
@@ -50,6 +64,7 @@ export function isInTowerListener(socket: Socket, io: Server)
                     console.error(error)
                   }
                 });
+                notifyMortimer(player.email, accepted)
             }
             else
             {
@@ -58,6 +73,7 @@ export function isInTowerListener(socket: Socket, io: Server)
                     console.error(error)
                   }
                 });
+                notifyMortimer(player.email, denied)
             }
             
             
@@ -74,4 +90,37 @@ export function isInTowerListener(socket: Socket, io: Server)
         }
     }
 )
+}
+
+const notifyMortimer = async (playerEmail: string, body: string) => {
+    try{
+
+        if(!email)
+        {
+            console.error(`email: ${playerEmail} not found`);
+
+        }
+        //Find Mortimer in DB
+        const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer)
+        if(!mortimer)
+        {
+            console.error(`email ${roles.mortimer} invalid, or ${mortimer} not found`)
+        }
+        //build the FCM message
+        const message = {
+            notification: {
+                title: "ACOLITE ALERT",
+                body: body,
+            }, 
+            token: mortimer.fcmToken
+        }
+        //send push notificationç
+        await messaging.send(message);
+
+
+        console.log("Notification sent to Mortimer")
+
+    }catch(error){
+        console.error("Error notifying Mortimer: ", error);
+    }
 }

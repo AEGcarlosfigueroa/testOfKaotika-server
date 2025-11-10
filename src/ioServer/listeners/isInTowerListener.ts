@@ -4,9 +4,9 @@ import { mqttClient } from '../../mqtt/mqttManager.ts';
 
 import mortimerListUpdate from '../events/mortimerListUpdate.ts';
 
-import { messaging } from "../../firebase";
+import { messaging } from "../../firebase.ts";
 
-import { roles } from "../../database/playerRoles";
+import { roles } from "../../database/playerRoles.ts";
 
 
 

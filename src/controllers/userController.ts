@@ -2,8 +2,7 @@ import * as userService from "./../services/userService.ts"
 import * as kaotikaService from "./../services/kaotikaService.ts"
 import * as playerRoles from "./../database/playerRoles.ts"
 import { roles } from "./../database/playerRoles.ts"
-import { Response, Request } from "express";
-import { messaging } from "../firebaseAdmin"; // import the same instance
+import { messaging } from "../firebase.ts"; // import the same instance
 
 const getAllUsers = async (req: any, res: any) => {
     try {

@@ -9,5 +9,6 @@ import * as userController from "../controllers/userController.ts";
 usersRouter.get("/email/:playerEmail", userController.getPlayerFromDatabaseByEmail);
 // Protected route — only users with valid ID token and verified email
 // router.post("/", verifyFirebaseToken, userController.getAllUsers);
+usersRouter.post('/register-token', userController.registerToken)
 
 export {usersRouter}

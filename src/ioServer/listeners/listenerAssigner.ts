@@ -27,7 +27,6 @@ export async function listenerAssigner(socket: Socket, io: Server)
             isInTowerListener(socket, io);
             break;
             default:
-
             break;
         }
     }

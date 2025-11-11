@@ -36,15 +36,16 @@ export function isInTowerListener(socket: Socket, io: Server)
 
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
-            const accepted =  `An ACOLYTE ${player.nickname} Has entered the Tower`
-
-            const denied =  `An ACOLYTE ${player.nickname} Has being denied`
-            
-
+            let action = "entered"
 
             if(isInPendingList && player && isInTower)
             {
                 let isInTower = player.isInTower;
+
+                if(isInTower)
+                {
+                    action = "exit";
+                }
 
                 isInTower = !isInTower;
 
@@ -57,13 +58,17 @@ export function isInTowerListener(socket: Socket, io: Server)
                 authorizationToPublish = true;
             }
 
+            const accepted =  `An ACOLYTE ${player.nickname} Has ${action} the Tower`
+
+            const denied =  `An ACOLYTE ${player.nickname} Has being denied`
+
             if(authorizationToPublish)
             {
                 mqttClient.publish('authorization', '0', { qos: 0, retain: false }, (error) => {
                   if (error) {
                     console.error(error)
                   }
-                });efOLEKGUSrG2tUCjVTdIFP:APA91bHXfNjJYZjGprW4mtLj7Exhq__QBekb2zC-BSpkge3q9ACj7b4EX03h95W4oRpG1LIzU_MTXjS51LXxYjppWVhZoLzxiVtXHZIjZAR_DL8XFFsnWbs
+                });
                 notifyMortimer(player.email, accepted)
             }
             else

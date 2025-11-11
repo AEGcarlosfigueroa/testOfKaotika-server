@@ -80,8 +80,6 @@ export function isInTowerListener(socket: Socket, io: Server)
                 });
                 notifyMortimer(player.email, denied)
             }
-            
-            
 
             console.log("Player authorized: " + isInTower);
             console.log("Current player status: " + player.isInTower);

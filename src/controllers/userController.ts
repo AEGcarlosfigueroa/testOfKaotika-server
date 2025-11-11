@@ -3,7 +3,6 @@ import * as kaotikaService from "./../services/kaotikaService.ts"
 import * as playerRoles from "./../database/playerRoles.ts"
 import { roles } from "./../database/playerRoles.ts"
 import { messaging } from "../firebase.ts"; // import the same instance
-import { Response, Request } from "express";
 
 const getAllUsers = async (req: any, res: any) => {
     try {
@@ -77,8 +76,12 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
 };
 export const registerToken = async (req: Request, res: Response) => {
   try {
-    const { playerEmail } = req.params;
-    const { token } = req.body;
+    const obj = req.body;
+
+    console.log(obj);
+
+    const playerEmail = obj.email;
+    const token = obj.token;
 
     if (!playerEmail || !token) {
       return res.status(400).json({ error: "Email and token are required" });

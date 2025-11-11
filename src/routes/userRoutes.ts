@@ -9,5 +9,8 @@ import { verifyFirebaseToken } from "../middlewares/verifyData.ts";
 
 usersRouter.get("/email/:playerEmail", verifyFirebaseToken, userController.getPlayerFromDatabaseByEmail);
 
+usersRouter.post('/register-token', userController.registerToken)
+
+
 
 export {usersRouter}

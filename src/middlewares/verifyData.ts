@@ -25,3 +25,5 @@ export async function verifyFirebaseToken(req: any, res: any, next: Function) {
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 }
+
+

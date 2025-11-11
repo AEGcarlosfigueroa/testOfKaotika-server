@@ -6,6 +6,7 @@ import * as userService from './../services/userService.ts'
 const subscribedTopics = ['cardscan', 'authorization']
 import { pendingSockets } from '../ioServer/listeners/isInTowerListener.ts';
 import isInTowerEntranceRequest from '../ioServer/events/isInTowerEntranceRequest.ts';
+import { notifyMortimer } from '../ioServer/listeners/isInTowerListener.ts';
 
 export let mqttClient = null;
 
@@ -103,6 +104,7 @@ async function manageTopicMessage(message: any)
             console.error(error)
           }
         });
+        notifyMortimer(player.email, `An ACOLYTE ${player.nickname} Has being denied`)
       }
       console.log(pendingSockets);
     }
@@ -113,6 +115,7 @@ async function manageTopicMessage(message: any)
           console.error(error)
         }
       });
+      notifyMortimer(null, "An unknown user has been denied");
     }
   }
   catch(error)

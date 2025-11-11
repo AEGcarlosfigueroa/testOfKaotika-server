@@ -36,9 +36,9 @@ export function isInTowerListener(socket: Socket, io: Server)
 
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
-            const accepted =  `An ACOLYTE ${player.email} Has entered the Tower`
+            const accepted =  `An ACOLYTE ${player.nickname} Has entered the Tower`
 
-            const denied =  `An ACOLYTE ${player.email} Has being denied`
+            const denied =  `An ACOLYTE ${player.nickname} Has being denied`
             
 
 
@@ -63,7 +63,7 @@ export function isInTowerListener(socket: Socket, io: Server)
                   if (error) {
                     console.error(error)
                   }
-                });
+                });efOLEKGUSrG2tUCjVTdIFP:APA91bHXfNjJYZjGprW4mtLj7Exhq__QBekb2zC-BSpkge3q9ACj7b4EX03h95W4oRpG1LIzU_MTXjS51LXxYjppWVhZoLzxiVtXHZIjZAR_DL8XFFsnWbs
                 notifyMortimer(player.email, accepted)
             }
             else
@@ -92,10 +92,10 @@ export function isInTowerListener(socket: Socket, io: Server)
 )
 }
 
-const notifyMortimer = async (playerEmail: string, body: string) => {
+export const notifyMortimer = async (playerEmail: string | null, body: string) => {
     try{
 
-        if(!email)
+        if(!playerEmail)
         {
             console.error(`email: ${playerEmail} not found`);
 
@@ -109,7 +109,7 @@ const notifyMortimer = async (playerEmail: string, body: string) => {
         //build the FCM message
         const message = {
             notification: {
-                title: "ACOLITE ALERT",
+                title: "TOWER ALERT",
                 body: body,
             }, 
             token: mortimer.fcmToken

@@ -13,7 +13,6 @@ export function registerToken (socket: Socket, io: Server)
             const player = await userService.getPlayerFromDatabaseByEmail(playerEmail)
             player.fcmToken = token;
             await player.save();
-
             console.log(`saved FCM token for ${playerEmail}`)
 
         }

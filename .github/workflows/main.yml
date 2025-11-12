@@ -20,6 +20,18 @@ jobs:
         run: |
           echo "${{ secrets.FIREBASE_SERVICE }}" | base64 --decode > firebase.json
 
+      - name: Create ca certificate from secret
+        run: |
+          echo "${{ secrets.CERTIFICATE_CA_BASE64 }}" | base64 --decode > ca.crt
+
+      - name: Create server certificate from secret    
+        run: |
+          echo "${{ secrets.CERTIFICATE_SERVER_BASE64 }}" | base64 --decode > tok-server.crt
+
+      - name: Create server private key from secret
+        run: |
+          echo "${{ secrets.KEY_SERVER_BASE64 }}" | base64 --decode > prodserver.key
+
       - name: Pull latest changesz
         run: git pull origin main
 

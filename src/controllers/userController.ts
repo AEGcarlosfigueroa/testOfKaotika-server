@@ -83,7 +83,7 @@ export const registerToken = async (req: Request, res: Response) => {
     const playerEmail = obj.email;
     const token = obj.token;
 
-    if (!playerEmail || !token) {
+    if (!playerEmail || token !== undefined) {
       return res.status(400).json({ error: "Email and token are required" });
     }
 

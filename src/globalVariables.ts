@@ -4,9 +4,11 @@ const scrollStateList = {
     eliminated: 2
 }
 
-let scrollState = scrollStateList.uncollected;
+const states = {
+    scrollState: scrollStateList.uncollected
+}
 
 export {
-    scrollState,
+    states,
     scrollStateList
 }

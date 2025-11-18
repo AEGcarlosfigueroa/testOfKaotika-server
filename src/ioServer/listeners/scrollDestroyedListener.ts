@@ -1,13 +1,14 @@
 import { Server, Socket } from "socket.io";
-import { scrollState, scrollStateList } from "../../globalVariables";
+import { states, scrollStateList } from "../../globalVariables.ts";
 import * as userService from"./../../services/userService.ts";
+import { messaging } from "../../firebase.ts";
 
 export default function scrollDestroyedListener(socket: Socket, io: Server)
 {
     socket.on("scrollDestroyed", async() => {
-        if(scrollState === scrollStateList.collected)
+        if(states.scrollState === scrollStateList.collected)
         {
-            scrollState = scrollStateList.eliminated;
+            states.scrollState = scrollStateList.eliminated;
             notifyEveryoneToHallOfSages(io);
         }
     })
@@ -21,11 +22,13 @@ async function notifyEveryoneToHallOfSages(io: Server)
 
         for(let i=0; i<players.length; i++)
         {
+            console.log("Attempting to send notification to: " + players[i].email);
             const player = players[i];
 
             if(player.socketId)
             {
                 io.in(player.socketId).emit("scrollDestroyedEvent", "ALL ARE CALLED TO THE HALL OF SAGES");
+                console.log("sent using socket io");
             }
             else if(player.fcmToken)
             {
@@ -34,8 +37,14 @@ async function notifyEveryoneToHallOfSages(io: Server)
                     title: "KAOTIKA ALERT",
                     body: "ALL ARE CALLED TO THE HALL OF SAGES",
                 }, 
-                token: mortimerPlayer.fcmToken
+                token: player.fcmToken
                 }
+                messaging.send(message);
+                console.log("sent using messanging");
+            }
+            else
+            {
+                console.log("no method found to notify player");
             }
         }
     }

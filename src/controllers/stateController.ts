@@ -1,10 +1,10 @@
-import { scrollState } from "../globalVariables"
+import { states } from "../globalVariables.ts"
 
 export const getCurrentScrollState = (req: Request, res: Response) => {
     try
     {
-        const currentState = scrollState;
-        return res.send({ status: "SUCCESS", state: scrollState });
+        const currentState = states.scrollState;
+        return res.send({ status: "SUCCESS", state: states.scrollState });
     }
     catch(error)
     {

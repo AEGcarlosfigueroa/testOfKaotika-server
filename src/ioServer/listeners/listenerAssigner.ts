@@ -3,8 +3,8 @@ import { getRoleByEmail } from "./../../database/playerRoles.ts";
 import { istvanListener } from "./istvanListener.ts";
 import { isInTowerListener } from "./isInTowerListener.ts";
 import { registerToken } from "./fcmTokenListener.ts";
-import scrollCollectedListener from "./scrollCollectedListener";
-import scrollDestroyedListener from "./scrollDestroyedListener";
+import scrollCollectedListener from "./scrollCollectedListener.ts";
+import scrollDestroyedListener from "./scrollDestroyedListener.ts";
 
 import * as userService from"./../../services/userService.ts"
 

@@ -2,7 +2,9 @@ import { Server, Socket } from "socket.io";
 import { getRoleByEmail } from "./../../database/playerRoles.ts";
 import { istvanListener } from "./istvanListener.ts";
 import { isInTowerListener } from "./isInTowerListener.ts";
-import { registerToken } from "./fcmTokenListener.ts"
+import { registerToken } from "./fcmTokenListener.ts";
+import scrollCollectedListener from "./scrollCollectedListener";
+import scrollDestroyedListener from "./scrollDestroyedListener";
 
 import * as userService from"./../../services/userService.ts"
 
@@ -25,6 +27,10 @@ export async function listenerAssigner(socket: Socket, io: Server)
             break;
             case "ACOLITO":
             isInTowerListener(socket, io);
+            scrollCollectedListener(socket, io);
+            break;
+            case 'MORTIMER':
+            scrollDestroyedListener(socket, io);
             break;
             default:
             break;

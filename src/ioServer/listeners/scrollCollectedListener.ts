@@ -15,7 +15,7 @@ export default function scrollCollectedListener(socket: Socket, io: Server)
         {
             console.log("scroll has been collected");
             const player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
-            if(player.isInTower)
+            if(player.isInTower && states.scrollState === scrollStateList.uncollected)
             {
                 states.scrollState = scrollStateList.collected;
                 notifyMortimerScrollCollected(socket, io);

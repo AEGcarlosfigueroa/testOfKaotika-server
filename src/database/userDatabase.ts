@@ -91,3 +91,4 @@ export async function updateInsertPlayer(playerData: any)
 
     return updatedPlayer;
 }
+

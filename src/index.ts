@@ -9,7 +9,7 @@ const mongodbRoute = process.env.MONGODB_URI;
 import logger from "morgan";
 import { verifyFirebaseToken } from "./middlewares/verifyData.ts";
 import { initIoServer } from './ioServer/ioServer.ts';
-import { usersRouter } from './routes/userRoutes.ts';
+import { usersRouter, scrollRouter } from './routes/userRoutes.ts';
 import startMQTT from './mqtt/mqttManager.ts';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 3000;
 
 initIoServer(app, PORT);
 
-app.use(express.json());
+app.use("/api/states", scrollRouter);
 
 app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
 

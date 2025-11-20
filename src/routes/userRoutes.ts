@@ -1,5 +1,6 @@
 import * as express from "express";
 const usersRouter = express.Router();
+const scrollRouter = express.Router();
 
 import * as userController from "../controllers/userController.ts";
 import { verifyFirebaseToken } from "../middlewares/verifyData.ts";
@@ -9,8 +10,12 @@ import { verifyFirebaseToken } from "../middlewares/verifyData.ts";
 
 usersRouter.get("/email/:playerEmail", verifyFirebaseToken, userController.getPlayerFromDatabaseByEmail);
 
+scrollRouter.get("/scrollstate", userController.getScroll)
+
 usersRouter.post('/register-token', userController.registerToken)
 
 
 
-export {usersRouter}
+
+
+export {usersRouter, scrollRouter}

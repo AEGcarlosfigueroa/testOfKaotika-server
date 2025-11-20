@@ -3,7 +3,7 @@ import * as kaotikaService from "./../services/kaotikaService.ts"
 import * as playerRoles from "./../database/playerRoles.ts"
 import { roles } from "./../database/playerRoles.ts"
 import { messaging } from "../firebase.ts"; // import the same instance
-
+import { scroll } from "../scrollVariable.ts";
 const getAllUsers = async (req: any, res: any) => {
     try {
         const allUsers = await userService.getAllUsers();
@@ -109,6 +109,15 @@ export const registerToken = async (req: Request, res: Response) => {
     console.error("ERROR REGISTERING TOKEN:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
+}
+
+export const getScroll = async (req, res) => {
+    res.json({
+        state: scroll.state
+    })
+    console.log("scroll", scroll.state)
+
+    
 }
 
 export {

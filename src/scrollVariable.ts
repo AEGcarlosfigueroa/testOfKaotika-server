@@ -4,6 +4,9 @@ export const scrollList = {
     destroyed: 2
 }
 export const scroll = {
+
     state: scrollList.uncollected
+
 }
+
 

@@ -109,14 +109,28 @@ export const notifyMortimer = async (playerEmail: string | null, body: string) =
         {
             console.error(`email ${roles.mortimer} invalid, or ${mortimer} not found`)
         }
-        //build the FCM message
+                //build the FCM message
         const message = {
+            token: mortimer.fcmToken,
+            android: {
+                priority: "high",
+            },
+            apns: {
+                headers: {
+                    "apns-priority": "10"
+                }
+            },
             notification: {
                 title: "TOWER ALERT",
                 body: body,
-            }, 
-            token: mortimer.fcmToken
-        }
+            },
+            data: {
+                title: "TOWER ALERT",
+                body: body,
+                type: "tower_alert"
+            }
+        };
+
         //send push notificationç
         await messaging.send(message);
 

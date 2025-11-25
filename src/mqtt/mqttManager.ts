@@ -1,6 +1,5 @@
 const connectUrl = 'mqtts://8170107f188a4c6f93244c5cdc6ed241.s1.eu.hivemq.cloud:8883';
 import * as dotenv from 'dotenv';
-import * as cardService from './../services/cardService.ts'
 import mqtt from 'mqtt';
 import * as userService from './../services/userService.ts'
 const subscribedTopics = ['cardscan', 'authorization']

@@ -1,5 +1,6 @@
 import { Server, Socket } from "socket.io";
 import * as userService from './../../services/userService.ts';
+import * as artifactService from "./../../services/artifactService.ts"
 import { messaging } from "../../firebase.ts";
 import { roles } from "../../database/playerRoles.ts";
 
@@ -60,7 +61,19 @@ async function sendHallOfSagesNotificationToMortimer()
             }
         }
 
-        console.log("All acolytes are in hall of fame, sending message...");
+        const artifacts = await artifactService.getAllArtifacts();
+
+        for(let i=0; i< artifacts.length; i++)
+        {
+            const entry = artifacts[i];
+            if(entry.isCollected === false)
+            {
+                console.log("not all artifacts are collected");
+                return;
+            }
+        }
+
+        console.log("All acolytes are in hall of fame and all artifacts are collected, sending message...");
 
         const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer);
 
@@ -68,8 +81,8 @@ async function sendHallOfSagesNotificationToMortimer()
         {
             const message = {
                 notification: {
-                    title: "SCROLL ALERT",
-                    body: "AN ACOLYTE HAS COLLECTED THE SCROLL",
+                    title: "HALL OF SAGES ALERT",
+                    body: "THE ACOLYTES ARE CALLING YOU TO THE HALL OF SAGES",
                 }, 
                 token: mortimer.fcmToken
             }

@@ -17,8 +17,6 @@ export function isInTowerListener(socket: Socket, io: Server)
     socket.on("inTower", async(isInTower) => {
         try
         {
-
-
             console.log("isInTower triggered");
             let isInPendingList = false;
 

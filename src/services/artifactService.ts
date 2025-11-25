@@ -12,3 +12,16 @@ export async function getAllArtifacts()
         throw error;
     }
 }
+
+export async function getArtifactById(id: string)
+{
+    try
+    {
+        const artifact = await artifactDatabase.getArtifactById(id);
+        return artifact;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}

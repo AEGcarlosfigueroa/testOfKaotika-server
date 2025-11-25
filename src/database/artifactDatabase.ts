@@ -12,3 +12,16 @@ export async function getAllArtifacts()
         throw error;
     }
 }
+
+export async function getArtifactById(id: string)
+{
+    try
+    {
+        const artifact = await artifactModel.findOne({artifactID: id});
+        return artifact;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}

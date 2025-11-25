@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import {authentication} from '../firebase.ts';
 import * as userService from "../services/userService.ts";
 import { listenerAssigner } from "./listeners/listenerAssigner.ts";
-import mortimerListUpdate from "./events/mortimerListUpdate.ts";
+import playerListUpdate from "./events/playerListUpdate.ts";
 import { pendingSockets } from "./listeners/isInTowerListener.ts";
 
 let server = null;
@@ -26,7 +26,9 @@ function initIoServer(app: any, port: any)
 
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
-      mortimerListUpdate(io);
+      playerListUpdate();
+
+      socket.join("playerList");
 
       listenerAssigner(socket, io);
 
@@ -45,7 +47,7 @@ function initIoServer(app: any, port: any)
               break;
             }
           }
-          mortimerListUpdate(io);
+          playerListUpdate();
         }
         catch(error)
         {

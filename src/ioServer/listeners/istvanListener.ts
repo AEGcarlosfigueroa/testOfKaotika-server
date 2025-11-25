@@ -2,7 +2,7 @@ import { Server, Socket } from "socket.io";
 
 import * as userService from"./../../services/userService.ts";
 
-import mortimerListUpdate from "../events/mortimerListUpdate.ts";
+import playerListUpdate from "../events/playerListUpdate.ts";
 
 function istvanListener(socket: Socket, io: Server)
 {
@@ -31,7 +31,7 @@ function istvanListener(socket: Socket, io: Server)
 
             console.log("enter");
 
-            mortimerListUpdate(io);
+            playerListUpdate();
         }
         catch(error)
         {

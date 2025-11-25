@@ -2,7 +2,7 @@ import * as userService from './../../services/userService.ts'
 
 import { mqttClient } from '../../mqtt/mqttManager.ts';
 
-import mortimerListUpdate from '../events/mortimerListUpdate.ts';
+import playerListUpdate from '../events/playerListUpdate.ts';
 
 import { messaging } from "../../firebase.ts";
 
@@ -84,7 +84,7 @@ export function isInTowerListener(socket: Socket, io: Server)
             console.log("Player authorized: " + isInTower);
             console.log("Current player status: " + player.isInTower);
 
-            mortimerListUpdate(io);
+            playerListUpdate();
 
         }
         catch(error)

@@ -74,10 +74,15 @@ export async function updateInsertPlayer(playerData: any)
         object.isInside = false;
         object.isInTower = false;
         object.cardID = null;
+        object.artifactInventory = [];
     }
     else
     {
         object.is_active = true;
+        if(!object.artifactInventory)
+        {
+            object.artifactInventory = [];
+        }
     }
 
     object._id = undefined;

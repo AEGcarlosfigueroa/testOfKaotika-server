@@ -174,6 +174,7 @@ const playerInfoSchema = new Schema({
   isInside: Boolean, // determines whether the user is inside the laboratory or not.
   isInTower: Boolean, // determines whether the player is in the tower or not
   cardID: String || null, //cardID assigned to player
+  artifactInventory: [String],
   profile: playerProfileSchema,
   gold: Number,
   tasks: [tasksSchema],

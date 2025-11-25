@@ -74,6 +74,7 @@ export async function updateInsertPlayer(playerData: any)
         object.isInside = false;
         object.isInTower = false;
         object.cardID = null;
+        object.isInHallOfSages = false;
         object.artifactInventory = [];
     }
     else
@@ -82,6 +83,11 @@ export async function updateInsertPlayer(playerData: any)
         if(!object.artifactInventory)
         {
             object.artifactInventory = [];
+        }
+
+        if(!object.isInHallOfSages)
+        {
+            object.isInHallOfSages = false;
         }
     }
 

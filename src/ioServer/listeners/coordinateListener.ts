@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { coordinateList } from "../../globalVariables.ts";
-import { coordinateListUpdate } from "../events/coordinateListUpdate";
+import { coordinateListUpdate } from "../events/coordinateListUpdate.ts";
 
 export function coordinateListener(socket: Socket, io: Server)
 {

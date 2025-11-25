@@ -4,7 +4,7 @@ export async function getAllArtifacts(req: Request, res: Response)
 {
     try
     {
-        const artifacts = artifactService.getAllArtifacts();
+        const artifacts = await artifactService.getAllArtifacts();
         if(artifacts.length === 0)
         {
             return res.status(404).send({ message: 'No artifacts found!' });

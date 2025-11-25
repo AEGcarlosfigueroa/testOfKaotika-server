@@ -6,7 +6,7 @@ import { registerToken } from "./fcmTokenListener.ts";
 import scrollCollectedListener from "./scrollCollectedListener.ts";
 import scrollDestroyedListener from "./scrollDestroyedListener.ts";
 import { coordinateListener } from "./coordinateListener.ts";
-import { hallOfSagesListener } from "./hallOfSagesListener";
+import { hallOfSagesListener } from "./hallOfSagesListener.ts";
 
 import * as userService from"./../../services/userService.ts"
 

@@ -48,6 +48,18 @@ export async function getAllConnectedPlayers()
         throw error;
     }
 }
+export async function getAllAcolytes()
+{
+    try
+    {
+        const players = await userDatabase.find({'profile.role': "ACOLITO"});
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 export async function getPlayerFromCardID(card: String)
 {
     try

@@ -45,10 +45,27 @@ const getPlayerFromDatabaseBySocketId = async (playerSocketId: String) => {
     }
 };
 const updateInsertPlayer = async (playerData: String) => {
-    const updatedPlayer = await userDatabase.updateInsertPlayer(playerData)
-    return updatedPlayer;
+    try
+    {
+        const updatedPlayer = await userDatabase.updateInsertPlayer(playerData)
+        return updatedPlayer;
+    }
+    catch(error)
+    {
+        throw error;
+    }
 };
-
+const getAllAcolytes = async () => {
+    try
+    {
+        const acolytes = await userDatabase.getAllAcolytes();
+        return acolytes;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 const getAllConnectedPlayers = async () => {
 
     const players = await userDatabase.getAllConnectedPlayers();
@@ -61,5 +78,6 @@ export {
     getAllUsers,
     getPlayerFromDatabaseBySocketId,
     getAllConnectedPlayers,
-    getPlayerFromCardID
+    getPlayerFromCardID,
+    getAllAcolytes
 }

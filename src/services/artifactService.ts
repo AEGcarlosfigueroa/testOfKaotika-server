@@ -1,6 +1,6 @@
 import * as artifactDatabase from './../database/artifactDatabase.ts'
 
-export function getAllArtifacts()
+export async function getAllArtifacts()
 {
     try
     {

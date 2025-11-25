@@ -1,5 +1,5 @@
 import * as express from "express";
-import * as artifactController from "./../controllers/artifactController"
+import * as artifactController from "./../controllers/artifactController.ts"
 const artifactRouter = express.Router();
 
 artifactRouter.get("/all", artifactController.getAllArtifacts);

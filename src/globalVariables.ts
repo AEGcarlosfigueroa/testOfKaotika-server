@@ -5,7 +5,8 @@ const scrollStateList = {
 }
 
 const states = {
-    scrollState: scrollStateList.uncollected
+    scrollState: scrollStateList.uncollected,
+    obituaryUnlocked: false //Controls whether the obituary is unlocked or not
 }
 
 export {

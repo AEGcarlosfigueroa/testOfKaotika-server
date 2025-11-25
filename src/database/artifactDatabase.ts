@@ -1,6 +1,6 @@
 import artifactModel from "../models/artifactModel.ts";
 
-export function getAllArtifacts()
+export async function getAllArtifacts()
 {
     try
     {

@@ -14,6 +14,7 @@ import startMQTT from './mqtt/mqttManager.ts';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { stateRouter } from './routes/stateRoutes.ts';
+import { artifactRouter } from './routes/artifactRoutes.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,6 +38,8 @@ app.use(express.json());
 app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
 
 app.use("/api/states", stateRouter);
+
+app.use("/api/artifacts", artifactRouter);
 
 startMQTT(mqttOptions);
 

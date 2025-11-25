@@ -24,6 +24,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
                 player.isInHallOfSages = true;
                 await player.save();
                 socket.emit("authorization", player);
+                sendHallOfSagesNotificationToMortimer();
             }
             else if(state === "exit")
             {

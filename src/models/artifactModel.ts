@@ -4,7 +4,9 @@ const { Schema } = mongoose;
 const artifactModel = new Schema({
     artifactID: String,
     artifactName: String,
-    isCollected: Boolean
+    isCollected: Boolean,
+    xPos: Number,
+    yPos: Number
 })
 
 export default mongoose.model('artifacts', artifactModel);

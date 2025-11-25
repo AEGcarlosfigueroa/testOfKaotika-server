@@ -9,7 +9,10 @@ const states = {
     obituaryUnlocked: false //Controls whether the obituary is unlocked or not
 }
 
+const coordinateList = [];
+
 export {
     states,
-    scrollStateList
+    scrollStateList,
+    coordinateList
 }

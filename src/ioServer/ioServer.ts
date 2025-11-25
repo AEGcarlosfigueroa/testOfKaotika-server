@@ -27,6 +27,7 @@ function initIoServer(app: any, port: any)
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
       mortimerListUpdate(io);
+
       listenerAssigner(socket, io);
 
       socket.on("disconnect", async () => {

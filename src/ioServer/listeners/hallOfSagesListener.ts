@@ -3,6 +3,7 @@ import * as userService from './../../services/userService.ts';
 import * as artifactService from "./../../services/artifactService.ts"
 import { messaging } from "../../firebase.ts";
 import { roles } from "../../database/playerRoles.ts";
+import playerListUpdate from "../events/playerListUpdate.ts";
 
 export function hallOfSagesListener(io: Server, socket: Socket)
 {
@@ -36,6 +37,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
             {
                 console.log("Invalid argument in hall of sages listener");
             }
+            playerListUpdate();
         }
         catch(error)
         {

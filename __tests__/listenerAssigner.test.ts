@@ -1,0 +1,77 @@
+// Import all modules used
+import { getRoleByEmail, roles } from "./../src/database/playerRoles.ts";
+
+import * as userService from "./../src/services/userService.ts";
+
+import { listenerAssigner } from "../src/ioServer/listeners/listenerAssigner.ts";
+import * as sages from "../src/ioServer/listeners/hallOfSagesListener.ts";
+import { createServer } from "node:http";
+import { type AddressInfo } from "node:net";
+import { Server, Socket, type Socket as ServerSocket } from "socket.io";
+import { io as ioc, type Socket as ClientSocket } from "socket.io-client";
+
+const fakeIstvan = {"isInsideTower":false,"cardID": null, "isInHallOfSages": false, "fcmToken": null,"artifactInventory":[],"_id":{"$oid":"68f6087d594499716d80233d"},"email":roles.istvan,"__v":{"$numberInt":"0"},"attributes":[{"intelligence":{"$numberInt":"5"},"dexterity":{"$numberInt":"25"},"charisma":{"$numberInt":"10"},"constitution":{"$numberInt":"10"},"strength":{"$numberInt":"5"},"insanity":{"$numberInt":"45"},"_id":{"$oid":"68f6087d0f45cdbef67c0b95"}}],"avatar":"https://lh3.googleusercontent.com/a/ACg8ocIYLoU9xq5uiqsvDp9YTrm8Qp_aSoQfCO8-fCPUq38-t_YnIUBJ=s288-c-no","classroom_Id":"","created_date":{"$date":{"$numberLong":"1760954491990"}},"equipment":[{"weapon":{"modifiers":{"intelligence":{"$numberInt":"60"},"dexterity":{"$numberInt":"52"},"charisma":{"$numberInt":"88"},"constitution":{"$numberInt":"82"},"strength":{"$numberInt":"75"},"insanity":{"$numberInt":"5"}},"name":"Axe of Kaotika's Realm","description":"An axe that channels the wrath of ancient wyrms.","type":"weapon","image":"/images/equipment/weapons/axe_26.png","value":{"$numberInt":"21000"},"min_lvl":{"$numberInt":"90"},"base_percentage":{"$numberInt":"28"},"die_faces":{"$numberInt":"12"},"die_modifier":{"$numberInt":"6"},"die_num":{"$numberInt":"9"},"isUnique":true,"isActive":true,"_id":{"$oid":"66fa650485f0d4f8e349db01"}},"armor":{"modifiers":{"intelligence":{"$numberInt":"80"},"dexterity":{"$numberInt":"10"},"charisma":{"$numberInt":"80"},"constitution":{"$numberInt":"10"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"20"}},"name":"Kaotika's Embrace","description":"Chaos and elegance seamlessly.","type":"armor","image":"/images/equipment/armors/full_plate_34.png","value":{"$numberInt":"28000"},"min_lvl":{"$numberInt":"30"},"defense":{"$numberInt":"850"},"_id":{"$oid":"66f671534a8f1157dab87ba6"}},"artifact":{"modifiers":{"intelligence":{"$numberInt":"57"},"dexterity":{"$numberInt":"5"},"charisma":{"$numberInt":"45"},"constitution":{"$numberInt":"5"},"strength":{"$numberInt":"90"},"insanity":{"$numberInt":"14"}},"name":"Mortimer's Hand","description":"Shines with endless light.","type":"artifact","image":"/images/equipment/artifacts/artifact_64.png","value":{"$numberInt":"12800"},"min_lvl":{"$numberInt":"90"},"_id":{"$oid":"66f66bb44a8f1157dab87b97"}},"antidote_potion":{"name":"Antidote of Frostbane Fever","description":"A potent concoction brewed from the rare Lumina flowers that only bloom under the full moon. The elixir emits a radiant glow and, when consumed, floods the body with purifying light, banishing the shadows and restoring the natural hue of the skin.","type":"antidote","image":"/images/equipment/potions/antidote/antidote_1.png","value":{"$numberInt":"10"},"min_lvl":{"$numberInt":"1"},"_id":{"$oid":"668bca125319ea9afdff075e"}},"healing_potion":{"modifiers":{"intelligence":{"$numberInt":"-15"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"0"}},"name":"Essence of Restoration","description":"The Essence of Restoration is a potent elixir that accelerates healing and revitalizes the body.","type":"essence","image":"/images/equipment/potions/healing/healing_3.png","value":{"$numberInt":"10"},"min_lvl":{"$numberInt":"1"},"_id":{"$oid":"668bca125319ea9afdff0759"}},"enhancer_potion":{"modifiers":{"intelligence":{"$numberInt":"0"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"20"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"0"}},"name":"Elixir of Increase Constitution","description":"This hearty elixir enhances the drinker's physical resilience and endurance.","type":"elixir","image":"/images/equipment/potions/enhancer/enhancer_3.png","value":{"$numberInt":"10"},"min_lvl":{"$numberInt":"1"},"duration":{"$numberInt":"2"},"_id":{"$oid":"668bca135319ea9afdff076f"}},"helmet":{"modifiers":{"intelligence":{"$numberInt":"34"},"dexterity":{"$numberInt":"25"},"charisma":{"$numberInt":"23"},"constitution":{"$numberInt":"56"},"strength":{"$numberInt":"25"},"insanity":{"$numberInt":"0"}},"name":"Kaotika's Mask","description":"Ethereal Dreams.","type":"helmet","image":"/images/equipment/helmets/full_helmet_666.png","value":{"$numberInt":"18200"},"min_lvl":{"$numberInt":"99"},"defense":{"$numberInt":"100"},"_id":{"$oid":"66f6974a4a8f1157dab87bf6"}},"shield":{"modifiers":{"intelligence":{"$numberInt":"45"},"dexterity":{"$numberInt":"45"},"charisma":{"$numberInt":"15"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"50"},"insanity":{"$numberInt":"10"}},"name":"Mortimer's Shadow","description":"The Eternal Protection.","type":"shield","image":"/images/equipment/shields/shield_666.png","value":{"$numberInt":"3000"},"min_lvl":{"$numberInt":"90"},"defense":{"$numberInt":"150"},"isUnique":true,"isActive":true,"_id":{"$oid":"66f67c304a8f1157dab87bb1"}},"boot":{"modifiers":{"intelligence":{"$numberInt":"15"},"dexterity":{"$numberInt":"30"},"charisma":{"$numberInt":"19"},"constitution":{"$numberInt":"32"},"strength":{"$numberInt":"50"},"insanity":{"$numberInt":"9"}},"name":"Kaotika's Legacy Boots","description":"Embrace chaos with each stride.","type":"boot","image":"/images/equipment/boots/full_boot_15.png","value":{"$numberInt":"12600"},"min_lvl":{"$numberInt":"99"},"isUnique":true,"isActive":true,"_id":{"$oid":"66f695614a8f1157dab87beb"}},"ring":{"modifiers":{"intelligence":{"$numberInt":"50"},"dexterity":{"$numberInt":"30"},"charisma":{"$numberInt":"25"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"95"},"insanity":{"$numberInt":"5"}},"name":"Kaotika's Ring","description":"A ring blessed by the Chaos.","type":"ring","image":"/images/equipment/rings/ring_666.png","value":{"$numberInt":"12000"},"min_lvl":{"$numberInt":"99"},"_id":{"$oid":"66f699874a8f1157dab87bfe"}},"_id":{"$oid":"68f6087d0f45cdbef67c0b8a"}}],"experience":{"$numberInt":"155900"},"gold":{"$numberInt":"1"},"inventory":[{"helmets":[{"modifiers":{"intelligence":{"$numberInt":"0"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"0"}},"name":"Eternal Guardian Helmet","description":"A helmet blessed by the spirits.","type":"helmet","image":"/images/equipment/helmets/helmet_initial.png","value":{"$numberInt":"5"},"min_lvl":{"$numberInt":"1"},"defense":{"$numberInt":"3"},"_id":{"$oid":"66d99aac7518eb4990035363"}}],"weapons":[{"modifiers":{"intelligence":{"$numberInt":"5"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"-6"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"8"}},"name":"Twirling Yo-yo","description":"A seemingly playful toy with a hidden edge, the Twirling Yo-yo is a versatile weapon in the right hands. ","type":"weapon","image":"/images/equipment/weapons/weapon_init_3.png","value":{"$numberInt":"10"},"min_lvl":{"$numberInt":"1"},"base_percentage":{"$numberInt":"15"},"die_faces":{"$numberInt":"6"},"die_modifier":{"$numberInt":"6"},"die_num":{"$numberInt":"2"},"_id":{"$oid":"668bca115319ea9afdff0725"}}],"shields":[{"modifiers":{"intelligence":{"$numberInt":"18"},"dexterity":{"$numberInt":"7"},"charisma":{"$numberInt":"10"},"constitution":{"$numberInt":"8"},"strength":{"$numberInt":"7"},"insanity":{"$numberInt":"0"}},"name":"Shield of the Cosmic Voyager","description":"A shield that glimmers with the stars' light.","type":"shield","image":"/images/equipment/shields/shield_63.png","value":{"$numberInt":"270"},"min_lvl":{"$numberInt":"17"},"defense":{"$numberInt":"43"},"isUnique":true,"isActive":true,"_id":{"$oid":"66f27ec7c114335cadf45daf"}},{"modifiers":{"intelligence":{"$numberInt":"0"},"dexterity":{"$numberInt":"2"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"3"},"strength":{"$numberInt":"5"},"insanity":{"$numberInt":"0"}},"name":"Knight's Shield","description":"A sturdy shield for knights.","type":"shield","image":"/images/equipment/shields/shield_initial.png","value":{"$numberInt":"15"},"min_lvl":{"$numberInt":"1"},"defense":{"$numberInt":"10"},"isUnique":false,"isActive":true,"_id":{"$oid":"66f27c81c114335cadf45d70"}}],"artifacts":[{"modifiers":{"intelligence":{"$numberInt":"-2"},"dexterity":{"$numberInt":"2"},"charisma":{"$numberInt":"8"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"0"}},"name":"Amulet of the Phoenix's Rebirth","description":"An amulet imbued with the essence of a phoenix.","type":"artifact","image":"/images/equipment/artifacts/artifact_3.png","value":{"$numberInt":"5"},"min_lvl":{"$numberInt":"1"},"_id":{"$oid":"66a902e1b5831810990551d3"}}],"boots":[{"modifiers":{"intelligence":{"$numberInt":"0"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"0"},"insanity":{"$numberInt":"0"}},"name":"Beggar's path","description":"Cheap sinister leather shoes.","type":"boot","image":"/images/equipment/boots/boot_initial.png","value":{"$numberInt":"5"},"min_lvl":{"$numberInt":"1"},"_id":{"$oid":"66d99a807518eb499003535f"}}],"rings":[{"modifiers":{"intelligence":{"$numberInt":"2"},"dexterity":{"$numberInt":"0"},"charisma":{"$numberInt":"0"},"constitution":{"$numberInt":"0"},"strength":{"$numberInt":"2"},"insanity":{"$numberInt":"0"}},"name":"Ring of Eternal Flame","description":"A ring that burns with eternal fire.","type":"ring","image":"/images/equipment/rings/ring_1.png","value":{"$numberInt":"10"},"min_lvl":{"$numberInt":"1"},"_id":{"$oid":"66a6d6c8dfbffe7e6503970f"}}],"antidote_potions":[],"healing_potions":[],"enhancer_potions":[],"ingredients":[],"_id":{"$oid":"68f6087d0f45cdbef67c0b82"}}],"isBetrayer":true,"isInside":false,"is_active":false,"level":{"$numberInt":"90"},"name":"Istvan","nickname":"Istvan","profile":{"name":"Pariah","description":"Expelled from society and condemned to wander alone, the Pariah is a figure marked by suffering and resilience. Despite his ostracism, he has developed an inner and physical strength that makes him a formidable adversary. His life on the margins of civilization has taught him to fend for himself, facing the dangers of the world with unyielding determination. Stripped of everything but his own will, the Pariah is a symbol of endurance and survival in a cruel and unforgiving world.","image":"/images/profiles/pariah.jpg","attributes":[{"name":"Intelligence","description":"The intelligence controls the chance of success when using a potion","value":{"$numberInt":"5"},"_id":{"$oid":"68f6087c1b8137767b61113a"}},{"name":"Dexterity","description":"Manages the chance of success when using a melee weapon and the damage a missile weapon does","value":{"$numberInt":"17"},"_id":{"$oid":"68f6087c1b8137767b61113b"}},{"name":"Insanity","description":"Indicates the state of mental health of an adventurer. If the insanity is high, there will be more chance to make a fumble of a critical hit, and the resulting damage will be more critical. If the insanity is low, there will be less chance to make a fumble or a critical hit, and the resulting damage will be less critical","value":{"$numberInt":"30"},"_id":{"$oid":"68f6087c1b8137767b61113c"}},{"name":"Charisma","description":"Indicates the chance to attack first in the next round","value":{"$numberInt":"5"},"_id":{"$oid":"68f6087c1b8137767b61113d"}},{"name":"Constitution","description":"Indicates the number of Hit Points an adventurer starts with","value":{"$numberInt":"13"},"_id":{"$oid":"68f6087c1b8137767b61113e"}},{"name":"Strength","description":"Manages the chance of success when using a melee weapon, and the damage a melee weapon does","value":{"$numberInt":"30"},"_id":{"$oid":"68f6087c1b8137767b61113f"}}],"role":"ISTVAN","_id":{"$oid":"6687c31b7a5ce485a0eed477"}},"skills":[{"skill":"684804a6022ac850c49be874","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b61112f"}},{"skill":"684804a6022ac850c49be875","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611130"}},{"skill":"684804a6022ac850c49be876","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611131"}},{"skill":"684804a6022ac850c49be877","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611132"}},{"skill":"684804a6022ac850c49be878","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611133"}},{"skill":"684804a6022ac850c49be879","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611134"}},{"skill":"684804a6022ac850c49be87a","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611135"}},{"skill":"684804a6022ac850c49be87b","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611136"}},{"skill":"68626fd7f87edf17ce379b45","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611137"}},{"skill":"68626fd7f87edf17ce379b46","activeLevels":[],"_id":{"$oid":"68f6087b1b8137767b611138"}}],"tasks":[],"socketId":null}
+
+
+
+describe("Test the socket io listeners being assigned by role", () => {
+
+    let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
+    beforeAll((done) => {
+      const httpServer = createServer();
+      io = new Server(httpServer);
+      httpServer.listen(() => {
+        const port = (httpServer.address() as AddressInfo).port;
+        clientSocket = ioc(`http://localhost:${port}`);
+        io.on("connection", (socket: Socket) => {
+          serverSocket = socket;
+        });
+        clientSocket.on("connect", done);
+      });
+    });
+
+    afterAll(() => {
+      io.close();
+      clientSocket.disconnect();
+    });
+
+    beforeEach(() => {
+        //Mock the modules
+        jest.mock("./../src/ioServer/listeners/istvanListener.ts", () => ({
+            istvanListener: jest.fn()
+        }));
+        jest.mock("./../src/ioServer/listeners/fcmTokenListener.ts", () => ({
+            fcmTokenListener: jest.fn()
+        }));
+        jest.mock("./../src/ioServer/listeners/isInTowerListener.ts", () => ({
+            isInTowerListener: jest.fn()
+        }));
+        jest.mock("./../src/ioServer/listeners/scrollCollectedListener.ts", jest.fn());
+        jest.mock("./../src/ioServer/listeners/scrollDestroyedListener.ts", jest.fn());
+        jest.mock("./../src/ioServer/listeners/coordinateListener.ts", () => ({
+            coordinateListener: jest.fn()
+        }));
+        jest.mock("./../src/ioServer/listeners/hallOfSagesListener.ts", () => ({
+            hallOfSagesListener: jest.fn()
+        }));
+    })
+
+    test('Make sure the correct listener assigners have been called for Mortimer role', async () => {
+
+        jest.spyOn(userService, 'getPlayerFromDatabaseBySocketId').mockImplementation(async() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(fakeIstvan);
+                }, 50);
+            })});
+
+        jest.spyOn(sages, "hallOfSagesListener");    
+
+        await listenerAssigner(serverSocket, io);
+        expect(sages.hallOfSagesListener).toHaveBeenCalled();
+    })
+
+})
+
+
+

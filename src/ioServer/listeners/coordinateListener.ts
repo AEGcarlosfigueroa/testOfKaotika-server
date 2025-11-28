@@ -10,7 +10,7 @@ export function coordinateListener(socket: Socket, io: Server)
             for(let i=0; i<coordinateList.length; i++)
             {
                 const currentEntry = coordinateList[i];
-                if(currentEntry.email === playerEmail)
+                if(currentEntry.email === data.playerEmail)
                 {
                     coordinateList.splice(i, 1);
                     break;
@@ -19,6 +19,7 @@ export function coordinateListener(socket: Socket, io: Server)
 
             const newEntry = { email: data.playerEmail, xPos: data.xPos, yPos: data.yPos };
             coordinateList.push(newEntry);
+            console.log(coordinateList);
             coordinateListUpdate();
         }
         catch(error)

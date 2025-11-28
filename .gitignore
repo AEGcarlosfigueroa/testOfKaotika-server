@@ -9,6 +9,7 @@ built
 firebase.json
 built
 ca.crt
+car.crt
 prodserver.key
 tok-server.crt
 

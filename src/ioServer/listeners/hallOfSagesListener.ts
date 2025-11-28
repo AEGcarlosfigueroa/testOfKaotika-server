@@ -16,7 +16,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
 
             if(!player)
             {
-                console.log("no player found");ç
+                console.log("no player found");
                 return;
             }
 

@@ -5,8 +5,8 @@ const artifactModel = new Schema({
     artifactID: String,
     artifactName: String,
     isCollected: Boolean,
-    xPos: Number,
-    yPos: Number
+    latitude: Number,
+    longitude: Number
 })
 
 export default mongoose.model('artifacts', artifactModel);

@@ -6,6 +6,7 @@ import * as userService from "../services/userService.ts";
 import { listenerAssigner } from "./listeners/listenerAssigner.ts";
 import playerListUpdate from "./events/playerListUpdate.ts";
 import { pendingSockets } from "./listeners/isInTowerListener.ts";
+import { coordinateListUpdate } from "./events/coordinateListUpdate.ts";
 
 let server = null;
 
@@ -32,6 +33,8 @@ function initIoServer(app: any, port: any)
 
       listenerAssigner(socket, io);
 
+      coordinateListUpdate();
+
       socket.on("disconnect", async () => {
         console.log(socket.id + " disconnected");
         try
@@ -47,6 +50,7 @@ function initIoServer(app: any, port: any)
               break;
             }
           }
+          coordinateListUpdate();
           playerListUpdate();
         }
         catch(error)

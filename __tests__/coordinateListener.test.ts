@@ -7,9 +7,9 @@ import { coordinateListener } from "../src/ioServer/listeners/coordinateListener
 import * as listUpdate from "./../src/ioServer/events/coordinateListUpdate.ts";
 import * as globals from "./../src/globalVariables.ts";
 
-const fakeObj = {playerEmail: "a@a.com", xPos: 20, yPos: 35}
-const fakeObj2 = {playerEmail: "a@a.com", xPos: 30, yPos: 40}
-const fakeObj3 = {playerEmail: "b@b.com", xPos: 20, yPos: 35}
+const fakeObj = {playerEmail: "a@a.com", latitude: 20, longitude: 35}
+const fakeObj2 = {playerEmail: "a@a.com", latitude: 30, longitude: 40}
+const fakeObj3 = {playerEmail: "b@b.com", latitude: 20, longitude: 35}
 
 describe("Test that the coordinateListener properly inserts coordinate object into the coordinateList array", () => {
     let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;

@@ -24,4 +24,6 @@ export async function coordinateListUpdate()
     }
     
     server.in("acolyteLocationTracker").emit("locationUpdated", coordinateList);
+
+    console.log("coordinate list updated");
 }

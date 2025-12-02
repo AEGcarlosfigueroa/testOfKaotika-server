@@ -8,9 +8,7 @@ export default async function isInTowerEntranceRequest(socketID: string)
     console.log("Send isInTowerRequest to: " + socketID)
     try
     {
-        const socket = await server.in(socketID).fetchSockets();
-
-        socket[0].emit("isInTowerEntranceRequest", " ");
+        const socket = await server.in(socketID).emit("isInTowerEntranceRequest", " ");
     }
     catch(error)
     {

@@ -14,7 +14,6 @@ export default async function playerListUpdate()
         const players = await userService.getAllConnectedPlayers();
         
         server.in("playerList").emit("update", players);
-
     }
     catch(error)
     {

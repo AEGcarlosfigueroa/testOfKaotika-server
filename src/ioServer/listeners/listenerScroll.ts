@@ -15,15 +15,12 @@ export function getScroll(socket: Socket, io: Server) {
 
         const body = `The Scroll has been collected by ${playerEmail}`
 
-        notifyMortimer(playerEmail, body)
-
+        notifyMortimer(playerEmail, body);
     });
 }
 export function mortimerScrollListener(socket: Socket, io: Server)
 {
- 
     socket.on("scrollDestroyed", async (data: string) =>{
-
         scroll.state = scrollList.destroyed
     })
 }

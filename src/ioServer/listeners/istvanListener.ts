@@ -10,6 +10,7 @@ function istvanListener(socket: Socket, io: Server)
         try
         {
             console.log("istvanlistener triggered");
+            
             console.log(email)
             
             const player = await userService.getPlayerFromDatabaseByEmail(email);
@@ -27,7 +28,6 @@ function istvanListener(socket: Socket, io: Server)
             console.log(acolyteSocket[0].id);
 
             acolyteSocket[0].emit("authorization", player);
-
 
             console.log("enter");
 

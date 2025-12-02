@@ -27,6 +27,7 @@ function initIoServer(app: any, port: any)
 
     io.on("connection", (socket: Socket) => {
       console.log("Connected with socket token " + socket.id);
+
       playerListUpdate();
 
       socket.join("playerList");
@@ -62,7 +63,9 @@ function initIoServer(app: any, port: any)
 
     //PRODUCTION MODE VERIFICATION WITH IDTOKEN
     io.use(async (socket: Socket, next: Function) => {
+
       console.log("enter middleware " + socket);
+
       try
       {
         const idToken = socket.handshake.auth.token;
@@ -71,12 +74,15 @@ function initIoServer(app: any, port: any)
 
         console.log(decodedToken.email);
 
-        if (!decodedToken.email_verified) {
+        if (!decodedToken.email_verified) 
+        {
           const err = new Error("not authorized: token invalid");
           next(err);
         }
         io.use(async (socket: Socket, next: Function) => {
+
           console.log("enter middleware " + socket.id);
+
           try
           {
             const idToken = socket.handshake.auth.token;
@@ -85,7 +91,8 @@ function initIoServer(app: any, port: any)
 
             console.log(decodedToken.email);
 
-            if (!decodedToken.email_verified) {
+            if (!decodedToken.email_verified) 
+            {
               const err = new Error("not authorized: token invalid");
               next(err);
             }
@@ -103,12 +110,12 @@ function initIoServer(app: any, port: any)
             await player.save();
 
             next();
-        }
-        catch(error: any)
-        {
-          const err = new Error("not authorized: internal server error");
-          next(err);
-        }
+          }
+          catch(error: any)
+          {
+            const err = new Error("not authorized: internal server error");
+            next(err);
+          }
         })
 
         let player = await userService.getPlayerFromDatabaseByEmail(decodedToken.email);

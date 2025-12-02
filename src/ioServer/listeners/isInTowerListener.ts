@@ -63,7 +63,8 @@ export function isInTowerListener(socket: Socket, io: Server)
             if(authorizationToPublish)
             {
                 mqttClient.publish('authorization', '0', { qos: 0, retain: false }, (error) => {
-                  if (error) {
+                  if(error) 
+                  {
                     console.error(error)
                   }
                 });
@@ -72,7 +73,8 @@ export function isInTowerListener(socket: Socket, io: Server)
             else
             {
                 mqttClient.publish('authorization', '1', { qos: 0, retain: false }, (error) => {
-                  if (error) {
+                  if(error) 
+                  {
                     console.error(error)
                   }
                 });
@@ -83,7 +85,6 @@ export function isInTowerListener(socket: Socket, io: Server)
             console.log("Current player status: " + player.isInTower);
 
             playerListUpdate();
-
         }
         catch(error)
         {
@@ -94,12 +95,11 @@ export function isInTowerListener(socket: Socket, io: Server)
 }
 
 export const notifyMortimer = async (playerEmail: string | null, body: string) => {
-    try{
-
+    try
+    {
         if(!playerEmail)
         {
             console.error(`email: ${playerEmail} not found`);
-
         }
         //Find Mortimer in DB
         const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer)
@@ -107,7 +107,7 @@ export const notifyMortimer = async (playerEmail: string | null, body: string) =
         {
             console.error(`email ${roles.mortimer} invalid, or ${mortimer} not found`)
         }
-                //build the FCM message
+        //build the FCM message
         const message = {
             token: mortimer.fcmToken,
             android: {
@@ -129,13 +129,13 @@ export const notifyMortimer = async (playerEmail: string | null, body: string) =
             }
         };
 
-        //send push notificationç
+        //send push notification
         await messaging.send(message);
 
-
-        console.log("Notification sent to Mortimer")
-
-    }catch(error){
+        console.log("Notification sent to Mortimer");
+    }
+    catch(error)
+    {
         console.error("Error notifying Mortimer: ", error);
     }
 }

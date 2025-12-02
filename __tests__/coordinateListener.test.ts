@@ -3,8 +3,6 @@ import { type AddressInfo } from "node:net";
 import { Server, Socket as ServerSocket, Socket } from "socket.io";
 import { io as ioc, type Socket as ClientSocket } from "socket.io-client";
 import { coordinateListener } from "../src/ioServer/listeners/coordinateListener.ts";
-
-import * as listUpdate from "./../src/ioServer/events/coordinateListUpdate.ts";
 import * as globals from "./../src/globalVariables.ts";
 
 const fakeObj = {playerEmail: "a@a.com", latitude: 20, longitude: 35}
@@ -12,6 +10,7 @@ const fakeObj2 = {playerEmail: "a@a.com", latitude: 30, longitude: 40}
 const fakeObj3 = {playerEmail: "b@b.com", latitude: 20, longitude: 35}
 
 describe("Test that the coordinateListener properly inserts coordinate object into the coordinateList array", () => {
+
     let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
 
     beforeAll((done) => {

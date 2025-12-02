@@ -21,28 +21,30 @@ export async function listenerAssigner(socket: Socket, io: Server)
         console.log("role: " + role);
 
         registerToken(socket, io);
+
         hallOfSagesListener(io, socket);
 
         switch(role)
         {
             case "ISTVAN": 
-            istvanListener(socket, io);
-            socket.join("acolyteLocationTracker");
-            break;
+                istvanListener(socket, io);
+                socket.join("acolyteLocationTracker");
+                break;
             case "ACOLITO":
-            isInTowerListener(socket, io);
-            scrollCollectedListener(socket, io);
-            coordinateListener(socket, io);
-            break;
+                isInTowerListener(socket, io);
+                scrollCollectedListener(socket, io);
+                coordinateListener(socket, io);
+                break;
             case 'MORTIMER':
-            scrollDestroyedListener(socket, io);
-            socket.join("acolyteLocationTracker");
-            break;
+                scrollDestroyedListener(socket, io);
+                socket.join("acolyteLocationTracker");
+                break;
             case 'VILLANO':
-            socket.join("acolyteLocationTracker");
-            break;
+                socket.join("acolyteLocationTracker");
+                break;
             default:
-            break;
+                console.error("Invalid role");
+                break;
         }
     }
     catch(error)

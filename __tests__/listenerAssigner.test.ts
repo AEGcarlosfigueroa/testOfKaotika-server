@@ -1,8 +1,5 @@
-// Import all modules used
 import { roles } from "./../src/database/playerRoles.ts";
-
 import * as userService from "./../src/services/userService.ts";
-
 import { listenerAssigner } from "../src/ioServer/listeners/listenerAssigner.ts";
 import * as sages from "../src/ioServer/listeners/hallOfSagesListener.ts";
 import { createServer } from "node:http";

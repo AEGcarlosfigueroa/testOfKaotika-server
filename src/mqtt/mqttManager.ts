@@ -31,30 +31,29 @@ export default function startMQTT(mqttOptions: any)
   
   const client = mqtt.connect(mqttOptions.url, options)
 
-    mqttClient = client
+  mqttClient = client;
 
-    client.on('connect', () => {
-      console.log('MQTT Connected');
+  client.on('connect', () => {
 
-      client.subscribe(subscribedTopics, () => {
-        console.log("subscribed to topics: ");
-        for(let i=0; i<subscribedTopics.length; i++)
-        {
-            console.log(subscribedTopics[i]);
-        }
-      });
+    console.log('MQTT Connected');
+    client.subscribe(subscribedTopics, () => {
+      console.log("subscribed to topics: ");
+      for(let i=0; i<subscribedTopics.length; i++)
+      {
+          console.log(subscribedTopics[i]);
+      }
+    });
 
-      client.on('message', (topic, payload) => {
-        console.log('Received Message:', topic, payload.toString());
-        const message = {
-            topic: topic,
-            content: payload,
-        };
+    client.on('message', (topic, payload) => {
+      console.log('Received Message:', topic, payload.toString());
+      const message = {
+          topic: topic,
+          content: payload,
+      };
+      manageResponse(message);
+    });
 
-        manageResponse(message);
-
-      });
-    })
+  })
 
     client.on('error', (error) => {
       console.error('connection failed', error)
@@ -65,7 +64,7 @@ async function manageResponse(message: any)
 {
     if(message.topic === subscribedTopics[0])
     {
-        manageTopicMessage(message);
+      manageTopicMessage(message);
     }
 }
 

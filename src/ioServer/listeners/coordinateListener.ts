@@ -8,6 +8,7 @@ export function coordinateListener(socket: Socket, io: Server)
         try
         {
             console.log("Inserting data...");
+
             for(let i=0; i<coordinateList.length; i++)
             {
                 const currentEntry = coordinateList[i];
@@ -19,9 +20,12 @@ export function coordinateListener(socket: Socket, io: Server)
             }
 
             const newEntry = { email: data.playerEmail, latitude: data.latitude, longitude: data.longitude };
+
             coordinateList.push(newEntry);
+
             console.log("New data: ");
             console.log(coordinateList);
+
             coordinateListUpdate();
         }
         catch(error)

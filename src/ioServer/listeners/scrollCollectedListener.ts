@@ -60,5 +60,5 @@ async function notifyMortimerScrollCollected(socket: Socket, io: Server)
     {
         console.error(error);
     }
-    }
+}
    

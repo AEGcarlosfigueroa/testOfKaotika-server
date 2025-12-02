@@ -1,11 +1,9 @@
 import * as dotenv from 'dotenv';
 import fs from 'fs';
-dotenv.config();
 import express from "express";
 import pkg from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose"
-const mongodbRoute = process.env.MONGODB_URI;
 import logger from "morgan";
 import { verifyFirebaseToken } from "./middlewares/verifyData.ts";
 import { initIoServer } from './ioServer/ioServer.ts';
@@ -16,7 +14,12 @@ import { fileURLToPath } from 'url';
 import { stateRouter } from './routes/stateRoutes.ts';
 import { artifactRouter } from './routes/artifactRoutes.ts';
 
+dotenv.config();
+
+const mongodbRoute = process.env.MONGODB_URI;
+
 const __filename = fileURLToPath(import.meta.url);
+
 const __dirname = path.dirname(__filename);
 
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`

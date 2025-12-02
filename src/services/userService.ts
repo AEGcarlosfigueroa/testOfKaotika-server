@@ -67,9 +67,15 @@ const getAllAcolytes = async () => {
     }
 }
 const getAllConnectedPlayers = async () => {
-
-    const players = await userDatabase.getAllConnectedPlayers();
-    return players;
+    try
+    {
+        const players = await userDatabase.getAllConnectedPlayers();
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
 }
 
 export {

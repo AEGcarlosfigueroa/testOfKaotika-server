@@ -5,13 +5,17 @@ import { roles } from "./../database/playerRoles.ts"
 import { messaging } from "../firebase.ts"; // import the same instance
 
 const getAllUsers = async (req: any, res: any) => {
-    try {
+    try 
+    {
         const allUsers = await userService.getAllUsers();
-        if (allUsers.length === 0) {
+        if (allUsers.length === 0) 
+        {
             return res.status(404).send({ message: 'No users found!' });
         }
         return res.send({ status: "SUCCESS", userData: allUsers });
-    } catch (error: any) {
+    } 
+    catch(error: any) 
+    {
         return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Request failed",
@@ -22,6 +26,7 @@ const getAllUsers = async (req: any, res: any) => {
 
 const getPlayerBySocketId = async (req: any, res: any) => {
     const { params: {playerSocketId} } = req;
+
     if(!playerSocketId)
     {
         return res.status(400).send({ 
@@ -34,14 +39,16 @@ const getPlayerBySocketId = async (req: any, res: any) => {
 const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
     const { params: { playerEmail } } = req;
 
-    if (!playerEmail) {
+    if (!playerEmail) 
+    {
         return res.status(400).send({ 
             status: "FAILED", 
             data: { error: "Parameter ':playerEmail' cannot be empty" } 
         });
     }
 
-    try {
+    try 
+    {
         let player = await userService.getPlayerFromDatabaseByEmail(playerEmail);
         const legend = await kaotikaService.getLegendByEmail(playerEmail);
 
@@ -65,8 +72,9 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
         }
 
         return res.send({ status: "SUCCESS", data: player });
-
-    } catch (error: any) {
+    } 
+    catch(error: any) 
+    {
         return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Error fetching player",
@@ -75,11 +83,9 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
     }
 };
 export const registerToken = async (req: Request, res: Response) => {
-  try {
+  try 
+  {
     const obj = req.body;
-
-    console.log(obj);
-
     const playerEmail = obj.email;
     const token = obj.token;
 
@@ -95,18 +101,20 @@ export const registerToken = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Player not found" });
     }
 
-    // Store the token in the player's record
     player.fcmToken = token;
+
     await player.save();
 
     console.log("Received FCM token:", token, "for", playerEmail);
 
-
     console.log(`Saved FCM token for ${playerEmail}`);
-    return res.status(200).json({ message: "Token registered successfully" });
 
-  } catch (error) {
+    return res.status(200).json({ message: "Token registered successfully" });
+  } 
+  catch (error) 
+  {
     console.error("ERROR REGISTERING TOKEN:", error);
+
     return res.status(500).json({ error: "Internal server error" });
   }
 }

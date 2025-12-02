@@ -1,7 +1,8 @@
 import * as authentication from '../firebase.ts'
 
 
-export async function verifyFirebaseToken(req: any, res: any, next: Function) {
+export async function verifyFirebaseToken(req: any, res: any, next: Function) 
+{
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -10,7 +11,8 @@ export async function verifyFirebaseToken(req: any, res: any, next: Function) {
 
   const idToken = authHeader.split("Bearer ")[1];
 
-  try {
+  try 
+  {
     const decodedToken = await authentication.authentication.verifyIdToken(idToken);
 
     req.user = decodedToken;
@@ -20,8 +22,11 @@ export async function verifyFirebaseToken(req: any, res: any, next: Function) {
     }
 
     next(); 
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.log(error);
+
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 }

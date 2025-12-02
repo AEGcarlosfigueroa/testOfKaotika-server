@@ -23,6 +23,7 @@ async function notifyEveryoneToHallOfSages(io: Server)
         for(let i=0; i<players.length; i++)
         {
             console.log("Attempting to send notification to: " + players[i].email);
+            
             const player = players[i];
 
             if(player.socketId)

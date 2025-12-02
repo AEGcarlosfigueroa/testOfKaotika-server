@@ -21,7 +21,7 @@ export async function listenerAssigner(socket: Socket, io: Server)
         console.log("role: " + role);
 
         registerToken(socket, io);
-        hallOfSagesListener(socket, io);
+        hallOfSagesListener(io, socket);
 
         switch(role)
         {

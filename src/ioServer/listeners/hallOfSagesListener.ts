@@ -48,7 +48,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
     })
 }
 
-async function sendHallOfSagesNotificationToMortimer()
+export async function sendHallOfSagesNotificationToMortimer()
 {
     try
     {

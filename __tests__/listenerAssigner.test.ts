@@ -80,7 +80,7 @@ describe("Test the socket io listeners being assigned by role", () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(fakeIstvan);
-                }, 50);
+                }, 5);
             })});   
 
         await listenerAssigner(serverSocket, io);
@@ -98,7 +98,7 @@ describe("Test the socket io listeners being assigned by role", () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(fakeMortimer);
-                }, 50);
+                }, 5);
             })});   
 
         await listenerAssigner(serverSocket, io);
@@ -116,7 +116,7 @@ describe("Test the socket io listeners being assigned by role", () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(fakeVillain);
-                }, 50);
+                }, 5);
             })});   
 
         await listenerAssigner(serverSocket, io);
@@ -134,7 +134,7 @@ describe("Test the socket io listeners being assigned by role", () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(fakeAcolyte);
-                }, 50);
+                }, 5);
             })});   
 
         await listenerAssigner(serverSocket, io);

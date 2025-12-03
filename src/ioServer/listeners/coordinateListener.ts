@@ -33,4 +33,25 @@ export function coordinateListener(socket: Socket, io: Server)
             console.error(error);
         }
     })
+
+    socket.on("removeCoordinates", async(email: string) => {
+        try
+        {
+            console.log("Removing coordinates from: " + email);
+            for(let i=0; i<coordinateList.length; i++)
+            {
+                if(coordinateList[i].email === email)
+                {
+                    coordinateList.splice(i, 1);
+                    console.log("Coordinates removed");
+                    break;
+                }
+            }
+            coordinateListUpdate();
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+    })
 }

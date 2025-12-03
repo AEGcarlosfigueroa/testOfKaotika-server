@@ -58,7 +58,15 @@ describe("Test that the coordinateListener properly inserts coordinate object in
         clientSocket.emit("sendCoordinates", fakeObj2);
         await wait();
         expect(globals.coordinateList.length).toBe(2);
-    })
+    });
+
+    test("when removeCordinates is called, the item associated with the email sent must be removed", async() => {
+        coordinateListener(serverSocket, io);
+        clientSocket.emit("removeCoordinates", "a@a.com");
+        await wait();
+        expect(globals.coordinateList.length).toBe(1);
+    });
+
 
 })
 
@@ -67,6 +75,6 @@ async function wait()
     await new Promise((resolve) => {
                 setTimeout(() => {
                     resolve ("a");
-                }, 50);
+                }, 5);
             });
 }

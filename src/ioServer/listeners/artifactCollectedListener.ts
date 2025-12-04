@@ -25,7 +25,7 @@ export function artifactCollectedListener(io: Server, socket: Socket)
 
                 console.log("Distance: " + distance);
 
-                if(distance < 1)
+                if(distance <= 10)
                 {
                     player.artifactInventory.push(artifactId);
                     artifact.isCollected = true;

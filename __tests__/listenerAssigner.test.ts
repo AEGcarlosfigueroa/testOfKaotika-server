@@ -144,7 +144,8 @@ describe("Test the socket io listeners being assigned by role", () => {
         expect(coordinate.coordinateListener).toHaveBeenCalled();
         expect(scrollCollectedListener.default).toHaveBeenCalled();
         expect(scrollDestroyedListener.default).not.toHaveBeenCalled();
-        expect(serverSocket.join).not.toHaveBeenCalled();
+        expect(serverSocket.join).toHaveBeenCalledWith("artifactTracker");
+        expect(serverSocket.join).not.toHaveBeenCalledWith("acolyteLocationTracker");
     })
 
 })

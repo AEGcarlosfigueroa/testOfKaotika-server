@@ -7,6 +7,7 @@ import scrollCollectedListener from "./scrollCollectedListener.ts";
 import scrollDestroyedListener from "./scrollDestroyedListener.ts";
 import { coordinateListener } from "./coordinateListener.ts";
 import { hallOfSagesListener } from "./hallOfSagesListener.ts";
+import { artifactCollectedListener } from "./artifactCollectedListener.ts";
 
 import * as userService from"./../../services/userService.ts"
 
@@ -34,10 +35,13 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 isInTowerListener(socket, io);
                 scrollCollectedListener(socket, io);
                 coordinateListener(socket, io);
+                artifactCollectedListener(io, socket);
+                socket.join("artifactTracker");
                 break;
             case 'MORTIMER':
                 scrollDestroyedListener(socket, io);
                 socket.join("acolyteLocationTracker");
+                socket.join("artifactTracker");
                 break;
             case 'VILLANO':
                 socket.join("acolyteLocationTracker");

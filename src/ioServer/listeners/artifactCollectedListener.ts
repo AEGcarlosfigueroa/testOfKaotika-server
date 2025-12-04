@@ -31,9 +31,10 @@ export function artifactCollectedListener(io: Server, socket: Socket)
                     artifact.isCollected = true;
                     await player.save();
                     await artifact.save();
-                    socket.emit("authorization", player);
                 }
             }
+
+            socket.emit("authorization", player);
 
             playerListUpdate();
 

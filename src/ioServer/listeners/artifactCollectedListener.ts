@@ -19,7 +19,18 @@ export function artifactCollectedListener(io: Server, socket: Socket)
 
             const artifact = await artifactService.getArtifactById(artifactId);
 
-            if(player && artifact && coordinate)
+            let isAlreadyCollected = false;
+
+            for(let i=0; i<player.artifactInventory.length; i++)
+            {
+                const id = player.artifactInventory[i];
+                if(id === artifactId)
+                {
+                    isAlreadyCollected = true;
+                }
+            }
+
+            if(player && artifact && coordinate && !isAlreadyCollected)
             {
                 const distance = getDistanceInMeters(coordinate.latitude, coordinate.longitude, artifact.latitude, artifact.longitude);
 

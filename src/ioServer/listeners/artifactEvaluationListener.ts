@@ -2,7 +2,8 @@ import {Server, Socket} from 'socket.io';
 import * as userService from './../../services/userService.ts';
 import * as artifactService from './../../services/artifactService.ts';
 import { obituaryStateList, states } from '../../globalVariables.ts';
-import artifactListUpdate from '../events/artifactListUpdate';
+import artifactListUpdate from '../events/artifactListUpdate.ts';
+import { server } from '../ioServer.ts';
 
 export function artifactEvaluationListener(io: Server, socket: Socket)
 {
@@ -23,7 +24,7 @@ export function artifactEvaluationListener(io: Server, socket: Socket)
                 {
                     states.obituaryState = obituaryStateList.locked;
 
-                    const artifacts = artifactService.getAllArtifacts();
+                    const artifacts = await artifactService.getAllArtifacts();
 
                     for(let i=0; i<artifacts.length; i++)
                     {

@@ -10,6 +10,7 @@ import { hallOfSagesListener } from "./hallOfSagesListener.ts";
 import { artifactCollectedListener } from "./artifactCollectedListener.ts";
 import * as userService from"./../../services/userService.ts"
 import { showArtifactsListener } from "./showArtifactsListener.ts";
+import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {
@@ -43,7 +44,7 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 break;
             case 'MORTIMER':
                 scrollDestroyedListener(socket, io);
-                artifactCollectedListener(io, socket);
+                artifactEvaluationListener(io, socket);
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;

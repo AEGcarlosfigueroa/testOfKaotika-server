@@ -26,6 +26,8 @@ export async function listenerAssigner(socket: Socket, io: Server)
 
         hallOfSagesListener(io, socket);
 
+        socket.join("stateTracker");
+
         switch(role)
         {
             case "ISTVAN": 
@@ -42,6 +44,7 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 break;
             case 'MORTIMER':
                 scrollDestroyedListener(socket, io);
+                artifactCollectedListener(io, socket);
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;

@@ -1,0 +1,53 @@
+import {Server, Socket} from 'socket.io';
+import * as userService from './../../services/userService.ts';
+import * as artifactService from './../../services/artifactService.ts';
+import { obituaryStateList, states } from '../../globalVariables.ts';
+import artifactListUpdate from '../events/artifactListUpdate';
+
+export function artifactEvaluationListener(io: Server, socket: Socket)
+{
+    socket.on("artifactEvaluation", async(message: string) => {
+        try
+        {
+            console.log("artifactEvaluation triggered")
+
+            if(states.obituaryState === obituaryStateList.evaluating)
+            {
+                if(message === 'verify')
+                {
+                    states.obituaryState = obituaryStateList.unlocked;
+
+                    io.in("stateTracker").emit("obituaryUpdate", states);
+                }
+                else if(message === 'reset')
+                {
+                    states.obituaryState = obituaryStateList.locked;
+
+                    const artifacts = artifactService.getAllArtifacts();
+
+                    for(let i=0; i<artifacts.length; i++)
+                    {
+                        const artifact = artifacts[i];
+
+                        artifact.isCollected = false;
+
+                        await artifact.save();
+                    }
+
+                    io.in("stateTracker").emit("obituaryUpdate", states);
+
+                    artifactListUpdate();
+                }
+            }
+            else
+            {
+                console.log("obituaryState not in evaluation, aborted");
+            }
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+    })
+    
+}

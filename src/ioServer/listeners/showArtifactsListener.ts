@@ -3,7 +3,7 @@ import * as userService from './../../services/userService.ts';
 import * as artifactService from './../../services/artifactService.ts';
 import { roles } from '../../database/playerRoles';
 import { server } from '../ioServer';
-import { obituaryStateList, states } from '../../globalVariables';
+import { obituaryStateList, states } from '../../globalVariables.ts';
 
 export function showArtifactsListener(io: Server, socket: Socket)
 {
@@ -44,17 +44,9 @@ export function showArtifactsListener(io: Server, socket: Socket)
 
             console.log("all conditions are met, sending emit to mortimer and acolytes...");
 
-            for(let i=0; i<players.length; i++)
-            {
-                const entry = players[i];
-
-                if(entry.profile.role === 'MORTIMER' || entry.profile.role === 'ACOLITO')
-                {
-                    server.in(entry.socketId).emit("artifactEvaluating", "");
-                }
-            }
-
             states.obituaryState = obituaryStateList.evaluating;
+
+            io.in("stateTracker").emit("obituaryUpdate", states);
         }
         catch(error)
         {

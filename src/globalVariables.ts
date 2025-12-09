@@ -4,9 +4,15 @@ const scrollStateList = {
     eliminated: 2
 }
 
+const obituaryStateList = {
+    locked: 0,
+    evaluating: 1,
+    unlocked: 2
+}
+
 const states = {
     scrollState: scrollStateList.eliminated,
-    obituaryUnlocked: false //Controls whether the obituary is unlocked or not
+    obituaryState: obituaryStateList.locked
 }
 
 const coordinateList = [];
@@ -14,5 +20,6 @@ const coordinateList = [];
 export {
     states,
     scrollStateList,
-    coordinateList
+    coordinateList,
+    obituaryStateList
 }

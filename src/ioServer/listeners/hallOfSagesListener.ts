@@ -82,6 +82,12 @@ export async function sendHallOfSagesNotificationToMortimer()
 
         const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer);
 
+        if(mortimer.socketId !== null && mortimer.isInHallOfSages)
+        {
+            console.log("Message should not be sent, mortimer is already in hall of sages");
+            return;
+        }
+
         if(mortimer && mortimer.fcmToken !== null)
         {
             const message = {

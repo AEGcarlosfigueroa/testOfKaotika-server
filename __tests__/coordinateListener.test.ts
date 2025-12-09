@@ -75,6 +75,6 @@ async function wait()
     await new Promise((resolve) => {
                 setTimeout(() => {
                     resolve ("a");
-                }, 5);
+                }, 10);
             });
 }

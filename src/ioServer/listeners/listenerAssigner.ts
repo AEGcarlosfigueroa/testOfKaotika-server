@@ -8,9 +8,8 @@ import scrollDestroyedListener from "./scrollDestroyedListener.ts";
 import { coordinateListener } from "./coordinateListener.ts";
 import { hallOfSagesListener } from "./hallOfSagesListener.ts";
 import { artifactCollectedListener } from "./artifactCollectedListener.ts";
-
 import * as userService from"./../../services/userService.ts"
-import { showArtifactsListener } from "./showArtifactsListener";
+import { showArtifactsListener } from "./showArtifactsListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {

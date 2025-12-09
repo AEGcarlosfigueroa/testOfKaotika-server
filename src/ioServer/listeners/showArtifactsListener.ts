@@ -1,8 +1,8 @@
 import {Server, Socket} from 'socket.io';
 import * as userService from './../../services/userService.ts';
 import * as artifactService from './../../services/artifactService.ts';
-import { roles } from '../../database/playerRoles';
-import { server } from '../ioServer';
+import { roles } from '../../database/playerRoles.ts';
+import { server } from '../ioServer.ts';
 import { obituaryStateList, states } from '../../globalVariables.ts';
 
 export function showArtifactsListener(io: Server, socket: Socket)

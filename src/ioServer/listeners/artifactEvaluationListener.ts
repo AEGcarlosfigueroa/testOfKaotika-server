@@ -34,6 +34,22 @@ export function artifactEvaluationListener(io: Server, socket: Socket)
                         await artifact.save();
                     }
 
+                    const players = await userService.getAllUsers();
+
+                    for(let i=0; i<players.length; i++)
+                    {
+                        const player = players[i];
+
+                        player.artifactInventory = [];
+
+                        await player.save();
+
+                        if(player.socketId !== null)
+                        {
+                            server.in(player.socketId).emit("authorization", player);
+                        }
+                    }
+
                     io.in("stateTracker").emit("stateUpdate", states);
 
                     artifactListUpdate();

@@ -4,6 +4,8 @@ import * as artifactService from "./../../services/artifactService.ts"
 import { messaging } from "../../firebase.ts";
 import { roles } from "../../database/playerRoles.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
+import { states } from "../../globalVariables.ts";
+import { server } from "../ioServer.ts";
 
 export function hallOfSagesListener(io: Server, socket: Socket)
 {
@@ -62,6 +64,8 @@ export async function sendHallOfSagesNotificationToMortimer()
             if(entry.socketId === null || entry.isInHallOfSages === false)
             {
                 console.log("Not all acolytes are in hall of fame");
+                states.canShowArtifacts = false;
+                server.in("stateTracker").emit("stateUpdate", states);
                 return;
             }
         }
@@ -74,6 +78,8 @@ export async function sendHallOfSagesNotificationToMortimer()
             if(entry.isCollected === false)
             {
                 console.log("not all artifacts are collected");
+                states.canShowArtifacts = false;
+                server.in("stateTracker").emit("stateUpdate", states);
                 return;
             }
         }
@@ -84,7 +90,9 @@ export async function sendHallOfSagesNotificationToMortimer()
 
         if(mortimer.socketId !== null && mortimer.isInHallOfSages)
         {
+            states.canShowArtifacts = true
             console.log("Message should not be sent, mortimer is already in hall of sages");
+            server.in("stateTracker").emit("stateUpdate", states);
             return;
         }
 
@@ -100,6 +108,10 @@ export async function sendHallOfSagesNotificationToMortimer()
             messaging.send(message);
             console.log("message sent");
         }
+
+        states.canShowArtifacts = false;
+
+        server.in("stateTracker").emit("stateUpdate", states);
     }
     catch(error)
     {

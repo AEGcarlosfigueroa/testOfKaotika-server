@@ -12,7 +12,8 @@ const obituaryStateList = {
 
 const states = {
     scrollState: scrollStateList.eliminated,
-    obituaryState: obituaryStateList.locked
+    obituaryState: obituaryStateList.locked,
+    canShowArtifacts: false
 }
 
 const coordinateList = [];

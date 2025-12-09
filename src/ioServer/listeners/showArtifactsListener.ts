@@ -46,7 +46,7 @@ export function showArtifactsListener(io: Server, socket: Socket)
 
             states.obituaryState = obituaryStateList.evaluating;
 
-            io.in("stateTracker").emit("obituaryUpdate", states);
+            io.in("stateTracker").emit("stateUpdate", states);
         }
         catch(error)
         {

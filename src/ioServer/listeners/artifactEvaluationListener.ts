@@ -17,7 +17,7 @@ export function artifactEvaluationListener(io: Server, socket: Socket)
                 {
                     states.obituaryState = obituaryStateList.unlocked;
 
-                    io.in("stateTracker").emit("obituaryUpdate", states);
+                    io.in("stateTracker").emit("stateUpdate", states);
                 }
                 else if(message === 'reset')
                 {
@@ -34,7 +34,7 @@ export function artifactEvaluationListener(io: Server, socket: Socket)
                         await artifact.save();
                     }
 
-                    io.in("stateTracker").emit("obituaryUpdate", states);
+                    io.in("stateTracker").emit("stateUpdate", states);
 
                     artifactListUpdate();
                 }

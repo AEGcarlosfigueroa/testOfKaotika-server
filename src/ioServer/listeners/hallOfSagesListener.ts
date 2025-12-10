@@ -27,7 +27,6 @@ export function hallOfSagesListener(io: Server, socket: Socket)
                 player.isInHallOfSages = true;
                 await player.save();
                 socket.emit("authorization", player);
-                sendHallOfSagesNotificationToMortimer();
                 console.log("entered hallOfSages");
             }
             else if(state === "exit")
@@ -41,6 +40,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
             {
                 console.log("Invalid argument in hall of sages listener");
             }
+            sendHallOfSagesNotificationToMortimer();
             playerListUpdate();
         }
         catch(error)
@@ -55,8 +55,6 @@ export async function sendHallOfSagesNotificationToMortimer()
     try
     {
         const acolytes = await userService.getAllAcolytes();
-
-        let allAcolytesConnectedAndInHallOfFame = true;
 
         for(let i=0; i<acolytes.length; i++)
         {

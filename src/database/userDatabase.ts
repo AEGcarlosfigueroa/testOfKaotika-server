@@ -92,7 +92,7 @@ export async function updateInsertPlayer(playerData: any)
     else
     {
         object.is_active = true;
-        if(!object.artifactInventory)
+        if(!foundObj.artifactInventory)
         {
             object.artifactInventory = [];
         }

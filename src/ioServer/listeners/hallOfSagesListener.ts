@@ -86,6 +86,12 @@ export async function sendHallOfSagesNotificationToMortimer()
 
         const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer);
 
+        if(!mortimer)
+        {
+            console.log("mortimer not found, aborting");
+            return;
+        }
+
         if(mortimer.socketId !== null && mortimer.isInHallOfSages)
         {
             states.canShowArtifacts = true

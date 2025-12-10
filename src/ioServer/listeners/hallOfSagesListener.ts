@@ -4,6 +4,8 @@ import * as artifactService from "./../../services/artifactService.ts"
 import { messaging } from "../../firebase.ts";
 import { roles } from "../../database/playerRoles.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
+import { states } from "../../globalVariables.ts";
+import { server } from "../ioServer.ts";
 
 export function hallOfSagesListener(io: Server, socket: Socket)
 {
@@ -25,7 +27,6 @@ export function hallOfSagesListener(io: Server, socket: Socket)
                 player.isInHallOfSages = true;
                 await player.save();
                 socket.emit("authorization", player);
-                sendHallOfSagesNotificationToMortimer();
                 console.log("entered hallOfSages");
             }
             else if(state === "exit")
@@ -39,6 +40,7 @@ export function hallOfSagesListener(io: Server, socket: Socket)
             {
                 console.log("Invalid argument in hall of sages listener");
             }
+            sendHallOfSagesNotificationToMortimer();
             playerListUpdate();
         }
         catch(error)
@@ -54,14 +56,14 @@ export async function sendHallOfSagesNotificationToMortimer()
     {
         const acolytes = await userService.getAllAcolytes();
 
-        let allAcolytesConnectedAndInHallOfFame = true;
-
         for(let i=0; i<acolytes.length; i++)
         {
             const entry = acolytes[i];
             if(entry.socketId === null || entry.isInHallOfSages === false)
             {
                 console.log("Not all acolytes are in hall of fame");
+                states.canShowArtifacts = false;
+                server.in("stateTracker").emit("stateUpdate", states);
                 return;
             }
         }
@@ -74,6 +76,8 @@ export async function sendHallOfSagesNotificationToMortimer()
             if(entry.isCollected === false)
             {
                 console.log("not all artifacts are collected");
+                states.canShowArtifacts = false;
+                server.in("stateTracker").emit("stateUpdate", states);
                 return;
             }
         }
@@ -81,6 +85,20 @@ export async function sendHallOfSagesNotificationToMortimer()
         console.log("All acolytes are in hall of fame and all artifacts are collected, sending message...");
 
         const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer);
+
+        if(!mortimer)
+        {
+            console.log("mortimer not found, aborting");
+            return;
+        }
+
+        if(mortimer.socketId !== null && mortimer.isInHallOfSages)
+        {
+            states.canShowArtifacts = true
+            console.log("Message should not be sent, mortimer is already in hall of sages");
+            server.in("stateTracker").emit("stateUpdate", states);
+            return;
+        }
 
         if(mortimer && mortimer.fcmToken !== null)
         {
@@ -94,6 +112,10 @@ export async function sendHallOfSagesNotificationToMortimer()
             messaging.send(message);
             console.log("message sent");
         }
+
+        states.canShowArtifacts = false;
+
+        server.in("stateTracker").emit("stateUpdate", states);
     }
     catch(error)
     {

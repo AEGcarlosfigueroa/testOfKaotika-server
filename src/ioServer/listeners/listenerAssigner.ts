@@ -8,8 +8,9 @@ import scrollDestroyedListener from "./scrollDestroyedListener.ts";
 import { coordinateListener } from "./coordinateListener.ts";
 import { hallOfSagesListener } from "./hallOfSagesListener.ts";
 import { artifactCollectedListener } from "./artifactCollectedListener.ts";
-
 import * as userService from"./../../services/userService.ts"
+import { showArtifactsListener } from "./showArtifactsListener.ts";
+import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {
@@ -25,6 +26,8 @@ export async function listenerAssigner(socket: Socket, io: Server)
 
         hallOfSagesListener(io, socket);
 
+        socket.join("stateTracker");
+
         switch(role)
         {
             case "ISTVAN": 
@@ -36,10 +39,12 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 scrollCollectedListener(socket, io);
                 coordinateListener(socket, io);
                 artifactCollectedListener(io, socket);
+                showArtifactsListener(io, socket);
                 socket.join("artifactTracker");
                 break;
             case 'MORTIMER':
                 scrollDestroyedListener(socket, io);
+                artifactEvaluationListener(io, socket);
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;

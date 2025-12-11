@@ -66,7 +66,6 @@ describe("Test that the coordinateListener properly inserts coordinate object in
         await wait();
         expect(globals.coordinateList.length).toBe(1);
     });
-    
 })
 
 async function wait() {

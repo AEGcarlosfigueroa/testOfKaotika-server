@@ -66,21 +66,12 @@ describe("Test that the coordinateListener properly inserts coordinate object in
         await wait();
         expect(globals.coordinateList.length).toBe(1);
     });
-
-
 })
 
 async function wait() {
     await new Promise((resolve) => {
-<<<<<<< HEAD
         setTimeout(() => {
             resolve("a");
         }, 10);
     });
-=======
-                setTimeout(() => {
-                    resolve ("a");
-                }, 50);
-            });
->>>>>>> 8b3fbe260cca84beba6faad51cc0f58a4180a0e9
 }

@@ -101,6 +101,11 @@ export async function updateInsertPlayer(playerData: any)
         {
             object.isInHallOfSages = false;
         }
+
+        if(!foundObj.isBetrayer)
+        {
+            object.isBetrayer = false;
+        }
     }
 
     object._id = undefined;

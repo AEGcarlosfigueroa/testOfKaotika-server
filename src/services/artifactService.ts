@@ -1,4 +1,4 @@
-import * as artifactDatabase from './../database/artifactDatabase.ts'
+import * as artifactDatabase from './../database/artifactDatabase.ts';
 
 export async function getAllArtifacts()
 {

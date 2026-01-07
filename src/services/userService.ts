@@ -1,4 +1,5 @@
-import * as userDatabase from "./../database/userDatabase.ts"
+import * as userDatabase from "./../database/userDatabase.ts";
+import UserModel from '../models/userModel.ts';
 
 const getAllUsers = async () => {
     try

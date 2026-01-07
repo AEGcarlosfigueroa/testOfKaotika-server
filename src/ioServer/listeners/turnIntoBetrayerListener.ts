@@ -3,7 +3,7 @@ import playerListUpdate from '../events/playerListUpdate.ts';
 
 export function turnIntoBetrayerListener(io: Server, socket: Socket)
 {
-    socket.on("turnIntoBetrayer", () => {
+    socket.on("turnIntoBetrayer", async () => {
         
         const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 

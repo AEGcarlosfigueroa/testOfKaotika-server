@@ -11,6 +11,7 @@ import { artifactCollectedListener } from "./artifactCollectedListener.ts";
 import * as userService from"./../../services/userService.ts"
 import { showArtifactsListener } from "./showArtifactsListener.ts";
 import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
+import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {
@@ -40,6 +41,7 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 coordinateListener(socket, io);
                 artifactCollectedListener(io, socket);
                 showArtifactsListener(io, socket);
+                turnIntoBetrayerListener(io, socket);
                 socket.join("artifactTracker");
                 break;
             case 'MORTIMER':

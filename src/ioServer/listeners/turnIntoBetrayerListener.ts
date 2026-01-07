@@ -12,6 +12,8 @@ export function turnIntoBetrayerListener(io: Server, socket: Socket)
             player.gold += 50000;
             player.isBetrayer = true;
 
+            //IMPLEMENT ADDING NEW ITEMS TO PLAYER INVENTORY
+
             await player.save();
 
             socket.emit("authorization", player);

@@ -108,9 +108,7 @@ export async function updateInsertPlayer(playerData: any)
         }
         else
         {
-            object.isBetrayer = true;
-            object.gold += 50000;       //PLACEHOLDER WHILE WE CANNOT POST DIRECTLY TO KAOTIKA API
-            //INSERT TRAITOR ITEMS HERE
+            object.isBetrayer = true; //Preserving isBetrayer value on each login while post to Katika API cannot be made
         }
     }
 

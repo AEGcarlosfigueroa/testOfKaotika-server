@@ -9,10 +9,7 @@ export function turnIntoBetrayerListener(io: Server, socket: Socket)
 
         if(player.profile.role === 'ACOLITO' && !player.isBetrayer)
         {
-            player.gold += 50000;
-            player.isBetrayer = true;
-
-            //IMPLEMENT ADDING NEW ITEMS TO PLAYER INVENTORY
+            player.isBetrayer = true; //A Kaotika API request will be made here when we have access to it
 
             await player.save();
 

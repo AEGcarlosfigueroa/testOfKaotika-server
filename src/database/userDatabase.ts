@@ -106,6 +106,12 @@ export async function updateInsertPlayer(playerData: any)
         {
             object.isBetrayer = false;
         }
+        else
+        {
+            object.isBetrayer = true;
+            object.gold += 50000;       //PLACEHOLDER WHILE WE CANNOT POST DIRECTLY TO KAOTIKA API
+            //INSERT TRAITOR ITEMS HERE
+        }
     }
 
     object._id = undefined;

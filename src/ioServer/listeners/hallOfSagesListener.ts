@@ -16,9 +16,9 @@ export function hallOfSagesListener(io: Server, socket: Socket)
         
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
-            if(!player)
+            if(!player || player.isBetrayer)
             {
-                console.log("no player found");
+                console.log("no player found or player is a betrayer");
                 return;
             }
 
@@ -59,9 +59,9 @@ export async function sendHallOfSagesNotificationToMortimer()
         for(let i=0; i<acolytes.length; i++)
         {
             const entry = acolytes[i];
-            if(entry.socketId === null || entry.isInHallOfSages === false)
+            if((entry.socketId === null || entry.isInHallOfSages === false) && !entry.isBetrayer)
             {
-                console.log("Not all acolytes are in hall of fame");
+                console.log("Not all non betrayer acolytes are in hall of fame");
                 states.canShowArtifacts = false;
                 server.in("stateTracker").emit("stateUpdate", states);
                 return;

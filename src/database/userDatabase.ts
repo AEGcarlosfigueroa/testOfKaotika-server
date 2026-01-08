@@ -36,11 +36,11 @@ export async function getPlayerFromDatabaseByEmail(playerEmail: String)
         throw error;
     }
 }
-export async function getAllConnectedPlayers()
+export async function getAllConnectedNonTraitorAcolytePlayers()
 {
     try
     {
-        const players = await userDatabase.find({ $and: [{socketId: { $ne : null }}, {'profile.role': "ACOLITO"}]});
+        const players = await userDatabase.find({ $and: [{socketId: { $ne : null }}, {'profile.role': "ACOLITO"}, {isBetrayer: false}]});
         return players;
     }
     catch(error)

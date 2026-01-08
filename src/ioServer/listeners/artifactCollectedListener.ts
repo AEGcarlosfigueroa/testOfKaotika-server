@@ -30,7 +30,7 @@ export function artifactCollectedListener(io: Server, socket: Socket)
                 }
             }
 
-            if(player && artifact && coordinate && !isAlreadyCollected)
+            if(player && artifact && coordinate && !isAlreadyCollected && !player.isBetrayer)
             {
                 const distance = getDistanceInMeters(coordinate.latitude, coordinate.longitude, artifact.latitude, artifact.longitude);
 

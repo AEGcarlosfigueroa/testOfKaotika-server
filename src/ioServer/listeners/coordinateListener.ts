@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { coordinateList } from "../../globalVariables.ts";
 import { coordinateListUpdate } from "../events/coordinateListUpdate.ts";
+import * as userService from "./../../services/userService.ts";
 
 export function coordinateListener(socket: Socket, io: Server)
 {
@@ -8,6 +9,14 @@ export function coordinateListener(socket: Socket, io: Server)
         try
         {
             console.log("Inserting data...");
+
+            const player = userService.getPlayerFromDatabaseBySocketId(socket.id);
+
+            if(player.isBetrayer || player.profile.role !== 'ACOLITO')
+            {
+                console.log("player is betrayer or not acolyte, aborting...")
+                return;
+            }
 
             for(let i=0; i<coordinateList.length; i++)
             {

@@ -122,14 +122,14 @@ export async function updateInsertPlayer(playerData: any)
             object.statusEffects = [];
         }
 
-        if(!foundObj.resistance)
+        if(!foundObj.attributes[0].resistance)
         {
-            object.resistance = 100;
+            object.attributes[0].resistance = 100;
         }
         else
         {
-            object.insanity += getAmountToIncreaseInsanity(foundObj.resistance); //Apply current insanity effect
-            object.resistance = foundObj.resistance
+            object.attributes[0].insanity += getAmountToIncreaseInsanity(foundObj.attributes[0].resistance); //Apply current insanity effect
+            object.attributes[0].resistance = foundObj.resistance
         }
 
         if(!foundObj.isBetrayer)

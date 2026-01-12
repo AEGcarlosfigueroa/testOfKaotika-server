@@ -1,6 +1,7 @@
 import userDatabase from '../models/userModel.ts';
 import * as mongoose from 'mongoose'
 import { getRoleByEmail  } from './playerRoles.ts';
+import getAmountToIncreaseInsanity from '../statusTools/getAmountToIncreaseInsanity.ts';
 
 export async function getAllUsers()
 {
@@ -101,6 +102,7 @@ export async function updateInsertPlayer(playerData: any)
         object.isInHallOfSages = false;
         object.artifactInventory = [];
         object.statusEffects = [];
+        object.resistance = 100;
     }
     else
     {
@@ -118,6 +120,16 @@ export async function updateInsertPlayer(playerData: any)
         if(!foundObj.statusEffects)
         {
             object.statusEffects = [];
+        }
+
+        if(!foundObj.resistance)
+        {
+            object.resistance = 100;
+        }
+        else
+        {
+            object.insanity += getAmountToIncreaseInsanity(foundObj.resistance); //Apply current insanity effect
+            object.resistance = foundObj.resistance
         }
 
         if(!foundObj.isBetrayer)

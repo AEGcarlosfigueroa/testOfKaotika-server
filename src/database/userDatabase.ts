@@ -88,6 +88,7 @@ export async function updateInsertPlayer(playerData: any)
         object.cardID = null;
         object.isInHallOfSages = false;
         object.artifactInventory = [];
+        object.statusEffects = [];
     }
     else
     {
@@ -100,6 +101,11 @@ export async function updateInsertPlayer(playerData: any)
         if(!object.isInHallOfSages)
         {
             object.isInHallOfSages = false;
+        }
+
+        if(!foundObj.statusEffects)
+        {
+            object.statusEffects = [];
         }
 
         if(!foundObj.isBetrayer)

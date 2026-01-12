@@ -176,6 +176,7 @@ const playerInfoSchema = new Schema({
   isInTower: Boolean, // determines whether the player is in the tower or not
   cardID: String || null, //cardID assigned to player
   isInHallOfSages: Boolean, // controls whether the player is in the hall of sages or not
+  statusEffects: [String],
   artifactInventory: [String],
   profile: playerProfileSchema,
   gold: Number,

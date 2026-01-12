@@ -67,6 +67,17 @@ const getAllAcolytes = async () => {
         throw error;
     }
 }
+const getAllNonTraitorAcolytes = async () => {
+    try
+    {
+        const players = await userDatabase.getAllNonTraitorAcolytes();
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 const getAllConnectedNonTraitorAcolytePlayers = async () => {
     try
     {
@@ -86,5 +97,6 @@ export {
     getPlayerFromDatabaseBySocketId,
     getAllConnectedNonTraitorAcolytePlayers,
     getPlayerFromCardID,
-    getAllAcolytes
+    getAllAcolytes,
+    getAllNonTraitorAcolytes
 }

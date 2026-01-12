@@ -36,6 +36,18 @@ export async function getPlayerFromDatabaseByEmail(playerEmail: String)
         throw error;
     }
 }
+export async function getAllNonTraitorAcolytes()
+{
+    try
+    {
+        const players = await userDatabase.find({ $and: [{'profile.role': "ACOLITO"}, {isBetrayer: false}]});
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 export async function getAllConnectedNonTraitorAcolytePlayers()
 {
     try

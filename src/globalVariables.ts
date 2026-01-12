@@ -18,9 +18,18 @@ const states = {
 
 const coordinateList = [];
 
+const deadlyEffects = {
+    putridPlague: "0",
+    epicWeakness: "1",
+    medulaApocalypse: "2",
+    ethaziumCurse: "3"
+}
+
+
 export {
     states,
     scrollStateList,
     coordinateList,
-    obituaryStateList
+    obituaryStateList,
+    deadlyEffects
 }

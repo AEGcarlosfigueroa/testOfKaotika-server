@@ -10,6 +10,7 @@ const attributeField = {
   constitution: Number,
   strength: Number,
   insanity: Number,
+  resistance: Number
 };
 
 // Basic item fields

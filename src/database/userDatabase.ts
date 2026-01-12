@@ -102,7 +102,6 @@ export async function updateInsertPlayer(playerData: any)
         object.isInHallOfSages = false;
         object.artifactInventory = [];
         object.statusEffects = [];
-        object.resistance = 100;
     }
     else
     {
@@ -122,14 +121,15 @@ export async function updateInsertPlayer(playerData: any)
             object.statusEffects = [];
         }
 
-        if(!foundObj.attributes[0].resistance)
+        if(!foundObj.attributes.resistance)
         {
-            object.attributes[0].resistance = 100;
+            object.attributes.resistance = 100;
         }
         else
         {
-            object.attributes[0].insanity += getAmountToIncreaseInsanity(foundObj.attributes[0].resistance); //Apply current insanity effect
-            object.attributes[0].resistance = foundObj.resistance
+            console.log(object.attributes);
+            object.attributes.insanity += getAmountToIncreaseInsanity(foundObj.attributes.resistance); //Apply current insanity effect
+            object.attributes.resistance = foundObj.resistance
         }
 
         if(!foundObj.isBetrayer)

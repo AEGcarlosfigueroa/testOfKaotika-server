@@ -12,7 +12,11 @@ import * as userService from"./../../services/userService.ts"
 import { showArtifactsListener } from "./showArtifactsListener.ts";
 import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
+<<<<<<< HEAD
 import { acolyteRestListener } from "./acolyteRestListener.ts";
+=======
+import { villanoListener } from "./villanoListener";
+>>>>>>> newrolesAdded
 
 export async function listenerAssigner(socket: Socket, io: Server)
 {
@@ -53,6 +57,7 @@ export async function listenerAssigner(socket: Socket, io: Server)
                 socket.join("artifactTracker");
                 break;
             case 'VILLANO':
+                villanoListener(socket, io)
                 socket.join("acolyteLocationTracker");
                 break;
             default:

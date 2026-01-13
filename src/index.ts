@@ -14,6 +14,7 @@ import { fileURLToPath } from 'url';
 import { stateRouter } from './routes/stateRoutes.ts';
 import { artifactRouter } from './routes/artifactRoutes.ts';
 import cron from "node-cron";
+import executeCron from './cron/executeCron.ts';
 
 dotenv.config();
 
@@ -88,6 +89,7 @@ async function start(){
           if(cronEnabled == "true")
           {
             console.log("cron enabled, running task...");
+            executeCron();
           }
           else
           {

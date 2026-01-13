@@ -9,21 +9,31 @@ export default async function executeCron()
     {
         console.log("executing cron function...");
 
-        const acolytes = await userService.getAllConnectedNonTraitorAcolytePlayers();
+        const acolytes = await userService.getAllNonTraitorAcolytes();
 
         for(let i=0; i<acolytes.length; i++)
         {
             const currentAcolyte = acolytes[i];
 
-            await reduceResistanceBy10(currentAcolyte);
+            console.log("processing acolyte...");
+            console.log(currentAcolyte.attributes[0].resistance);
 
-            if(currentAcolyte.socketId !== null && server !== null)
+            if(currentAcolyte.attributes[0].resistance) // check if current acolyte has resistance
             {
-                server.in(currentAcolyte.socketId).emit("authorization", currentAcolyte);
+                console.log("acolyte has resistance, executing resistance reduction...")
+                await reduceResistanceBy10(currentAcolyte);
 
-                playerListUpdate();
+                if(currentAcolyte.socketId !== null && server !== null)
+                {
+                    server.in(currentAcolyte.socketId).emit("authorization", currentAcolyte);
+                }
             }
+
+            console.log("acolyte result...");
+            console.log(currentAcolyte.attributes);
         }
+
+        playerListUpdate(); // Update player lists after all operations are done
     }
     catch(error)
     {

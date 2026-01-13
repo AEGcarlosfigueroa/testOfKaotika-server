@@ -2,23 +2,38 @@ export default async function reduceResistanceBy10(playerObj: any)
 {
     try
     {
-        const currentResistance = playerObj.attributes.resistance;
+        console.log("reduce resistance by 10");
 
-        playerObj.attributes.resistance -= 10
+        const currentResistance = playerObj.attributes[0].resistance;
 
-        const amountToReduceInsanity = currentResistance - 50; //Revert changes occured by previous resistance number
+        playerObj.attributes[0].resistance -= 10;
+
+        if(playerObj.attributes[0].resistance < 0)
+        {
+            playerObj.attributes[0].resistance = 0;
+        }
+
+        const amountToReduceInsanity = 50 - currentResistance; //Revert changes occured by previous resistance number
+
+        console.log("Reduce resistance by: " + amountToReduceInsanity);
 
         if(amountToReduceInsanity > 0)
         {
-            playerObj.attributes.insanity -= amountToReduceInsanity;
+            playerObj.attributes[0].insanity -= amountToReduceInsanity;
         }
 
-        const amountToIncreaseInsanity = playerObj.attributes.resistance - 50; //Reapply changes with new resistance number
+        const amountToIncreaseInsanity = 50 - playerObj.attributes[0].resistance; //Reapply changes with new resistance number
+
+        console.log("Increase resistance by: " + amountToIncreaseInsanity);
 
         if(amountToIncreaseInsanity > 0)
         {
-            playerObj.attributes.insanity -= amountToIncreaseInsanity;
+            playerObj.attributes[0].insanity += amountToIncreaseInsanity;
         }
+
+        console.log(currentResistance);
+
+        console.log(playerObj.attributes);
 
         await playerObj.save();
     }

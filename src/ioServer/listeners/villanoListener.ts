@@ -6,36 +6,32 @@ import playerListUpdate from "../events/playerListUpdate.ts";
 
 import { deadlyEffects } from "../../../src/globalVariables.ts";
 
+import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
+
 function villanoListener(socket: Socket, io: Server) {
 
-    socket.on("disease", async (email: String, disease: String) => {
+    socket.on("disease", async (email: string, disease: string) => {
         console.log("player about to get infected")
 
-        const player = await userService.getPlayerFromDatabaseByEmail(email)
+        const player = await await userService.getPlayerFromDatabaseByEmail(email)
 
-        const diseaseApplied = deadlyEffects.disease
+        // const diseaseApplied = deadlyEffects.disease
 
-       ApplyStatusEffect(player)
+        await ApplyStatusEffect(player, disease)
+
+        const acolyteSO = await io.in(player.socketId).fetchSockets();
+
+        console.log(acolyteSO[0].id);
+
+        acolyteSO[0].emit("updated player", player);
+
+        socket.emit("confirmation", "ok")
+
 
     })
 }
 
-async function ApplyStatusEffect(player) {
-
-    if (!player.statusEffects.includes(diseaseApplied)) {
-
-        player.statusEffects.push(diseaseApplied);
-    }
-
-    await player.save();
-
-    socket.emit("confirmation", "ok")
-
-    const acolyteSO = await io.in(player.socketId).fetchSockets();
-
-    console.log(acolyteSO[0].id);
-
-    acolyteSO[0].emit("updated player", player);
-}
 
 export { villanoListener }
+
+// (SERVER) add a function that applies Ethazium Curse and apply its effect to statusEffects array and changes attributes to the Player object given

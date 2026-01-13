@@ -121,15 +121,18 @@ export async function updateInsertPlayer(playerData: any)
             object.statusEffects = [];
         }
 
-        if(!foundObj.attributes.resistance)
+        console.log("foundObj");
+        console.log(object.attributes.resistance);
+
+        if(!foundObj.attributes[0].resistance)
         {
             object.attributes.resistance = 100;
         }
         else
         {
-            console.log(object.attributes);
-            object.attributes.insanity += getAmountToIncreaseInsanity(foundObj.attributes.resistance); //Apply current insanity effect
-            object.attributes.resistance = foundObj.resistance
+            console.log(foundObj.attributes);
+            object.attributes.resistance = foundObj.attributes[0].resistance;
+            object.attributes.insanity += getAmountToIncreaseInsanity(object.attributes.resistance); //Apply current insanity effect
         }
 
         if(!foundObj.isBetrayer)
@@ -146,7 +149,7 @@ export async function updateInsertPlayer(playerData: any)
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: object.email}, 
-        {$set: object },
+        {$set: object , attributes: [object.attributes]},
         {upsert : true, new: true});
 
         console.log(updatedPlayer);

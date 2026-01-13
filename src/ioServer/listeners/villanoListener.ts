@@ -13,7 +13,7 @@ function villanoListener(socket: Socket, io: Server) {
     socket.on("disease", async (email: string, disease: string) => {
         console.log("player about to get infected")
 
-        const player = await userService.getPlayerFromDatabaseByEmail(email)
+        const player = await await userService.getPlayerFromDatabaseByEmail(email)
 
         // const diseaseApplied = deadlyEffects.disease
 

@@ -13,7 +13,7 @@ import { showArtifactsListener } from "./showArtifactsListener.ts";
 import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
 import { acolyteRestListener } from "./acolyteRestListener.ts";
-import { villanoListener } from "./villanoListener";
+import { villanoListener } from "./villanoListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {

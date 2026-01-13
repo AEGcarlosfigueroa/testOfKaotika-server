@@ -13,6 +13,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { stateRouter } from './routes/stateRoutes.ts';
 import { artifactRouter } from './routes/artifactRoutes.ts';
+import cron from "node-cron";
 
 dotenv.config();
 
@@ -33,6 +34,8 @@ const app: Application = express();
 app.use(logger("dev"));
 
 const PORT = process.env.PORT || 3000;
+
+const cronEnabled = process.env.CRON_ENABLED || "false";
 
 initIoServer(app, PORT);
 
@@ -80,6 +83,17 @@ async function start(){
             console.log(`API is listening on port ${PORT}`);
         });
         console.log('you are now connected to Mongo');
+
+        cron.schedule('* * * * *', () => {
+          if(cronEnabled == "true")
+          {
+            console.log("cron enabled, running task...");
+          }
+          else
+          {
+            console.log("cron disabled");
+          }
+        });
     } 
     catch(error: any)
     {

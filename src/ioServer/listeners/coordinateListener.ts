@@ -10,7 +10,7 @@ export function coordinateListener(socket: Socket, io: Server)
         {
             console.log("Inserting data...");
 
-            const player = userService.getPlayerFromDatabaseBySocketId(socket.id);
+            const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
             if(player.isBetrayer || player.profile.role !== 'ACOLITO')
             {

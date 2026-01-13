@@ -11,7 +11,7 @@ function villanoListener(socket: Socket, io: Server) {
     socket.on("disease", async (email: String, disease: String) => {
         console.log("player about to get infected")
 
-        const player = userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email)
 
         const diseaseApplied = deadlyEffects.disease
 
@@ -20,7 +20,7 @@ function villanoListener(socket: Socket, io: Server) {
     })
 }
 
-function ApplyStatusEffect(player) {
+async function ApplyStatusEffect(player) {
 
     if (!player.statusEffects.includes(diseaseApplied)) {
 

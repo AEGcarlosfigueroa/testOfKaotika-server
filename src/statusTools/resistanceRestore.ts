@@ -11,12 +11,12 @@ export default async function resistanceRestore(playerObj: any)
             playerObj.attributes.insanity -= amountToReduceInsanity;
         }
 
-        playerObj.attributes[0].resistance = 100;
+        playerObj.attributes.resistance = 100;
 
         await playerObj.save();
     }
     catch(error)
     {
-        console.error(error)
+        throw error;
     }
 }

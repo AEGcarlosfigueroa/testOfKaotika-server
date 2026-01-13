@@ -124,7 +124,7 @@ export async function updateInsertPlayer(playerData: any)
         console.log("foundObj");
         console.log(object.attributes.resistance);
 
-        if(!foundObj.attributes[0].resistance)
+        if(foundObj.attributes[0].resistance === undefined)
         {
             object.attributes.resistance = 100;
         }

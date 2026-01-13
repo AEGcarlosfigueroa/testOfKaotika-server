@@ -13,7 +13,7 @@ import { showArtifactsListener } from "./showArtifactsListener.ts";
 import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
 import { acolyteRestListener } from "./acolyteRestListener.ts";
-import { villanoListener } from "./villanoListener.ts";
+import { VillanoListener } from "./villanoListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {
@@ -51,7 +51,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 socket.join("artifactTracker");
                 break;
             case 'VILLANO':
-                villanoListener(socket, io)
+                VillanoListener(socket, io)
                 socket.join("acolyteLocationTracker");
                 break;
             default:

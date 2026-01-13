@@ -10,14 +10,23 @@ import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
 
 function villanoListener(socket: Socket, io: Server) {
 
-    socket.on("disease", async (email: String, disease: String) => {
+    socket.on("disease", async (email: string, disease: string) => {
         console.log("player about to get infected")
 
-        const player = userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email)
 
-        const diseaseApplied = deadlyEffects.disease
+        // const diseaseApplied = deadlyEffects.disease
 
-       ApplyStatusEffect(player, diseaseApplied)
+        await ApplyStatusEffect(player, disease)
+
+        const acolyteSO = await io.in(player.socketId).fetchSockets();
+
+        console.log(acolyteSO[0].id);
+
+        acolyteSO[0].emit("updated player", player);
+
+        socket.emit("confirmation", "ok")
+
 
     })
 }

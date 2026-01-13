@@ -1,4 +1,4 @@
-import { deadlyEffects } from "../globalVariables";
+import { deadlyEffects } from "../globalVariables.ts";
 
 export async function ApplyStatusEffect(player: any, diseaseApplied: string) {
     if (!player.statusEffects.includes(diseaseApplied)) {

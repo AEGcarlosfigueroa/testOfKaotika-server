@@ -8,12 +8,12 @@ import { deadlyEffects } from "../../../src/globalVariables.ts";
 
 import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
 
-function villanoListener(socket: Socket, io: Server) {
+function VillanoListener(socket: Socket, io: Server) {
 
     socket.on("disease", async (email: string, disease: string) => {
         console.log("player about to get infected")
 
-        const player = await await userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email)
 
         // const diseaseApplied = deadlyEffects.disease
 
@@ -27,11 +27,10 @@ function villanoListener(socket: Socket, io: Server) {
 
         socket.emit("confirmation", "ok")
 
-
     })
 }
 
 
-export { villanoListener }
+export { VillanoListener }
 
 // (SERVER) add a function that applies Ethazium Curse and apply its effect to statusEffects array and changes attributes to the Player object given

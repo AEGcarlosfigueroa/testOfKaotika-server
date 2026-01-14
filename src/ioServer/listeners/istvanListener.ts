@@ -40,27 +40,41 @@ function istvanListener(socket: Socket, io: Server) {
     })
     socket.on("curse", async (email) => {
 
-        console.log("curse, from the depts of hell, incoming")
+        try
+        {
+            console.log("curse, from the depts of hell, incoming")
 
-        console.log(email)
+            console.log(email)
 
-        const player = await userService.getPlayerFromDatabaseByEmail(email);
+            const player = await userService.getPlayerFromDatabaseByEmail(email);
 
-        const cursedApplied = deadlyEffects.ethaziumCurse;
+            const cursedApplied = deadlyEffects.ethaziumCurse;
 
-        if (!player.statusEffects.includes(cursedApplied)) {
+            if (!player.statusEffects.includes(cursedApplied)) {
 
-            player.statusEffects.push(cursedApplied);
+                player.statusEffects.push(cursedApplied);
+            }
+            await player.save();
+
+            const acolyteSO = await io.in(player.socketId).fetchSockets();
+
+            if(acolyteSO[0] !== undefined)
+            {
+                console.log(acolyteSO[0].id);
+
+                acolyteSO[0].emit("updated player", player);
+            }
+
+            socket.emit("confirmation", "ok");
+
+            playerListUpdate();
         }
-        await player.save();
+        catch(error)
+        {
+            console.error(error);
+        }
 
-        socket.emit("confirmation", "ok")
-
-        const acolyteSO = await io.in(player.socketId).fetchSockets();
-
-        console.log(acolyteSO[0].id);
-
-        acolyteSO[0].emit("updated player", player);
+        
 
     })
 }

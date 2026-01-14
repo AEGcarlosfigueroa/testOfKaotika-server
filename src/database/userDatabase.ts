@@ -2,6 +2,7 @@ import userDatabase from '../models/userModel.ts';
 import * as mongoose from 'mongoose'
 import { getRoleByEmail  } from './playerRoles.ts';
 import getAmountToIncreaseInsanity from '../statusTools/getAmountToIncreaseInsanity.ts';
+import { reapplyStatusEffects } from '../statusTools/applyStatusEffect.ts';
 
 export async function getAllUsers()
 {
@@ -146,6 +147,8 @@ export async function updateInsertPlayer(playerData: any)
     }
 
     object._id = undefined;
+
+    if(foundObj) reapplyStatusEffects(object, foundObj);
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: object.email}, 

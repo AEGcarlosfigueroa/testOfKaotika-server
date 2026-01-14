@@ -5,6 +5,7 @@ import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
 
 import { deadlyEffects } from "../../../src/globalVariables.ts";
+import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect";
 
 function istvanListener(socket: Socket, io: Server) {
     socket.on("scan", async (email) => {
@@ -53,16 +54,14 @@ function istvanListener(socket: Socket, io: Server) {
             if (!player.statusEffects.includes(cursedApplied)) {
 
                 player.statusEffects.push(cursedApplied);
+
+                ApplyStatusEffect(player, cursedApplied);
             }
             await player.save();
 
-            const acolyteSO = await io.in(player.socketId).fetchSockets();
-
-            if(acolyteSO[0] !== undefined)
+            if(player.socketId !== null)
             {
-                console.log(acolyteSO[0].id);
-
-                acolyteSO[0].emit("updated player", player);
+                io.in(player.socketId).emit("authorization", player);
             }
 
             socket.emit("confirmation", "ok");

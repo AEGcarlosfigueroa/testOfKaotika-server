@@ -23,6 +23,7 @@ export function acolyteRestListener(socket: Socket, io: Server)
             {
                 console.log("player is betrayer or has resistance less than 30, aborting...");
                 socket.emit("authorization", player);
+                return;
             }
 
             await resistanceRestore(player);

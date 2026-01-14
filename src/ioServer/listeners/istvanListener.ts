@@ -51,13 +51,7 @@ function istvanListener(socket: Socket, io: Server) {
 
             const cursedApplied = deadlyEffects.ethaziumCurse;
 
-            if (!player.statusEffects.includes(cursedApplied)) {
-
-                player.statusEffects.push(cursedApplied);
-
-                ApplyStatusEffect(player, cursedApplied);
-            }
-            await player.save();
+            await ApplyStatusEffect(player, cursedApplied);
 
             if(player.socketId !== null)
             {

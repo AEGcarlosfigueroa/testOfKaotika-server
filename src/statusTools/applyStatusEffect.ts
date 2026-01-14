@@ -36,17 +36,20 @@ export function reapplyStatusEffects(player: any, dbPlayer: any) {
 
 function ApplyMaladies(player: any, diseaseApplied: any) {
 
+    console.log("applying maladies...");
+    console.log(player.attributes);
+
     if (diseaseApplied === deadlyEffects.ethaziumCurse) {
-        player.attributes.strength *= 0.6;
-        player.attributes.dexterity *= 0.6;
-        player.attributes.intelligence *= 0.6;
-        player.attributes.constitution *= 0.6;
+        player.attributes[0].strength *= 0.6;
+        player.attributes[0].dexterity *= 0.6;
+        player.attributes[0].intelligence *= 0.6;
+        player.attributes[0].constitution *= 0.6;
     }
     else if (diseaseApplied === deadlyEffects.medulaApocalypse) {
-        player.attributes.constitution *= 0.7;
+        player.attributes[0].constitution *= 0.7;
     }
     else if (diseaseApplied === deadlyEffects.putridPlague) {
-        player.attributes.intelligence *= 0.25
+        player.attributes[0].intelligence *= 0.25
     }
     else {
         player.attributes[0].strength *= 0.4

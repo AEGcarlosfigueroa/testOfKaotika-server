@@ -4,7 +4,7 @@ export const playerRole = {
     "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER",
     // "oskar.calvo@aeg.eus" : "MORTIMER",
     // "ozarate@aeg.eus" : "VILLANO",
-    "carlos.palacio@ikasle.aeg.eus" : "VILLANO"
+    "carlos.palacio@ikasle.aeg.eus" : 'VILLANO'
     
 
 }

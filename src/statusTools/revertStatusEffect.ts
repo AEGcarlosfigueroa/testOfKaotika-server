@@ -1,4 +1,4 @@
-import { deadlyEffects } from "../globalVariables";
+import { deadlyEffects } from "../globalVariables.ts";
 
 export async function RevertDiseaseEffects(player: any, disease: string) {
 

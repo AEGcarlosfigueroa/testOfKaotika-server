@@ -3,7 +3,6 @@ import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
 import { deadlyEffects } from "../../../src/globalVariables.ts";
 import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
-import { RevertStatusEffects } from "../../statusTools/revertStatusEffect.ts"
 import { RevertCurse } from "../../statusTools/revertStatusEffect.ts"
 
 function MortimerListener(socket: Socket, io: Server) {

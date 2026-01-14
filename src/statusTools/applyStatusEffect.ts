@@ -17,11 +17,12 @@ function ApplyMaladies(player: any, diseaseApplied: any) {
         player.attributes.strength *= 0.6;
         player.attributes.dexterity *= 0.6;
         player.attributes.intelligence *= 0.6;
+        player.attributes.constitution *= 0.6;
     }
-    else if(diseaseApplied === deadlyEffects.medulaApocalypse){
+    else if (diseaseApplied === deadlyEffects.medulaApocalypse) {
         player.attributes.constitution *= 0.7;
     }
-    else if (diseaseApplied === deadlyEffects.putridPlague){
+    else if (diseaseApplied === deadlyEffects.putridPlague) {
         player.attributes.intelligence *= 0.25
     }
     else {

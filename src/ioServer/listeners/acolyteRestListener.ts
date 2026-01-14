@@ -19,7 +19,7 @@ export function acolyteRestListener(socket: Socket, io: Server)
                 return;
             }
 
-            if(player.isBetrayer || player.attributes.resistance <= 30)
+            if(player.isBetrayer || player.attributes[0].resistance <= 30 || player.statusEffects[0] !== undefined)
             {
                 console.log("player is betrayer or has resistance less than 30, aborting...");
                 socket.emit("authorization", player);

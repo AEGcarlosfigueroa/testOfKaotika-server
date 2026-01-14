@@ -4,18 +4,33 @@ import playerListUpdate from "../events/playerListUpdate.ts";
 import { deadlyEffects } from "../../../src/globalVariables.ts";
 import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
 import { RevertStatusEffects } from "../../statusTools/revertStatusEffect.ts"
+import { RevertCurse } from "../../statusTools/revertStatusEffect.ts"
 
 function MortimerListener(socket: Socket, io: Server) {
 
     socket.on("disease", async (email: string, disease: string) => {
 
-        console.log("healing player")
+        console.log(`healing player ${email}`)
 
         const player = await userService.getPlayerFromDatabaseByEmail(email)
 
         await RevertStatusEffects(player, disease)
 
         await emitPlayerUpdate(socket, io, player, "player healed");
+
+    });
+
+    socket.on("release", async (email: string, curse: string) => {
+
+        console.log(`cursed is being lifted ${email}`)
+
+        const player = await userService.getPlayerFromDatabaseByEmail(email)
+
+        await RevertCurse(player, curse)
+
+        await emitPlayerUpdate(socket, io, player, "player has been blessed");
+
+
 
     })
     socket.on("restore", async (email: string, restore: string) => {

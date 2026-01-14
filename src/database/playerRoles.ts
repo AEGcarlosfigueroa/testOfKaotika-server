@@ -3,7 +3,8 @@ export const playerRole = {
     "classcraft.daw2@aeg.eus" : "ISTVAN",
     "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER",
     // "oskar.calvo@aeg.eus" : "MORTIMER",
-    "ozarate@aeg.eus" : "VILLANO",
+    // "ozarate@aeg.eus" : "VILLANO",
+    "carlos.palacio@ikasle.aeg.eus" : "VILLANO"
     
 
 }

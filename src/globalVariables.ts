@@ -10,10 +10,18 @@ const obituaryStateList = {
     unlocked: 2
 }
 
+const angeloStateList = {
+    angeloCaptured: 0,
+    angeloProcessing: 1,
+    angeloDelivered: 2,
+}
+
+
 const states = {
     scrollState: scrollStateList.eliminated,
-    obituaryState: obituaryStateList.unlocked,
-    canShowArtifacts: false
+    obituaryState: obituaryStateList.locked,
+    canShowArtifacts: false,
+    angeloState: angeloStateList.angeloProcessing 
 }
 
 const coordinateList = [];
@@ -25,11 +33,11 @@ const deadlyEffects = {
     ethaziumCurse: "3"
 }
 
-
 export {
     states,
     scrollStateList,
     coordinateList,
     obituaryStateList,
-    deadlyEffects
+    deadlyEffects,
+    angeloStateList
 }

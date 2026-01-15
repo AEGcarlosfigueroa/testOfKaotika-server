@@ -2,6 +2,7 @@ import * as userService from"./../../services/userService.ts"
 import { Server, Socket } from "socket.io";
 import { register } from "module";
 import resistanceRestore from "../../statusTools/resistanceRestore.ts";
+import playerListUpdate from "../events/playerListUpdate.ts";
 
 export function acolyteRestListener(socket: Socket, io: Server)
 {
@@ -30,6 +31,8 @@ export function acolyteRestListener(socket: Socket, io: Server)
             socket.emit("authorization", player);
 
             console.log("acolyte resistance restored");
+
+            playerListUpdate();
 
         }
         catch(error)

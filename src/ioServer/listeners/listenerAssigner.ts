@@ -15,6 +15,7 @@ import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
 import { acolyteRestListener } from "./acolyteRestListener.ts";
 import { VillanoListener } from "./villanoListener.ts";
 import { MortimerListener} from "./mortimerMaladiesListener.ts"
+import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {
@@ -49,6 +50,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 scrollDestroyedListener(socket, io);
                 artifactEvaluationListener(io, socket);
                 MortimerListener(socket, io)
+                MortimerAndAngeloListener(socket, io)
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;

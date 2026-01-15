@@ -15,7 +15,21 @@ export default async function reduceResistanceBy10(playerObj: any)
 
         const amountToReduceInsanity = 50 - currentResistance; //Revert changes occured by previous resistance number
 
+        const amountToDivideOtherAttributes = (currentResistance/100);
+
+        playerObj.attributes[0].strength /= amountToDivideOtherAttributes;
+
+        playerObj.attributes[0].dexterity /= amountToDivideOtherAttributes;
+
+        playerObj.attributes[0].intelligence /= amountToDivideOtherAttributes;
+
         console.log("Reduce resistance by: " + amountToReduceInsanity);
+
+        const amountToMultiplyOtherAttributes = (playerObj.attributes[0].resistance/100);
+
+        playerObj.attributes[0].strength *= amountToMultiplyOtherAttributes;
+        playerObj.attributes[0].dexterity *= amountToMultiplyOtherAttributes;
+        playerObj.attributes[0].intelligence *= amountToMultiplyOtherAttributes;
 
         if(amountToReduceInsanity > 0)
         {

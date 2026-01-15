@@ -6,6 +6,12 @@ export default async function resistanceRestore(playerObj: any)
 
         const amountToReduceInsanity = 50 - currentResistance;
 
+        const amountToDivideOtherAttributes = (currentResistance/100);
+
+        playerObj.attributes[0].strength *= amountToMultiplyOtherAttributes;
+        playerObj.attributes[0].dexterity *= amountToMultiplyOtherAttributes;
+        playerObj.attributes[0].intelligence *= amountToMultiplyOtherAttributes;
+
         if(amountToReduceInsanity > 0)
         {
             playerObj.attributes[0].insanity -= amountToReduceInsanity;

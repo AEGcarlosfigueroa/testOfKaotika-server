@@ -1,7 +1,7 @@
 import userDatabase from '../models/userModel.ts';
 import * as mongoose from 'mongoose'
 import { getRoleByEmail  } from './playerRoles.ts';
-import getAmountToIncreaseInsanity from '../statusTools/getAmountToIncreaseInsanity.ts';
+import getAmountToIncreaseInsanity, { getAmountToMultiplyOtherAttributes } from '../statusTools/getAmountToIncreaseInsanity.ts';
 import { reapplyStatusEffects } from '../statusTools/applyStatusEffect.ts';
 
 export async function getAllUsers()
@@ -134,6 +134,9 @@ export async function updateInsertPlayer(playerData: any)
             console.log(foundObj.attributes);
             object.attributes.resistance = foundObj.attributes[0].resistance;
             object.attributes.insanity += getAmountToIncreaseInsanity(object.attributes.resistance); //Apply current insanity effect
+            object.attributes.strength *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+            object.attributes.dexterity *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+            object.attributes.intelligence *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
         }
 
         if(!foundObj.isBetrayer)

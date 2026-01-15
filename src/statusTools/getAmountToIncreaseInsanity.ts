@@ -11,3 +11,8 @@ export default function getAmountToIncreaseInsanity(resistance: number)
         return amountToIncreaseInsanity;
     }
 }
+
+export function getAmountToMultiplyOtherAttributes(resistance: number)
+{
+    return (resistance/100);
+}

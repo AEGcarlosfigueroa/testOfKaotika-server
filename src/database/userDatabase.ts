@@ -94,6 +94,16 @@ export async function updateInsertPlayer(playerData: any)
 
     object.profile.role = getRoleByEmail(object.email);
 
+    const originalAttributes = {
+        resistance = 0,
+        dexterity = object.attributes.dexterity,
+        strength = object.attributes.insanity,
+        intelligence = object.attributes.intelligence,
+        insanity = object.attributes.insanity,
+        constitution = object.attributes.constitution,
+        charisma = object.attributes.charisma
+    }
+
     if(!foundObj)
     {
         object.is_active = false;
@@ -134,9 +144,19 @@ export async function updateInsertPlayer(playerData: any)
             console.log(foundObj.attributes);
             object.attributes.resistance = foundObj.attributes[0].resistance;
             object.attributes.insanity += getAmountToIncreaseInsanity(object.attributes.resistance); //Apply current insanity effect
-            object.attributes.strength *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
-            object.attributes.dexterity *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
-            object.attributes.intelligence *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+            if(object.attributes.insanity !== 0)
+            {
+                object.attributes.strength *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+                object.attributes.dexterity *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+                object.attributes.intelligence *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+            }
+            else
+            {
+                object.attributes.strength = 0;
+                object.attributes.dexterity = 0;
+                object.attributes.intelligence = 0;
+            }
+            
         }
 
         if(!foundObj.isBetrayer)
@@ -155,7 +175,7 @@ export async function updateInsertPlayer(playerData: any)
 
     const updatedPlayer = await userDatabase.findOneAndUpdate({
         email: object.email}, 
-        {$set: object , attributes: [object.attributes]},
+        {$set: object , attributes: [object.attributes, originalAttributes]},
         {upsert : true, new: true});
 
         console.log(updatedPlayer);

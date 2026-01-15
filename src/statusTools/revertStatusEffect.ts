@@ -30,20 +30,20 @@ export async function RevertCurse(player: any, curse: string) {
 
 function CRestorationCalculation(player: any) {
     // Restore stats
-    player.attributes.strength /= 0.6;
-    player.attributes.dexterity /= 0.6;
-    player.attributes.intelligence /= 0.6;
-    player.attributes.constitution /= 0.6;
+    player.attributes[0].strength /= 0.6;
+    player.attributes[0].dexterity /= 0.6;
+    player.attributes[0].intelligence /= 0.6;
+    player.attributes[0].constitution /= 0.6;
 }
 
 
 function DRestorationCalculation(player: any, disease: string) {
     // Revert attribute effect of this malady
     if (disease === deadlyEffects.putridPlague) {
-        player.attributes.intelligence /= 0.25;
+        player.attributes[0].intelligence /= 0.25;
     } else if (disease === deadlyEffects.medulaApocalypse) {
-        player.attributes.constitution /= 0.7;
+        player.attributes[0].constitution /= 0.7;
     } else if (disease === deadlyEffects.epicWeakness) {
-        player.attributes.strength /= 0.4;
+        player.attributes[0].strength /= 0.4;
     }
 }

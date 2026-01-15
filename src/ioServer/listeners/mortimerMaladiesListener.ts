@@ -3,19 +3,27 @@ import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
 import { deadlyEffects } from "../../../src/globalVariables.ts";
 import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
-import { RevertCurse } from "../../statusTools/revertStatusEffect.ts"
+import { RevertCurse, RevertDiseaseEffects } from "../../statusTools/revertStatusEffect.ts"
 
 function MortimerListener(socket: Socket, io: Server) {
 
-    socket.on("disease", async (email: string, disease: string) => {
+    socket.on("disease", async (email: string) => {
 
         console.log(`healing player ${email}`)
 
-        const player = await userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email);
 
-        await RevertStatusEffects(player, disease)
+        if(!player) return;
+
+        await RevertDiseaseEffects(player, deadlyEffects.epicWeakness);
+
+        await RevertDiseaseEffects(player, deadlyEffects.medulaApocalypse);
+
+        await RevertDiseaseEffects(player, deadlyEffects.putridPlague);
 
         await emitPlayerUpdate(socket, io, player, "player healed");
+
+        playerListUpdate();
 
     });
 
@@ -29,7 +37,7 @@ function MortimerListener(socket: Socket, io: Server) {
 
         await emitPlayerUpdate(socket, io, player, "player has been blessed");
 
-
+        playerListUpdate();
 
     })
     socket.on("restore", async (email: string, restore: string) => {
@@ -40,22 +48,27 @@ function MortimerListener(socket: Socket, io: Server) {
 
         if (!player) return;
 
+        console.log("player exists");
+        console.log(restore);
+
         if (restore === "resistance") {
-            player.attributes.resistance = 100;
+            player.attributes[0].resistance = 100;
             await player.save();
         }
 
         await emitPlayerUpdate(socket, io, player, "player restored");
 
-
+        playerListUpdate();
     })
 }
 
 async function emitPlayerUpdate(socket: Socket, io: Server, player: any, event: string) {
 
-    const sockets = await io.in(player.socketId).fetchSockets();
+    if(player.socketId !== null)
+    {
+        const sockets = await io.in(player.socketId).emit("authorization", player);
+    }
 
-    if (sockets.length > 0) sockets[0].emit(event, player);
     socket.emit("confirmation", "ok");
 }
 

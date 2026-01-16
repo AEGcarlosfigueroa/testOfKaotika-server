@@ -14,6 +14,7 @@ const angeloStateList = {
     angeloCaptured: 0,
     angeloProcessing: 1,
     angeloDelivered: 2,
+    angeloFree: 3
 }
 
 

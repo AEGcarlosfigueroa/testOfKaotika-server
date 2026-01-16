@@ -1,10 +1,10 @@
 import { Server, Socket } from "socket.io";
 import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
-import { deadlyEffects } from "../../../src/globalVariables.ts";
-import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
-import { RevertCurse, RevertDiseaseEffects } from "../../statusTools/revertStatusEffect.ts"
-import resistanceRestore from "../../statusTools/resistanceRestore.ts";
+import { deadlyEffects } from "./../../globalVariables.ts";
+import { ApplyStatusEffect } from ".././../statusTools/applyStatusEffect.ts"
+import { RevertCurse, RevertDiseaseEffects } from "./../../statusTools/revertStatusEffect.ts"
+import resistanceRestore from "./../../statusTools/resistanceRestore.ts";
 
 function MortimerListener(socket: Socket, io: Server) {
 

@@ -1,8 +1,8 @@
 import { Server, Socket } from "socket.io";
 import * as userService from "./../../services/userService.ts";
-import playerListUpdate from "../events/playerListUpdate.ts";
-import { angeloStateList } from "../../../src/globalVariables.ts";
-import { states } from "../../../src/globalVariables.ts";
+import playerListUpdate from "./../events/playerListUpdate.ts";
+import { angeloStateList } from "./../../globalVariables.ts";
+import { states } from "./../../globalVariables.ts";
 
 
 export function MortimerAndAngeloListener(socket: Socket, io: Server) {

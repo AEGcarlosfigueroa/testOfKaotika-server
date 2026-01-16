@@ -2,10 +2,10 @@ import { Server, Socket } from "socket.io";
 
 import * as userService from "./../../services/userService.ts";
 
-import playerListUpdate from "../events/playerListUpdate.ts";
+import playerListUpdate from "./../events/playerListUpdate.ts";
 
-import { deadlyEffects } from "../../../src/globalVariables.ts";
-import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts";
+import { deadlyEffects } from "./../../globalVariables.ts";
+import { ApplyStatusEffect } from "./../../statusTools/applyStatusEffect.ts";
 
 function istvanListener(socket: Socket, io: Server) {
     socket.on("scan", async (email) => {

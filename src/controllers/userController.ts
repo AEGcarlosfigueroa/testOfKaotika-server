@@ -16,6 +16,7 @@ const getAllUsers = async (req: any, res: any) => {
     } 
     catch(error: any) 
     {
+        console.error(error);
         return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Request failed",
@@ -75,6 +76,7 @@ const getPlayerFromDatabaseByEmail = async (req: any, res: any) => {
     } 
     catch(error: any) 
     {
+        console.error(error);
         return res.status(error?.status || 500).send({ 
             status: "FAILED",
             message: "Error fetching player",

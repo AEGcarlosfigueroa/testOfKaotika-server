@@ -1,18 +1,19 @@
 import { Server, Socket } from "socket.io";
 
-import * as userService from"./../../services/userService.ts";
+import * as userService from "./../../services/userService.ts";
 
 import playerListUpdate from "../events/playerListUpdate.ts";
 
-function istvanListener(socket: Socket, io: Server)
-{
+import { deadlyEffects } from "../../../src/globalVariables.ts";
+import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts";
+
+function istvanListener(socket: Socket, io: Server) {
     socket.on("scan", async (email) => {
-        try
-        {
+        try {
             console.log("istvanlistener triggered");
-            
+
             console.log(email)
-            
+
             const player = await userService.getPlayerFromDatabaseByEmail(email);
 
             let inside = player.isInside;
@@ -33,10 +34,41 @@ function istvanListener(socket: Socket, io: Server)
 
             playerListUpdate();
         }
-        catch(error)
-        {
+
+        catch (error) {
             console.log(error);
         }
+    })
+    socket.on("curse", async (email) => {
+
+        try
+        {
+            console.log("curse, from the depts of hell, incoming")
+
+            console.log(email)
+
+            const player = await userService.getPlayerFromDatabaseByEmail(email);
+
+            const cursedApplied = deadlyEffects.ethaziumCurse;
+
+            await ApplyStatusEffect(player, cursedApplied);
+
+            if(player.socketId !== null)
+            {
+                io.in(player.socketId).emit("authorization", player);
+            }
+
+            socket.emit("confirmation", "ok");
+
+            playerListUpdate();
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+
+        
+
     })
 }
 

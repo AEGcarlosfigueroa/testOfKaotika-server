@@ -95,13 +95,13 @@ export async function updateInsertPlayer(playerData: any)
     object.profile.role = getRoleByEmail(object.email);
 
     const originalAttributes = {
-        resistance = 0,
-        dexterity = object.attributes.dexterity,
-        strength = object.attributes.insanity,
-        intelligence = object.attributes.intelligence,
-        insanity = object.attributes.insanity,
-        constitution = object.attributes.constitution,
-        charisma = object.attributes.charisma
+        resistance: 0,
+        dexterity: object.attributes.dexterity,
+        strength: object.attributes.insanity,
+        intelligence: object.attributes.intelligence,
+        insanity: object.attributes.insanity,
+        constitution: object.attributes.constitution,
+        charisma: object.attributes.charisma
     }
 
     if(!foundObj)
@@ -146,9 +146,9 @@ export async function updateInsertPlayer(playerData: any)
             object.attributes.insanity += getAmountToIncreaseInsanity(object.attributes.resistance); //Apply current insanity effect
             if(object.attributes.insanity !== 0)
             {
-                object.attributes.strength *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
-                object.attributes.dexterity *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
-                object.attributes.intelligence *= getAmountToMultiplyOtherAttributes(object.attributes.insanity);
+                object.attributes.strength *= (object.attributes.resistance/100);
+                object.attributes.dexterity *= (object.attributes.resistance/100);
+                object.attributes.intelligence *= (object.attributes.resistance/100);
             }
             else
             {

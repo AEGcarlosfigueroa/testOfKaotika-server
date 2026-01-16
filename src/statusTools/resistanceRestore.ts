@@ -1,4 +1,4 @@
-import { reapplySicknesses } from "./applyStatusEffect";
+import { reapplySicknesses } from "./applyStatusEffect.ts";
 
 export default async function resistanceRestore(playerObj: any)
 {
@@ -10,14 +10,17 @@ export default async function resistanceRestore(playerObj: any)
 
         if(currentResistance !== 0)
         {
-            const amountToDivideOtherAttributes = (currentResistance/100);
+            const amountToMultiplyOtherAttributes = (currentResistance/100);
+            console.log("current resistance not 0");
 
-            playerObj.attributes[0].strength *= amountToMultiplyOtherAttributes;
-            playerObj.attributes[0].dexterity *= amountToMultiplyOtherAttributes;
-            playerObj.attributes[0].intelligence *= amountToMultiplyOtherAttributes;
+            playerObj.attributes[0].strength /= amountToMultiplyOtherAttributes;
+            playerObj.attributes[0].dexterity /= amountToMultiplyOtherAttributes;
+            playerObj.attributes[0].intelligence /= amountToMultiplyOtherAttributes;
         }
-        else if(playerObj.attributes[1] !== undefined)
+        else
         {
+            console.log("current resistance is 0");
+
             playerObj.attributes[0].strength = playerObj.attributes[1].strength;
             playerObj.attributes[0].dexterity = playerObj.attributes[1].dexterity;
             playerObj.attributes[0].intelligence = playerObj.attributes[1].intelligence;
@@ -28,7 +31,7 @@ export default async function resistanceRestore(playerObj: any)
             reapplySicknesses(playerObj);
         }
 
-        if(amountToReduceInsanity > 0)
+        if(amountToReduceInsanity > 0 && currentResistance !== 0)
         {
             playerObj.attributes[0].insanity -= amountToReduceInsanity;
         }

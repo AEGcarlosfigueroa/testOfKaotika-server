@@ -4,6 +4,7 @@ import playerListUpdate from "../events/playerListUpdate.ts";
 import { deadlyEffects } from "../../../src/globalVariables.ts";
 import { ApplyStatusEffect } from "../../statusTools/applyStatusEffect.ts"
 import { RevertCurse, RevertDiseaseEffects } from "../../statusTools/revertStatusEffect.ts"
+import resistanceRestore from "../../statusTools/resistanceRestore.ts";
 
 function MortimerListener(socket: Socket, io: Server) {
 
@@ -52,7 +53,7 @@ function MortimerListener(socket: Socket, io: Server) {
         console.log(restore);
 
         if (restore === "resistance") {
-            player.attributes[0].resistance = 100;
+            await resistanceRestore(player);
             await player.save();
         }
 

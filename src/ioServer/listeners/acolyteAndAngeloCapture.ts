@@ -1,14 +1,14 @@
 import { Server, Socket } from "socket.io";
 import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "./../events/playerListUpdate.ts";
-import { angeloStateList } from "./../../globalVariables.ts";
+import { angeloStateList, angeloCapturer } from "./../../globalVariables.ts";
 import { states } from "./../../globalVariables.ts";
 
 export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
     socket.on("capture_Angelo", async (email: string, angeloConstant: number) => {
 
-        console.log("Angelo has being captured");
+        console.log(`Angelo has being captured by ${email}`);
 
         const constantNum = Number(angeloConstant);
 
@@ -21,6 +21,8 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
         ) {
             states.angeloState = angeloStateList.angeloCaptured
+            angeloCapturer = player.email
+
             socket.emit("confirmation", "ok");
             console.log("Angelo state updated to Captured");
 

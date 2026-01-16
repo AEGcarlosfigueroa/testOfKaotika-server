@@ -17,6 +17,8 @@ const angeloStateList = {
     angeloFree: 3
 }
 
+export let angeloCapturer: string | null = null;
+
 
 const states = {
     scrollState: scrollStateList.eliminated,

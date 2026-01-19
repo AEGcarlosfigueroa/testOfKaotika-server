@@ -15,6 +15,8 @@ import { stateRouter } from './routes/stateRoutes.ts';
 import { artifactRouter } from './routes/artifactRoutes.ts';
 import cron from "node-cron";
 import executeCron from './cron/executeCron.ts';
+import { jwtRouter } from './routes/jwtRoutes.ts';
+import authenticateToken from './middlewares/verifyJsonWebToken.ts';
 
 dotenv.config();
 
@@ -42,11 +44,13 @@ initIoServer(app, PORT);
 
 app.use(express.json());
 
-app.use("/api/players", verifyFirebaseToken, usersRouter);     // For your MongoDB players
+app.use("/api/players", authenticateToken, usersRouter);     // For your MongoDB players
 
-app.use("/api/states", stateRouter);
+app.use("/api/states", authenticateToken, stateRouter);
 
-app.use("/api/artifacts", artifactRouter);
+app.use("/api/artifacts", authenticateToken, artifactRouter);
+
+app.use("/api/jwt", jwtRouter);
 
 startMQTT(mqttOptions);
 

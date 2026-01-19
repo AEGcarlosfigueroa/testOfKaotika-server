@@ -8,5 +8,5 @@
     "allowSyntheticDefaultImports": true,
     "rewriteRelativeImportExtensions": true
   },
-  "include": ["./src/**/*", "package.json"],
+  "include": ["./src/**/*", "package.json"]
 }

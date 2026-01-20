@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 
 export default function authenticateToken (req: Request, res: Response, next: Function)
 {

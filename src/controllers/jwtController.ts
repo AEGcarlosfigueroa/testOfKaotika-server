@@ -6,7 +6,9 @@ export function refreshToken(req: Request, res: Response)
 {
     try
     {
-        const authHeader = req.body.refreshToken;
+        const authHeader = req.headers.refreshtoken;
+
+        console.log(req.headers)
 
         const token = authHeader && authHeader.split(' ')[1];
 

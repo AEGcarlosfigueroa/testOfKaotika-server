@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv';
 
 export const generateAccessToken = (email: string) => {

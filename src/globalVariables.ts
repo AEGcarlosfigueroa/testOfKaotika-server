@@ -13,7 +13,9 @@ const obituaryStateList = {
 const angeloStateList = {
     angeloCaptured: 0,
     angeloDelivered: 2,
-    angeloFree: 3
+    angeloFree: 3,
+    angeloAwaitingTrial: 4,
+    angeloInTrial: 5
 }
 
 

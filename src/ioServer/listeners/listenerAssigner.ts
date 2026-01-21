@@ -16,6 +16,7 @@ import { acolyteRestListener } from "./acolyteRestListener.ts";
 import { VillanoListener } from "./villanoListener.ts";
 import { MortimerListener} from "./mortimerMaladiesListener.ts"
 import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
+import { MortimerStartTrialListener } from "./mortimerStartTrialListener";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {
@@ -51,6 +52,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 artifactEvaluationListener(io, socket);
                 MortimerListener(socket, io)
                 MortimerAndAngeloListener(socket, io)
+                MortimerStartTrialListener(socket, io);
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;

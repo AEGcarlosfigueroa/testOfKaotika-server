@@ -14,9 +14,9 @@ import { artifactEvaluationListener } from "./artifactEvaluationListener.ts";
 import { turnIntoBetrayerListener } from "./turnIntoBetrayerListener.ts";
 import { acolyteRestListener } from "./acolyteRestListener.ts";
 import { VillanoListener } from "./villanoListener.ts";
-import { MortimerListener} from "./mortimerMaladiesListener.ts"
+import { MortimerListener } from "./mortimerMaladiesListener.ts"
 import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
-import { MortimerStartTrialListener } from "./mortimerStartTrialListener";
+import { MortimerStartTrialListener } from "./mortimerStartTrialListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {

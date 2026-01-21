@@ -23,9 +23,9 @@ async function notifyEveryoneToHallOfSages(io: Server)
             
             const player = players[i];
 
-            if(player.profile.role === 'ACOLITO' && player.isBetrayer)
+            if((player.profile.role === 'ACOLITO' && player.isBetrayer) || player.profile.role === 'MORTIMER')
             {
-                console.log("Do not notify, acolyte betrayer");
+                console.log("Do not notify, acolyte betrayer ot Mortimer");
             }
             else
             {

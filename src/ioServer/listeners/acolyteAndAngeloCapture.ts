@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "./../events/playerListUpdate.ts";
-import { angeloStateList, angeloCapturer } from "./../../globalVariables.ts";
+import { angeloStateList } from "./../../globalVariables.ts";
 import { states } from "./../../globalVariables.ts";
 
 export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
@@ -21,7 +21,7 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
         ) {
             states.angeloState = angeloStateList.angeloCaptured
-            angeloCapturer = player.email
+            states.angeloCapturer = player.email
 
             socket.emit("confirmation", "ok");
             console.log("Angelo state updated to Captured");
@@ -33,6 +33,55 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
                 `Failed to update Angelo: current state ${states.angeloState}, received ${constantNum}`
             );
         }
+    });
+
+    socket.on("deliverAngeloToMortimer", async (email: string) => {
+        console.log(`Attempt to deliver Angelo by ${email}`);
+
+        const player = await userService.getPlayerFromDatabaseByEmail(email);
+
+        if (!player || player.isBetrayer) {
+            socket.emit("confirmation", "failed");
+            return;
+        }
+
+        // Must be the capturer
+        if (states.angeloCapturer !== email) {
+            console.warn("Player is not Angelo capturer");
+            socket.emit("confirmation", "failed");
+            return;
+        }
+
+        // Angelo must be captured
+        if (states.angeloState !== angeloStateList.angeloCaptured) {
+            console.warn("Angelo not in captured state");
+            socket.emit("confirmation", "failed");
+            return;
+        }
+
+        const players = await userService.getAllUsers();
+
+        const mortimer = players.find(p => p.profile.role === "MORTIMER");
+
+        if (!mortimer) {
+            socket.emit("confirmation", "failed");
+            return;
+        }
+
+        // Both must be in Hall of Sages
+        if (!player.isInHallOfSages || !mortimer.isInHallOfSages) {
+            console.warn("Both players are not in Hall of Sages");
+            socket.emit("confirmation", "failed");
+            return;
+        }
+
+        // SUCCESS
+        states.angeloState = angeloStateList.angeloDelivered;
+
+        console.log("Angelo delivered successfully → processing");
+        socket.emit("confirmation", "ok");
+
+        io.emit("angeloStateUpdate", states.angeloState);
     });
 
 }

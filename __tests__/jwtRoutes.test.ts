@@ -76,9 +76,6 @@ describe('test if jwt API routes work properly', () => {
     })
 
     test("GET /api/jwt/refreshToken should return 401 when there is not any token", async() => {
-        const usedRefreshToken = tokens.refreshToken;
-
-        console.log(usedRefreshToken)
 
         const url = "/api/jwt/refreshToken";
 
@@ -88,9 +85,6 @@ describe('test if jwt API routes work properly', () => {
     })
 
     test("GET /api/jwt/refreshToken should return 405 when there is an incorrect token", async() => {
-        const usedRefreshToken = tokens.refreshToken;
-
-        console.log(usedRefreshToken)
 
         const url = "/api/jwt/refreshToken";
 
@@ -113,10 +107,7 @@ describe('test if jwt API routes work properly', () => {
         expect(response.status).toBe(200);
     })
 
-    test("authenticateToken middleware should return 401 when there is not a correct token", async() => {
-        const usedAccessToken = tokens.accessToken;
-
-        console.log(usedAccessToken)
+    test("authenticateToken middleware should return 403 when there is not a correct token", async() => {
 
         const url = "/verifyToken";
 

@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv'
-import * as jwt from 'jsonwebtoken'
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
 
 export default function authenticateToken (req: Request, res: Response, next: Function)
 {
@@ -13,7 +14,7 @@ export default function authenticateToken (req: Request, res: Response, next: Fu
         return res.sendStatus(401);
     }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
+    verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
         if(error)
         {
             console.log('FORBIDDEN')

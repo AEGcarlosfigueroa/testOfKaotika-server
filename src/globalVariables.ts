@@ -12,19 +12,18 @@ const obituaryStateList = {
 
 const angeloStateList = {
     angeloCaptured: 0,
-    angeloProcessing: 1,
     angeloDelivered: 2,
     angeloFree: 3
 }
 
-export let angeloCapturer: string | null = null;
 
 
 const states = {
     scrollState: scrollStateList.eliminated,
     obituaryState: obituaryStateList.unlocked,
     canShowArtifacts: false,
-    angeloState: angeloStateList.angeloProcessing 
+    angeloState: angeloStateList.angeloFree,
+    angeloCapturer: null as string | null,
 }
 
 const coordinateList = [];

@@ -17,7 +17,6 @@ import cron from "node-cron";
 import executeCron from './cron/executeCron.ts';
 import { jwtRouter } from './routes/jwtRoutes.ts';
 import authenticateToken from './middlewares/verifyJsonWebToken.ts';
-
 dotenv.config();
 
 const mongodbRoute = process.env.MONGODB_URI;
@@ -30,7 +29,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
 const mqttOptions = mqttOptionsConfiguration();
 
-const {Application} = pkg;
+const { Application } = pkg;
 
 const app: Application = express();
 
@@ -54,22 +53,19 @@ app.use("/api/jwt", jwtRouter);
 
 startMQTT(mqttOptions);
 
-function mqttOptionsConfiguration()
-{
-    try
-    {
+function mqttOptionsConfiguration() {
+    try {
         return ({
-        clientId: clientId,
-        rejectUnauthorized: true,
-        clean: true,
-        ca: fs.readFileSync(path.resolve(__dirname, "../ca.crt")),
-        key: fs.readFileSync(path.resolve(__dirname, "../prodserver.key")),
-        cert: fs.readFileSync(path.resolve(__dirname, "../tok-server.crt")),
-        url: process.env.HIVEMQ_URL
+            clientId: clientId,
+            rejectUnauthorized: true,
+            clean: true,
+            ca: fs.readFileSync(path.resolve(__dirname, "../ca.crt")),
+            key: fs.readFileSync(path.resolve(__dirname, "../prodserver.key")),
+            cert: fs.readFileSync(path.resolve(__dirname, "../tok-server.crt")),
+            url: process.env.HIVEMQ_URL
         });
     }
-    catch(error)
-    {
+    catch (error) {
         console.log("No certificates found, trying fallback");
         return ({
             url: process.env.HIVEMQ_URL,
@@ -77,12 +73,11 @@ function mqttOptionsConfiguration()
             user: process.env.HIVEMQ_USER
         });
     }
-    
+
 }
 
-async function start(){
-    try
-    {
+async function start() {
+    try {
         await mongoose.connect(mongodbRoute);
         app.listen(PORT, () => {
             console.log(`API is listening on port ${PORT}`);
@@ -90,21 +85,18 @@ async function start(){
         console.log('you are now connected to Mongo');
 
         cron.schedule('* * * * *', () => {
-          if(cronEnabled == "true")
-          {
-            console.log("cron enabled, running task...");
-            executeCron();
-          }
-          else
-          {
-            console.log("cron disabled");
-          }
+            if (cronEnabled == "true") {
+                console.log("cron enabled, running task...");
+                executeCron();
+            }
+            else {
+                console.log("cron disabled");
+            }
         });
-    } 
-    catch(error: any)
-    {
+    }
+    catch (error: any) {
         console.error(`Error to connect to the database: ${error.message}`);
     }
 }
-start ();
+start();
 

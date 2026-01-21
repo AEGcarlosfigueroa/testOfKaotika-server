@@ -26,8 +26,10 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
             socket.emit("confirmation", "ok");
             console.log("Angelo state updated to Captured");
 
-            io.in("stateTracker").emit("stateUpdate", states);
-
+            io.in("stateTracker").emit("angeloStateUpdate", {
+                angeloState: states.angeloState,
+                angeloCapturer: states.angeloCapturer
+            });
         }
         else {
             socket.emit("confirmation", "failed");
@@ -79,11 +81,16 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
         // SUCCESS
         states.angeloState = angeloStateList.angeloDelivered;
+        states.angeloCapturer = null;
+        
 
         console.log("Angelo delivered successfully → processing");
         socket.emit("confirmation", "ok");
 
-        io.in("stateTracker").emit("stateUpdate", states);
+        io.in("stateTracker").emit("angeloStateUpdate", {
+            angeloState: states.angeloState,
+            angeloCapturer: states.angeloCapturer
+        });
     });
 
 }

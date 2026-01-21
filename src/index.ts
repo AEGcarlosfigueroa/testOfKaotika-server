@@ -17,7 +17,6 @@ import cron from "node-cron";
 import executeCron from './cron/executeCron.ts';
 import { jwtRouter } from './routes/jwtRoutes.ts';
 import authenticateToken from './middlewares/verifyJsonWebToken.ts';
-import { states } from './globalVariables';
 dotenv.config();
 
 const mongodbRoute = process.env.MONGODB_URI;
@@ -86,7 +85,7 @@ async function start() {
         console.log('you are now connected to Mongo');
 
         cron.schedule('* * * * *', () => {
-            if (cronEnabled == "true" && !states.angeloStateList.angeloProcessing) {
+            if (cronEnabled == "true") {
                 console.log("cron enabled, running task...");
                 executeCron();
             }

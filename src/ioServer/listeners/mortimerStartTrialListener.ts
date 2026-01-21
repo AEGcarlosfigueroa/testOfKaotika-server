@@ -6,6 +6,8 @@ export function MortimerStartTrialListener(socket: Socket, io: Server) {
         {
             states.angeloState = angeloStateList.angeloAwaitingTrial;
 
+            io.in("stateTracker").emit("stateUpdate", states);
+
             await notifyEveryoneToHallOfSages(io);
         }
     })

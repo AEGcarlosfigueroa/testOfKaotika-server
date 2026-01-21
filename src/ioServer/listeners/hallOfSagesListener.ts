@@ -91,6 +91,12 @@ async function checkIfAllAuthorizedPlayersAreInHallOfSages()
 
         states.angeloState = angeloStateList.angeloInTrial;
 
+        states.trialResult.guilty = 0;
+
+        states.trialResult.innocent = 0;
+        
+        states.playersWboHaveVoted = [];
+
         server.in("stateTracker").emit("stateUpdate", states);
     }
     catch(error)

@@ -26,6 +26,8 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
             socket.emit("confirmation", "ok");
             console.log("Angelo state updated to Captured");
 
+            io.in("stateTracker").emit("stateUpdate", states);
+
         }
         else {
             socket.emit("confirmation", "failed");
@@ -81,7 +83,7 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
         console.log("Angelo delivered successfully → processing");
         socket.emit("confirmation", "ok");
 
-        io.emit("angeloStateUpdate", states.angeloState);
+        io.in("stateTracker").emit("stateUpdate", states);
     });
 
 }

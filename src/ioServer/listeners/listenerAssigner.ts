@@ -17,7 +17,7 @@ import { VillanoListener } from "./villanoListener.ts";
 import { MortimerListener } from "./mortimerMaladiesListener.ts"
 import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
 import { MortimerStartTrialListener } from "./mortimerStartTrialListener.ts";
-import { MortimerRestartTrialListener } from "./MortimerRestartTrialListener";
+import { MortimerRestartTrialListener } from "./MortimerRestartTrialListener,ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {

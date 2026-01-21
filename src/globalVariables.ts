@@ -16,8 +16,6 @@ const angeloStateList = {
     angeloFree: 3
 }
 
-
-
 const states = {
     scrollState: scrollStateList.eliminated,
     obituaryState: obituaryStateList.unlocked,

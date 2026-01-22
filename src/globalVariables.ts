@@ -26,7 +26,7 @@ const states = {
     angeloCapturer: null as string | null,
     trialResult: { guilty: 0, innocent: 0 },
     playersAuthorized: 0,
-    playersWboHaveVoted: [],
+    playersWhoHaveVoted: [],
 }
 
 const coordinateList = [];

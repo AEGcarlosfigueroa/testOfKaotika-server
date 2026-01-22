@@ -1,4 +1,7 @@
-import { angeloStateList, states } from "../../globalVariables.ts"
+import { angeloStateList, states } from "../../globalVariables.ts";
+import * as userService from"./../../services/userService.ts";
+import { messaging } from "../../firebase.ts";
+import { Socket, Server } from "socket.io";
 
 export function MortimerStartTrialListener(socket: Socket, io: Server) {
     socket.on("startTrial", async() => {

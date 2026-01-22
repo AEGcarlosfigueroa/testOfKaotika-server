@@ -22,11 +22,11 @@ const states = {
     scrollState: scrollStateList.eliminated,
     obituaryState: obituaryStateList.unlocked,
     canShowArtifacts: false,
-    angeloState: angeloStateList.angeloFree,
+    angeloState: angeloStateList.angeloDelivered,
     angeloCapturer: null as string | null,
     trialResult: { guilty: 0, innocent: 0 },
     playersAuthorized: 0,
-    playersWboHaveVoted: [],
+    playersWhoHaveVoted: [],
 }
 
 const coordinateList = [];

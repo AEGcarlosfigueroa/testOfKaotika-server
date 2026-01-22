@@ -70,7 +70,7 @@ async function checkIfAllAuthorizedPlayersAreInHallOfSages()
         {
             const entry = players[i];
 
-            if(entry.isBetrayer && playerListUpdate.profile.role === 'ACOLITO')
+            if(entry.isBetrayer && player.profile.role === 'ACOLITO')
             {
                 console.log("player not authorized, skipping check for this player");
             }

@@ -18,8 +18,8 @@ import { MortimerListener } from "./mortimerMaladiesListener.ts"
 import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
 import { MortimerStartTrialListener } from "./mortimerStartTrialListener.ts";
 import { MortimerRestartTrialListener } from "./MortimerRestartTrialListener.ts";
-import { MortimerEndTrialListener } from "./MortimerEndTrialListener";
-import { trialVoteListener } from "./trialVoteListener";
+import { MortimerEndTrialListener } from "./MortimerEndTrialListener.ts";
+import { trialVoteListener } from "./trialVoteListener.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {

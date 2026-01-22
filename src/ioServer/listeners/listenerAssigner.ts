@@ -18,6 +18,8 @@ import { MortimerListener } from "./mortimerMaladiesListener.ts"
 import { MortimerAndAngeloListener } from "./mortimerAndAngeloListener.ts"
 import { MortimerStartTrialListener } from "./mortimerStartTrialListener.ts";
 import { MortimerRestartTrialListener } from "./MortimerRestartTrialListener.ts";
+import { MortimerEndTrialListener } from "./MortimerEndTrialListener";
+import { trialVoteListener } from "./trialVoteListener";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {
@@ -36,6 +38,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
         switch (role) {
             case "ISTVAN":
                 istvanListener(socket, io);
+                trialVoteListener(socket, io);
                 socket.join("acolyteLocationTracker");
                 break;
             case "ACOLITO":
@@ -46,6 +49,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 showArtifactsListener(io, socket);
                 turnIntoBetrayerListener(io, socket);
                 acolyteRestListener(socket, io);
+                trialVoteListener(socket, io);
                 socket.join("artifactTracker");
                 break;
             case 'MORTIMER':
@@ -55,11 +59,13 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 MortimerAndAngeloListener(socket, io)
                 MortimerStartTrialListener(socket, io);
                 MortimerRestartTrialListener(socket, io);
+                MortimerEndTrialListener(socket, io);
                 socket.join("acolyteLocationTracker");
                 socket.join("artifactTracker");
                 break;
             case 'VILLANO':
-                VillanoListener(socket, io)
+                VillanoListener(socket, io);
+                trialVoteListener(socket, io);
                 socket.join("acolyteLocationTracker");
                 break;
             default:

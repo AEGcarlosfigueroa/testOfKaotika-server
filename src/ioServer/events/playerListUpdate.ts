@@ -8,6 +8,10 @@ export default async function playerListUpdate()
     try
     {
         const connectedPlayers = await userService.getAllConnectedNonTraitorAcolytePlayers();
+
+        const allConnectedPlayers = await userService.getAllConnectedPlayers();
+
+        server.in("playerList").emit("connectedPlayerUpdate", connectedPlayers);
         
         server.in("playerList").emit("update", connectedPlayers);
 

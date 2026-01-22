@@ -89,7 +89,17 @@ const getAllConnectedNonTraitorAcolytePlayers = async () => {
         throw error;
     }
 }
-
+const getAllConnectedPlayers = async () => {
+    try
+    {
+        const players = await userDatabase.getAllConnectedPlayers();
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 export {
     updateInsertPlayer,
     getPlayerFromDatabaseByEmail,
@@ -98,5 +108,6 @@ export {
     getAllConnectedNonTraitorAcolytePlayers,
     getPlayerFromCardID,
     getAllAcolytes,
-    getAllNonTraitorAcolytes
+    getAllNonTraitorAcolytes,
+    getAllConnectedPlayers
 }

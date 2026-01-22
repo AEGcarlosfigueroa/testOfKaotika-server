@@ -33,6 +33,8 @@ export async function listenerAssigner(socket: Socket, io: Server) {
 
         hallOfSagesListener(io, socket);
 
+        MortimerAndAngeloListener(socket, io);
+
         socket.join("stateTracker");
 
         switch (role) {
@@ -50,13 +52,13 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 turnIntoBetrayerListener(io, socket);
                 acolyteRestListener(socket, io);
                 trialVoteListener(socket, io);
+                
                 socket.join("artifactTracker");
                 break;
             case 'MORTIMER':
                 scrollDestroyedListener(socket, io);
                 artifactEvaluationListener(io, socket);
                 MortimerListener(socket, io)
-                MortimerAndAngeloListener(socket, io)
                 MortimerStartTrialListener(socket, io);
                 MortimerRestartTrialListener(socket, io);
                 MortimerEndTrialListener(socket, io);

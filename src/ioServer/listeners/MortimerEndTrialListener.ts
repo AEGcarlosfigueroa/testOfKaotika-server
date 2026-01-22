@@ -1,8 +1,8 @@
 import { angeloStateList, states } from "../../globalVariables.ts"
 
 export function MortimerEndTrialListener(socket: Socket, io: Server) {
-    socket.on("restartTrial", async() => {
-        if(states.angeloState === angeloStateList.angeloInTrial && states.playersWboHaveVoted.length === states.playersAuthorized)
+    socket.on("endTrial", async() => {
+        if(states.angeloState === angeloStateList.angeloInTrial && states.playersWhoHaveVoted.length === states.playersAuthorized)
         {
             if(states.trialResult.guilty === states.trialResult.innocent)
             {
@@ -22,7 +22,7 @@ export function MortimerEndTrialListener(socket: Socket, io: Server) {
             states.trialResult.guilty = 0;
             states.trialResult.innocent = 0;
 
-            states.playersWboHaveVoted = [];
+            states.playersWhoHaveVoted = [];
 
             socket.emit("confirmation", "ok");
             io.in("stateTracker").emit("stateUpdate", states);

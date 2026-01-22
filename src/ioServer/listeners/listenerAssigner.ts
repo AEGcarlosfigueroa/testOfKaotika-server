@@ -20,6 +20,7 @@ import { MortimerStartTrialListener } from "./mortimerStartTrialListener.ts";
 import { MortimerRestartTrialListener } from "./MortimerRestartTrialListener.ts";
 import { MortimerEndTrialListener } from "./MortimerEndTrialListener.ts";
 import { trialVoteListener } from "./trialVoteListener.ts";
+import { AcolytesAndAngeloCapture } from "./acolyteAndAngeloCapture.ts";
 
 export async function listenerAssigner(socket: Socket, io: Server) {
     try {
@@ -52,6 +53,7 @@ export async function listenerAssigner(socket: Socket, io: Server) {
                 turnIntoBetrayerListener(io, socket);
                 acolyteRestListener(socket, io);
                 trialVoteListener(socket, io);
+                AcolytesAndAngeloCapture(socket, io);
                 
                 socket.join("artifactTracker");
                 break;

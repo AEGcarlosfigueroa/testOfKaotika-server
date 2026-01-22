@@ -13,6 +13,8 @@ export function hallOfSagesListener(io: Server, socket: Socket)
         try
         {
             console.log("executing hall of sages listener");
+            console.log("angelo state: " + states.angeloState);
+            console.log("angelo capturer: " + states.angeloCapturer);
         
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 

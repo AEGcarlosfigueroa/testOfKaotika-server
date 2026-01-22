@@ -7,9 +7,9 @@ export function trialVoteListener(socket: Socket, io: Server)
     socket.on("trialVote", async(vote: string) => {
         try
         {
-            const player = await userService.getPlayerFromDatabaseBySocketId();
+            const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
-            if(!player || (player.profile.role === 'ACOLITO' && player.isBetrayer) || player.profile.role === 'MORTIMER' || states.playersWboHaveVoted.includes(player.email))
+            if(!player || (player.profile.role === 'ACOLITO' && player.isBetrayer) || player.profile.role === 'MORTIMER' || states.playersWhoHaveVoted.includes(player.email))
             {
                 console.log("this player cannot vote in the trial, aborting...");
                 socket.emit("confirmation", "ok");
@@ -21,13 +21,13 @@ export function trialVoteListener(socket: Socket, io: Server)
                 {
                     states.trialResult.guilty++;
 
-                    states.playersWboHaveVoted.push(player.email);
+                    states.playersWhoHaveVoted.push(player.email);
                 }
                 else if(vote === "innocent")
                 {
-                    states.trialResult.guilty++;
+                    states.trialResult.innocent++;
 
-                    states.playersWboHaveVoted.push(player.email);
+                    states.playersWhoHaveVoted.push(player.email);
                 }
                 else
                 {
@@ -35,6 +35,7 @@ export function trialVoteListener(socket: Socket, io: Server)
                 }
 
                 io.in("stateTracker").emit("stateUpdate", states);
+                socket.emit("confirmation", "ok");
 
             }
         }

@@ -6,36 +6,26 @@ import { states } from "./../../globalVariables.ts";
 
 export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
-    socket.on("capture_Angelo", async (email: string, angeloConstant: number) => {
+    socket.on("capture_Angelo", async (email: string) => {
 
         console.log(`Angelo has being captured by ${email}`);
 
-        const constantNum = Number(angeloConstant);
-
-        const player = userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email)
 
         if (player.isBetrayer === true) return;
 
-        if (states.angeloState === angeloStateList.angeloFree &&
-            constantNum === angeloStateList.angeloCaptured
-
-        ) {
-            states.angeloState = angeloStateList.angeloCaptured
-            states.angeloCapturer = player.email
-
-            socket.emit("confirmation", "ok");
+        if (states.angeloState === angeloStateList.angeloFree) 
+        {
+            states.angeloState = angeloStateList.angeloCaptured;
+            states.angeloCapturer = player.email;
             console.log("Angelo state updated to Captured");
 
-            io.in("stateTracker").emit("angeloStateUpdate", {
-                angeloState: states.angeloState,
-                angeloCapturer: states.angeloCapturer
-            });
+            io.in("stateTracker").emit("stateUpdate", states);
+            socket.emit("confirmation", "ok");
         }
         else {
             socket.emit("confirmation", "failed");
-            console.warn(
-                `Failed to update Angelo: current state ${states.angeloState}, received ${constantNum}`
-            );
+            console.log("capture failed");
         }
     });
 

@@ -1,7 +1,7 @@
 export const playerRole = {
 
     "classcraft.daw2@aeg.eus" : "ISTVAN",
-    "ignacio.ayaso@ikasle.aeg.eus" : "MORTIMER",
+    "carlos.figueroa@ikasle.aeg.eus" : "MORTIMER",
     "oskar.calvo@aeg.eus" : "MORTIMER",
     // "carlos.palacio@ikasle.aeg.eus" : "VILLANO",
     
@@ -13,7 +13,7 @@ export const roles = {
     villano: "ozarate@aeg.eus",
     // villano: "carlos.palacio@ikasle.aeg.eus",
     // mortimer: "oskar.calvo@aeg.eus",
-    mortimer: "ignacio.ayaso@ikasle.aeg.eus"
+    mortimer: "carlos.figueroa@ikasle.aeg.eus"
 }
 const DEFAULT = "ACOLITO" //this is for students 
 export function getRoleByEmail(playerEmail: string) {

@@ -62,10 +62,10 @@ export default function startMQTT(mqttOptions: any)
 
 async function manageResponse(message: any)
 {
-    if(message.topic === subscribedTopics[0])
-    {
-      manageTopicMessage(message);
-    }
+  if(message.topic === subscribedTopics[0])
+  {
+    manageTopicMessage(message);
+  }
 }
 
 async function manageTopicMessage(message: any)

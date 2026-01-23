@@ -1,24 +1,29 @@
 import {Server, Socket} from 'socket.io';
 import playerListUpdate from '../events/playerListUpdate.ts';
 import * as userService from "./../../services/userService.ts";
+import * as kaotikaService from "./../../services/kaotikaService.ts"
 
 export function turnIntoBetrayerListener(io: Server, socket: Socket)
 {
     socket.on("turnIntoBetrayer", async () => {
         try
         {
-            console.log("tuen into betrayer triggered");
+            console.log("turn into betrayer triggered");
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
             
             if(player.profile.role === 'ACOLITO' && !player.isBetrayer)
             {
-                player.isBetrayer = true; //A Kaotika API request will be made here when we have access to it
+                const kaotikaPlayer = await kaotikaService.turnIntoBetrayer(player.email);
+
+                const newPlayer = await userService.updateInsertPlayer(kaotikaPlayer);
             
-                await player.save();
-            
-                socket.emit("authorization", player);
+                socket.emit("authorization", newPlayer);
             
                 playerListUpdate();
+            }
+            else
+            {
+                socket.emit("authorization", player);
             }
         }
         catch(error)

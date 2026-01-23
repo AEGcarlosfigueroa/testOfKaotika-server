@@ -13,3 +13,16 @@ export async function getLegendByEmail(playerEmail: String)
     }
 }
 
+export async function turnIntoBetrayer(playerEmail: String)
+{
+    try
+    {
+        const player = await kaotikaDB.turnIntoBetrayer(playerEmail);
+        return player;
+    }
+    catch (error)
+    {
+        throw error;
+    }
+}
+

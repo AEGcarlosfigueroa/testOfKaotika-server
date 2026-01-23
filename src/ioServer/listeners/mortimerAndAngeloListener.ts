@@ -4,6 +4,7 @@ import playerListUpdate from "./../events/playerListUpdate.ts";
 import { angeloStateList } from "./../../globalVariables.ts";
 import { states } from "./../../globalVariables.ts";
 import { messaging } from "../../firebase.ts";
+import { roles } from "../../database/playerRoles.ts";
 
 export function MortimerAndAngeloListener(socket: Socket, io: Server) {
 
@@ -12,7 +13,9 @@ export function MortimerAndAngeloListener(socket: Socket, io: Server) {
 
         const player = await userService.getPlayerFromDatabaseByEmail(email);
 
-        if(player.isBetrayer) return;
+        const mortimer = await userService.getPlayerFromDatabaseByEmail(roles.mortimer);
+
+        if(player.isBetrayer || !mortimer) return;
 
         if (states.angeloState === angeloStateList.angeloCaptured ) {
             states.angeloState = angeloStateList.angeloDelivered;
@@ -38,7 +41,7 @@ export function MortimerAndAngeloListener(socket: Socket, io: Server) {
             p => p.profile.role === "MORTIMER"
         );
 
-        console.log(states.angeloState);
+        console.log(mortimerPlayer.fcmToken);
 
         if (states.angeloState === angeloStateList.angeloCaptured) {
             if (mortimerPlayer && mortimerPlayer.fcmToken) {

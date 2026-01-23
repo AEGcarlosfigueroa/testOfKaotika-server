@@ -3,6 +3,7 @@ import * as userService from "./../../services/userService.ts";
 import playerListUpdate from "./../events/playerListUpdate.ts";
 import { angeloStateList } from "./../../globalVariables.ts";
 import { states } from "./../../globalVariables.ts";
+import { roles } from "../../database/playerRoles.ts";
 
 export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
@@ -10,7 +11,7 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
         console.log(`Angelo has being captured by ${email}`);
 
-        const player = await userService.getPlayerFromDatabaseByEmail(email)
+        const player = await userService.getPlayerFromDatabaseByEmail(email);
 
         if (player.isBetrayer === true) return;
 
@@ -76,6 +77,8 @@ export function AcolytesAndAngeloCapture(socket: Socket, io: Server) {
 
         console.log("Angelo delivered successfully → processing");
         socket.emit("confirmation", "ok");
+
+        io.in(mortimer.socketId).emit("confirmation", "ok");
 
         io.in("stateTracker").emit("angeloStateUpdate", {
             angeloState: states.angeloState,

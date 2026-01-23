@@ -84,7 +84,7 @@ async function start() {
         });
         console.log('you are now connected to Mongo');
 
-        cron.schedule('* * * * *', () => {
+        cron.schedule('15,45 * * * *', () => {
             if (cronEnabled == "true") {
                 console.log("cron enabled, running task...");
                 executeCron();

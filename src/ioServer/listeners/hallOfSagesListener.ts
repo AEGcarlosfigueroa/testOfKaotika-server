@@ -4,7 +4,7 @@ import * as artifactService from "./../../services/artifactService.ts"
 import { messaging } from "../../firebase.ts";
 import { roles } from "../../database/playerRoles.ts";
 import playerListUpdate from "../events/playerListUpdate.ts";
-import { states } from "../../globalVariables.ts";
+import { angeloStateList, states } from "../../globalVariables.ts";
 import { server } from "../ioServer.ts";
 
 export function hallOfSagesListener(io: Server, socket: Socket)
@@ -13,6 +13,8 @@ export function hallOfSagesListener(io: Server, socket: Socket)
         try
         {
             console.log("executing hall of sages listener");
+            console.log("angelo state: " + states.angeloState);
+            console.log("angelo capturer: " + states.angeloCapturer);
         
             const player = await userService.getPlayerFromDatabaseBySocketId(socket.id);
 
@@ -40,7 +42,15 @@ export function hallOfSagesListener(io: Server, socket: Socket)
             {
                 console.log("Invalid argument in hall of sages listener");
             }
-            sendHallOfSagesNotificationToMortimer();
+
+            if(states.angeloState === angeloStateList.angeloAwaitingTrial)
+            {
+                checkIfAllAuthorizedPlayersAreInHallOfSages();
+            }
+            else
+            {
+                sendHallOfSagesNotificationToMortimer();
+            }
             playerListUpdate();
         }
         catch(error)
@@ -48,6 +58,53 @@ export function hallOfSagesListener(io: Server, socket: Socket)
             console.error(error);
         }
     })
+}
+
+async function checkIfAllAuthorizedPlayersAreInHallOfSages()
+{
+    try
+    {
+        const players = await userService.getAllUsers();
+
+        let authorizedPlayerCount = 0;
+
+        for(let i=0; i<players.length; i++)
+        {
+            const entry = players[i];
+
+            if(entry.isBetrayer && player.profile.role === 'ACOLITO')
+            {
+                console.log("player not authorized, skipping check for this player");
+            }
+            else if(!entry.isInHallOfSages)
+            {
+                console.log("An authorized player i not in hall of sages, trial may not start yet...");
+                return;
+            }
+            else
+            {
+                authorizedPlayerCount++;
+            }
+        }
+
+        authorizedPlayerCount-- // To exclude mortimer from having to vote
+
+        states.playersAuthorized = authorizedPlayerCount;
+
+        states.angeloState = angeloStateList.angeloInTrial;
+
+        states.trialResult.guilty = 0;
+
+        states.trialResult.innocent = 0;
+        
+        states.playersWboHaveVoted = [];
+
+        server.in("stateTracker").emit("stateUpdate", states);
+    }
+    catch(error)
+    {
+        console.error(error);
+    }
 }
 
 export async function sendHallOfSagesNotificationToMortimer()

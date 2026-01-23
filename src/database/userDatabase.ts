@@ -62,6 +62,18 @@ export async function getAllConnectedNonTraitorAcolytePlayers()
         throw error;
     }
 }
+export async function getAllConnectedPlayers()
+{
+    try
+    {
+        const players = await userDatabase.find({ $and: [{socketId: { $ne : null }}]});
+        return players;
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
 export async function getAllAcolytes()
 {
     try

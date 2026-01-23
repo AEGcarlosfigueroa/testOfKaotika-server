@@ -1,9 +1,10 @@
 import * as authentication from '../firebase.ts'
 
-
 export async function verifyFirebaseToken(req: any, res: any, next: Function) 
 {
   const authHeader = req.headers.authorization;
+
+  console.log("enter verifyFirebaseToken");
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Unauthorized: No token provided" });

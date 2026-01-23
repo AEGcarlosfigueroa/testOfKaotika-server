@@ -12,16 +12,21 @@ const obituaryStateList = {
 
 const angeloStateList = {
     angeloCaptured: 0,
-    angeloProcessing: 1,
     angeloDelivered: 2,
+    angeloFree: 3,
+    angeloAwaitingTrial: 4,
+    angeloInTrial: 5
 }
-
 
 const states = {
     scrollState: scrollStateList.eliminated,
     obituaryState: obituaryStateList.unlocked,
     canShowArtifacts: false,
-    angeloState: angeloStateList.angeloProcessing 
+    angeloState: angeloStateList.angeloFree,
+    angeloCapturer: null as string | null,
+    trialResult: { guilty: 0, innocent: 0 },
+    playersAuthorized: 0,
+    playersWhoHaveVoted: [],
 }
 
 const coordinateList = [];

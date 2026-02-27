@@ -20,7 +20,7 @@ const angeloStateList = {
 
 const states = {
     scrollState: scrollStateList.eliminated,
-    obituaryState: obituaryStateList.unlocked,
+    obituaryState: obituaryStateList.locked,
     canShowArtifacts: false,
     angeloState: angeloStateList.angeloFree,
     angeloCapturer: null as string | null,

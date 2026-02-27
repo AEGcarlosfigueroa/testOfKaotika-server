@@ -13,7 +13,6 @@ export const roles = {
     villano: "ozarate@aeg.eus",
     // villano: "carlos.palacio@ikasle.aeg.eus",
     mortimer: "oskar.calvo@aeg.eus",
-    mortimer: "ignacio.ayaso@ikasle.aeg.eus"
 }
 const DEFAULT = "ACOLITO" //this is for students 
 export function getRoleByEmail(playerEmail: string) {

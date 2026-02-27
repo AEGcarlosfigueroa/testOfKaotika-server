@@ -47,7 +47,7 @@ app.use("/api/players", authenticateToken, usersRouter);     // For your MongoDB
 
 app.use("/api/states", authenticateToken, stateRouter);
 
-app.use("/api/artifacts", authenticateToken, artifactRouter);
+app.use("/api/artifacts", artifactRouter);
 
 app.use("/api/jwt", jwtRouter);
 
